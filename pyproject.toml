@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "fig-tree"
+version = "0.0.0"
+description = "Data management utility for geneological research"
+authors = ["Daniel Perrefort"]
+readme = "README.md"
+packages = [{include = "fig_tree"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "4.2.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
