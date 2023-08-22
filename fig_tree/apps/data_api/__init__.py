@@ -4,10 +4,9 @@ updating, and deletion of genealogical data in a flexible manner.
 
 Features:
   - Create, read, update, and delete individual persons, families, events, locations, and more.
-  - Associate individuals with families and events to establish genealogical relationships.
   - Utilize query parameters and filters to search and retrieve specific genealogical records.
-  - Support paginated responses to efficiently manage large datasets.
-  - Manage event details uch as births, deaths, baptisms, and other customizable life events.
+  - Create and manage citations between genelogical records and historical sources.
+  - Manage event details such as births, deaths, baptisms, and other customizable life events.
   - Implement robust validation when creating/updating records to ensure data integrity.
 
 Installation
