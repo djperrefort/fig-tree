@@ -9,4 +9,15 @@ Features:
   - Support paginated responses to efficiently manage large datasets.
   - Manage event details uch as births, deaths, baptisms, and other customizable life events.
   - Implement robust validation when creating/updating records to ensure data integrity.
+
+Installation
+------------
+
+Add the application to the ``installed_apps`` list in the package settings:
+
+.. doctest:: python
+
+   >>> INSTALLED_APPS = [
+   ...    'apps.data_api',
+   ... ]
 """

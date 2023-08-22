@@ -68,6 +68,8 @@ from django.urls import path
 
 from . import views
 
+app_name = 'data_api'
+
 urlpatterns = [
     path('address', views.AddressListView.as_view(), name='address_list'),
     path('address/<str:id>', views.AddressDetailView.as_view(), name='address_detail'),
