@@ -1,0 +1,33 @@
+"""Application level URL routing.
+
+The ``urls`` module maps URL endpoints to django views defined by the parent
+application. For root level URL routing, see the project level ``urls`` module.
+View objects can be found in the ``views`` module.
+
+URL Routing Configuration
+-------------------------
+
++---------------------------+--------------------------+----------------------+
+| URL                       | View                     | Name                 |
++===========================+==========================+======================+
+|``/``                      | ``SignUpView``           | ``new-user``         |
++---------------------------+--------------------------+----------------------+
+|``act_sent/``              | ``activation_sent_view`` | ``activation-sent``  |
++---------------------------+--------------------------+----------------------+
+|``[AUTHENTICATION-TOKEN]`` | ``ActivateAccountView``  | ``activate``         |
++---------------------------+--------------------------+----------------------+
+"""
+
+from django.urls import path, re_path
+
+from . import views
+
+app_name = 'signup'
+
+token_regex = r'(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,50})'
+
+urlpatterns = [
+    path('', views.SignUpView.as_view(), name='new-user'),
+    path('sent', views.ActivationSentView.as_view(), name='activation-sent'),
+    re_path(token_regex, views.ActivateAccountView.as_view(), name='activate'),
+]
