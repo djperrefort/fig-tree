@@ -6,7 +6,7 @@ with database models/serializers, managing application business logic, and
 returning rendered HTTP responses.
 
 Whenever possible, generic base classes are used to implement common behavior
-for HTP request handling.
+for HTTP request handling.
 """
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator

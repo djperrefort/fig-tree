@@ -2,10 +2,10 @@
 of new user accounts.
 
 Features:
-  - Allw users to create new accounts by providing a unique username, email address, and password.
+  - Allow users to create new accounts by providing a unique username, email address, and password.
+  - Extend the default user database model with additional fields and functionality
   - Manage user account information view customized administrative interfaces in the website admin portal.
   - Verify user contact information by sending confirmation requests to user email addresss.
-  - Provide a secure, token-based mechanism for users to reset forgotten or outdated passwords.
 
 Installation
 ------------

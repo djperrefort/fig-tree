@@ -2,6 +2,10 @@
 existing accounts. It handles user logins/logouts and password reset requests.
 It is **not** responsible for creating new user accounts.
 
+Features:
+  - Extend built-in authentication functionality with useful features like "remember me" session cookies.
+  - Provide a secure, token-based mechanism for users to reset forgotten or outdated passwords.
+
 Installation
 ------------
 
