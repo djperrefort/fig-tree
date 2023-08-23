@@ -1,0 +1,3 @@
+[submodule "fig_tree/static/vendored/mdb-webpack-starter"]
+	path = fig_tree/static/vendored/mdb-webpack-starter
+	url = https://github.com/mdbootstrap/mdb-webpack-starter

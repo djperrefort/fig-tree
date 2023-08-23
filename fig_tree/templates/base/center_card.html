@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block body %}
+  <div class="page page-center">
+    <div class="container-tight py-4">
+
+      {% block header %}{% endblock %}
+
+      {% block card_body %}
+        <div class="card card-md">
+          <div class="card-body">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+      {% endblock %}
+
+      {% block footer %}{% endblock %}
+
+    </div>
+  </div>
+{% endblock %}

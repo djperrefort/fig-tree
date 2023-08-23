@@ -1,0 +1,24 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+  <div class="page">
+    {% include 'base/components/header.html' %}
+    {% include 'base/components/navbar.html' %}
+
+    <div class="page-wrapper">
+      <div class="container-xl">
+        <div class="page-header d-print-none">
+          {% block header %}{% endblock %}
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+      <footer class="footer footer-transparent d-print-none">
+        {% block footer %}{% endblock %}
+      </footer>
+    </div>
+  </div>
+{% endblock %}

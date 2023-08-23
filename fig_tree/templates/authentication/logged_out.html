@@ -1,0 +1,13 @@
+{% extends "base/center_card.html" %}
+
+{% block title %}Logout Successful{% endblock %}
+
+{% block additional_css %}
+  <meta http-equiv="refresh" content="3;{% url 'home' %}"/>
+{% endblock %}
+
+{% block content %}
+  <h2 class="text-center mb-3">Success</h2>
+  <p class="card-text">You have been logged out from your account.</p>
+  <p class="card-text">You will be automatically redirected to the <a href="{% url 'home' %}">Home Page</a>.</p>
+{% endblock %}
