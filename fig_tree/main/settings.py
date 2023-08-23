@@ -14,6 +14,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
 # Application Configuration
 
 ROOT_URLCONF = 'main.urls'
+AUTH_USER_MODEL = 'signup.AuthUser'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -22,8 +23,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
-    'apps.data_api'
+    'apps.data_api',
+    'apps.signup'
 ]
 
 MIDDLEWARE = [

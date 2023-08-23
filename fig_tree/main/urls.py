@@ -18,9 +18,8 @@ URL Routing Configuration
 from django.contrib import admin
 from django.urls import path, include
 
-from apps.data_api import urls as data_api_urls
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(data_api_urls, namespace='data_api')),
+    path('api/', include('apps.data_api.urls', namespace='data_api')),
+    path('signup/', include('apps.signup.urls', namespace='signup')),
 ]
