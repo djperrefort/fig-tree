@@ -11,7 +11,11 @@ URL Routing Configuration
 +======================+============================+=========================+
 | ``admin/``           | ``apps.admin``             | ``admin``               |
 +----------------------+----------------------------+-------------------------+
+| ``auth/``            | ``apps.authentication``    | ``auth``                |
++----------------------+----------------------------+-------------------------+
 | ``api/``             | ``apps.data_api``          | ``data_api``            |
++----------------------+----------------------------+-------------------------+
+| ``signup/``          | ``apps.signup``            | ``signup``              |
 +----------------------+----------------------------+-------------------------+
 """
 
@@ -20,6 +24,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('apps.authentication.urls', namespace='auth')),
     path('api/', include('apps.data_api.urls', namespace='data_api')),
     path('signup/', include('apps.signup.urls', namespace='signup')),
 ]

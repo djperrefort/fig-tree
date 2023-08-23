@@ -15,6 +15,8 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
 
 ROOT_URLCONF = 'main.urls'
 AUTH_USER_MODEL = 'signup.AuthUser'
+LOGIN_URL = 'auth:login'
+SITE_ID = 1
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -25,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'rest_framework',
+    'apps.authentication',
     'apps.data_api',
     'apps.signup'
 ]
@@ -42,7 +45,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
