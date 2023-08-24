@@ -17,6 +17,9 @@ django-bootstrap5 = "23.3"
 django-widget-tweaks = "1.4.12"
 python-dotenv = "1.0.0"
 
+[tool.poetry.scripts]
+fig-tree-manage = "fig_tree.manage:main"
+
 [tool.poetry.group.test]
 optional = true
 
