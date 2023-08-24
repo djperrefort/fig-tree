@@ -2,21 +2,27 @@
 {% load static %}
 
 {% block body %}
-  <div class="page page-center">
-    <div class="container-tight py-4">
+<section class="vh-100">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
 
-      {% block header %}{% endblock %}
+          {% block card_header %}
+            <div class="card-header">
+              {% block card_header_content %}{% endblock %}
+            </div>
+          {% endblock %}
 
-      {% block card_body %}
-        <div class="card card-md">
-          <div class="card-body">
-            {% block content %}{% endblock %}
-          </div>
+          {% block card_body %}
+            <div class="card-body p-4">
+              {% block card_body_content %}{% endblock %}
+            </div>
+          {% endblock %}
+
         </div>
-      {% endblock %}
-
-      {% block footer %}{% endblock %}
-
+      </div>
     </div>
   </div>
+</section>
 {% endblock %}
