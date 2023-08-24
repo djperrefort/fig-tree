@@ -19,9 +19,11 @@ if DEBUG:
 # Application Configuration
 
 ROOT_URLCONF = 'main.urls'
-AUTH_USER_MODEL = 'signup.AuthUser'
-LOGIN_URL = 'auth:login'
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'signup.AuthUser'
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'auth:login'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
