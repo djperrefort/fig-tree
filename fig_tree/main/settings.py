@@ -11,6 +11,11 @@ DEBUG = bool(int(os.environ.get('DEBUG', default=0)))
 SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
 
+# If running in debug mode, save emails to disk instead of sending them
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR / 'email'
+
 # Application Configuration
 
 ROOT_URLCONF = 'main.urls'
