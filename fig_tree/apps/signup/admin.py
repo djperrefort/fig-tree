@@ -21,7 +21,7 @@ class AuthenticatedUserAdmin(UserAdmin):
     model = AuthUser
 
     # Fields shown in the main admin summary page
-    list_display = ('username', 'email', 'first_name', 'last_name')
+    list_display = ('username', 'email')
 
     # Fields shown when editing a new user
     fieldsets = (

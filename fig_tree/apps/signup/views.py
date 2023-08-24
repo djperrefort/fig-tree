@@ -81,7 +81,7 @@ class ActivateAccountView(View):
         Args:
             request: Incoming HTTP request
             uidb64: Base 64 encoded user id
-            token: Activation authentication token
+            token: Account authentication token
 
         Return:
             The outgoing HTTPResponse

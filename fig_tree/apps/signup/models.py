@@ -23,8 +23,6 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(max_length=50, unique=True, null=False)
     email = models.EmailField(_('email address'), unique=True, null=False)
-    first_name = models.CharField(max_length=50, null=False)
-    last_name = models.CharField(max_length=100, null=False)
     date_joined = models.DateTimeField(default=timezone.now, null=False)
     is_active = models.BooleanField(default=True, null=False)
     is_staff = models.BooleanField(default=False, null=False)

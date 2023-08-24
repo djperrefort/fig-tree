@@ -11,12 +11,10 @@ from django.forms import fields as form_fields
 
 from .models import AuthUser
 
-_user_fields = ('username', 'email', 'first_name', 'last_name')
+_user_fields = ('username', 'email')
 _user_field_classes = {
     'username': forms.UsernameField,
-    'email': form_fields.EmailField,
-    'first_name': form_fields.CharField,
-    'last_name': form_fields.CharField
+    'email': form_fields.EmailField
 }
 
 
