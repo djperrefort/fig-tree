@@ -1,0 +1,14 @@
+{% extends 'base/center_card.html' %}
+
+{% block title %}{{ site_title }} - Invalid Link{% endblock %}
+
+{% block card_header_content %}
+  <h3>Invalid Activation Link</h3>
+{% endblock %}
+
+{% block card_body_content %}
+  <p class="card-text">The activation link you have used is no longer valid.</p>
+  <div class="card-footer">
+    <a id="id_home" href="{% url 'home' %}" type="submit" class="btn btn-primary w-100">Go Home</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base/center_card.html' %}
+{% load static widget_tweaks %}
+
+{% block title %}{{ site_title }} - Sign Up{% endblock %}
+
+{% block card_header_content %}
+  <h3>Create a New Account</h3>
+{% endblock %}
+
+{% block card_body_content %}
+  <p class="card-text mb-4">If you already have an account, <a href="{% url 'auth:login' %}">click here to login</a>.</p>
+
+  {% if form.errors %}
+    {% for field in form %}
+      {% for error in field.errors %}
+        <div class="alert alert-danger px-2">
+          <strong>{{ error|escape }}</strong>
+        </div>
+      {% endfor %}
+    {% endfor %}
+  {% endif %}
+
+  <form method="post" action="{% url 'signup:new-user' %}">
+    {% csrf_token %}
+
+    <div class="mt-2 mb-4">
+      <label class="form-label">Username</label>
+      {% render_field form.username class="form-control mb-2" placeholder="Username" %}
+    </div>
+
+    <div class="mt-2 mb-4">
+      <label class="form-label">Email address</label>
+      {% render_field form.email class="form-control mb-2" placeholder="Email" %}
+    </div>
+
+    <div class="mt-2 mb-4">
+      <label class="form-label">Name</label>
+      {% render_field form.first_name class="form-control mb-2" placeholder="First" %}
+      {% render_field form.last_name class="form-control mb-2" placeholder="Last" %}
+    </div>
+
+    <div class="mt-2 mb-4">
+      <label class="form-label">Password</label>
+      {% render_field form.password1 class="form-control mb-2" placeholder="Password" %}
+      {% render_field form.password2 class="form-control mb-2" placeholder="Confirm Password" %}
+    </div>
+
+    <div class="form-footer">
+      <button id="id_submit" type="submit" class="btn btn-primary w-100">Sign Up</button>
+    </div>
+  </form>
+{% endblock %}
