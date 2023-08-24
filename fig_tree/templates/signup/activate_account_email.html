@@ -1,10 +1,11 @@
+{% load i18n %}
 {% autoescape off %}
-  Hello {{ user.username }},
+  {% blocktranslate %}You're receiving this email because you requested a new user account at {{ site_name }}.{% endblocktranslate %}
 
-  Thank you for requesting a new user account. Please use the link below to activate your account.
+  {% translate "To activate your account, please visit the following link:" %}
 
   https://{{ domain }}{% url 'signup:activate' uidb64=uid token=token %}
 
   Yours,
-    Fig-Tree
+  The {{ site_name }} team
 {% endautoescape %}

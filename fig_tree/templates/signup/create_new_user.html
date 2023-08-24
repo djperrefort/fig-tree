@@ -12,7 +12,7 @@
   {% if form.errors %}
     {% for field in form %}
       {% for error in field.errors %}
-        <div class="alert alert-danger px-2">
+        <div class="alert alert-danger">
           <strong>{{ error|escape }}</strong>
         </div>
       {% endfor %}
@@ -23,10 +23,10 @@
     {% csrf_token %}
     {% render_field form.username class="form-control my-2" placeholder="Username" %}
     {% render_field form.email class="form-control my-2" placeholder="Email" %}
-    {% render_field form.password1 class="form-control mb-2" placeholder="Password" %}
-    {% render_field form.password2 class="form-control mb-2" placeholder="Confirm Password" %}
+    {% render_field form.password1 class="form-control my-2" placeholder="Password" %}
+    {% render_field form.password2 class="form-control my-2" placeholder="Confirm Password" %}
 
-    <button id="id_submit" type="submit" class="btn btn-primary w-100 my-2">Sign Up</button>
+    <button id="id_submit" type="submit" class="btn btn-primary w-100 mt-4">Sign Up</button>
     <hr class="my-4">
     <div class="text-center text-muted">
       <p>Already have an account? <a href="{% url 'auth:login' %}">Click here to login</a></p>

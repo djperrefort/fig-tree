@@ -47,6 +47,7 @@ class PasswordResetView(views.PasswordResetView):
     """View for requesting a reset password link via email"""
 
     template_name = 'authentication/password_reset_form.html'
+    html_email_template_name = 'authentication/password_reset_email.html'
     success_url = reverse_lazy('auth:password-reset-done')
 
 
