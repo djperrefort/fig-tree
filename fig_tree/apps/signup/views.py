@@ -52,7 +52,7 @@ class SignUpView(CreateView):
         current_site = Site.objects.get_current()
 
         email_subject = 'New account activation'
-        message = render_to_string('activate_account_email.html', {
+        message = render_to_string('signup/activate_account_email.html', {
             'user': user,
             'domain': current_site.domain,
             'uid': urlsafe_base64_encode(force_bytes(user.id)),
@@ -69,7 +69,7 @@ class SignUpView(CreateView):
 class ActivationSentView(TemplateView):
     """View for telling user's to check hir email for a confirmation notice"""
 
-    template_name = "signup/sent.html"
+    template_name = "signup/activation_sent.html"
 
 
 class ActivateAccountView(View):

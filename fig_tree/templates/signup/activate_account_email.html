@@ -1,7 +1,10 @@
 {% autoescape off %}
-  Hi {{ user.username }},
+  Hello {{ user.username }},
 
-  Use the following link to activate your account.
+  Thank you for requesting a new user account. Please use the link below to activate your account.
 
-  http://{{ domain }}{% url 'signup:activate' uidb64=uid token=token %}
+  https://{{ domain }}{% url 'signup:activate' uidb64=uid token=token %}
+
+  Yours,
+    Fig-Tree
 {% endautoescape %}

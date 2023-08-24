@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block card_body_content %}
-  <p class="card-text">The activation link you have used is no longer valid.</p>
-  <div class="card-footer">
-    <a id="id_home" href="{% url 'home' %}" type="submit" class="btn btn-primary w-100">Go Home</a>
-  </div>
+  <p>The activation link you have used is no longer valid.</p>
+  <a class="btn btn-primary w-100 my-2" id="id_home" href="{% url 'home' %}" type="submit">Go Home</a>
 {% endblock %}
