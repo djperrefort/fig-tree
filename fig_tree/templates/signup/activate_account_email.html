@@ -1,11 +1,11 @@
 {% load i18n %}
 {% autoescape off %}
-  {% blocktranslate %}You're receiving this email because you requested a new user account at {{ site_name }}.{% endblocktranslate %}
+{% blocktranslate %}You're receiving this email because you requested a password reset for your user account at {{ site_name }}.{% endblocktranslate %}
 
-  {% translate "To activate your account, please visit the following link:" %}
+{% translate "To activate your account, please visit the following link:" %}
 
-  https://{{ domain }}{% url 'signup:activate' uidb64=uid token=token %}
+https://{{ domain }}{% url 'signup:activate' uidb64=uid token=token %}
 
-  Yours,
-  The {{ site_name }} team
+Yours,
+The {{ site_name }} team
 {% endautoescape %}
