@@ -26,7 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django_bootstrap5',
     'rest_framework',
+    'widget_tweaks',
     'apps.authentication',
     'apps.data_api',
     'apps.signup'
