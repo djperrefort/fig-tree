@@ -21,8 +21,10 @@ URL Routing Configuration
 
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
+    path('', TemplateView.as_view(template_name='main/index.html'), name='home'),
     path('admin/', admin.site.urls),
     path('auth/', include('apps.authentication.urls', namespace='auth')),
     path('api/', include('apps.data_api.urls', namespace='data_api')),
