@@ -16,20 +16,25 @@
 
   <form method="post" action="{% url 'auth:login' %}">
     {% csrf_token %}
-    {% render_field form.username class="form-control my-4" placeholder="Username" %}
-    {% render_field form.password class="form-control my-4" placeholder="Password" %}
-
-    <div class="row">
+    <div class="mb-3">
+      <label for="id_username" class="form-label">Username</label>
+      {% render_field form.username class="form-control" %}
+    </div>
+    <div class="mb-4">
+      <label for="id_password" class="form-label">Password</label>
+      {% render_field form.password class="form-control" %}
+    </div>
+    <div class="row mb-4">
       <div class="col d-flex justify-content-center">
-        {% render_field form.remember_me type="checkbox" class="form-check-input mx-1" %} Remember me
+        {% render_field form.remember_me type="checkbox" class="form-check-input" %}
+        <label class="form-check-label mx-1" for="id_remember_me">Remember me</label>
       </div>
       <div class="col">
         <a id="id_forgot_password" href="{% url 'auth:password-reset' %}">Forgot your password?</a>
       </div>
     </div>
-
-    <button id="id_submit" type="submit" class="btn btn-primary w-100 mt-4">Log In</button>
-    <hr class="my-4">
+    <button id="id_submit" type="submit" class="btn btn-primary w-100 mb-2">Log In</button>
+    <hr class="mb-3">
     <div class="text-center text-muted">
       Don't have account yet? <a id="id_signup" href="{% url 'signup:new-user' %}">Sign up</a>
     </div>
