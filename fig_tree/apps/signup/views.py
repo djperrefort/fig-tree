@@ -54,7 +54,8 @@ class SignUpView(CreateView):
         email_subject = 'New account activation'
         message = render_to_string('signup/activate_account_email.html', {
             'user': user,
-            'site_name': current_site.domain,
+            'domain': current_site.domain,
+            'protocol': 'https',
             'uid': urlsafe_base64_encode(force_bytes(user.id)),
             'token': activation_token_generator.make_token(user)
         })

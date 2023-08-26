@@ -21,24 +21,24 @@
 
   <form method="post" action="{% url 'signup:new-user' %}">
     {% csrf_token %}
-    <div class="mb-4">
+    <div class="mb-3">
       <label for="id_username" class="form-label">Username</label>
     {% render_field form.username class="form-control" placeholder="username" %}
     </div>
-    <div class="mb-4">
+    <div class="mb-3">
       <label for="id_email" class="form-label">Email</label>
       {% render_field form.email class="form-control" placeholder="name@domain.com" %}
     </div>
-    <div class="mb-4">
+    <div class="mb-3">
       <label for="id_password1" class="form-label">Password</label>
       {% render_field form.password1 class="form-control" placeholder="password" %}
     </div>
     <div class="mb-4">
-      <label for="id_password2" class="form-label">Confirm Password</label>
+      <label for="i3_password2" class="form-label">Confirm Password</label>
       {% render_field form.password2 class="form-control" placeholder="password" %}
     </div>
     
-    <button id="id_submit" type="submit" class="btn btn-primary w-100 mt-4">Sign Up</button>
+    <button id="id_submit" type="submit" class="btn btn-primary w-100">Sign Up</button>
     <hr class="my-4">
     <div class="text-center text-muted">
       <p>Already have an account? <a href="{% url 'auth:login' %}">Click here to login</a></p>
