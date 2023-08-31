@@ -53,6 +53,14 @@ jobs:
       - name: Test ${{ matrix.app_name }} app
         run: poetry run python fig_tree/manage.py test ${{ matrix.app_name }}
 
+  function_tests:
+    runs-on: ubuntu-latest
+    name: Site Function Tests
+
+    steps:
+      - name: Placeholder
+        run: echo "Hello World!"
+
   report-test-status:
     name: Report Test Status
     if: always()
