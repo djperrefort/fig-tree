@@ -30,9 +30,8 @@ jobs:
 
     strategy:
       fail-fast: false
-      strategy:
-        matrix:
-          directory: ${{fromJson(needs.find-test-directories.outputs.test_dirs)}}
+      matrix:
+        directory: ${{fromJson(needs.find-test-directories.outputs.test_dirs)}}
 
     steps:
       - name: Setup Python
