@@ -21,7 +21,8 @@ jobs:
         run: |
           # Find application directories containing a 'tests' subdirectory
           test_dirs=$(find fig_tree/apps -type d -name "tests" -exec dirname {} \;)
-          echo "::set-output name=test_dirs::$test_dirs"
+          echo $test_dirs
+          echo "test_dirs=$test_dirs" >> $GITHUB_STATE
 
   unit_tests:
     runs-on: ubuntu-latest
@@ -55,7 +56,7 @@ jobs:
 
   function_tests:
     runs-on: ubuntu-latest
-    name: Site Function Tests
+    name: Function Tests
 
     steps:
       - name: Placeholder
