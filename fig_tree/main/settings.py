@@ -1,6 +1,7 @@
 """Top level Django application settings."""
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -27,6 +28,7 @@ SITE_ID = 1
 AUTH_USER_MODEL = 'signup.AuthUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'auth:login'
+REMEMBER_ME_DURATION = timedelta(days=7).total_seconds()
 
 INSTALLED_APPS = [
     'django.contrib.admin',
