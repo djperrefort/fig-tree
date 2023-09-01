@@ -24,7 +24,7 @@ jobs:
         run: |
           # Find application directories containing a 'tests' subdirectory
           test_dirs=$(find fig_tree/apps -type d -name "tests" -exec dirname {} \; | jq -R . | jq -s .)
-          echo "matrix=$test_dirs" >> $GITHUB_OUTPUT
+          echo "matrix={\"app_name\":$test_dirs}" >> $GITHUB_OUTPUT
 
   unit_tests:
     runs-on: ubuntu-latest
