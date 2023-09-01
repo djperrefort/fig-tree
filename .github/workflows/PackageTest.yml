@@ -6,6 +6,7 @@ on:
 
 env:
   PYTHON_VERSION: 3.11
+  # Django settings required for running tests
   DEBUG: True
   SECRET_KEY: this_is_a_fake_key
 
