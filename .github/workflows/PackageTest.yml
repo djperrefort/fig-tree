@@ -31,7 +31,7 @@ jobs:
 
   unit_tests:
     runs-on: ubuntu-latest
-    name: Unit Tests
+    name: App Unit Tests
     needs: [ discover_apps ]
 
     strategy:
@@ -57,6 +57,36 @@ jobs:
 
       - name: Test ${{ matrix.app_name }} app
         run: poetry run python fig_tree/manage.py test ${{ matrix.app_name }}
+
+  function_tests:
+    runs-on: ubuntu-latest
+    name: Site Function Tests
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install webdriver
+        run: |
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+          tar -xf geckodriver-v0.33.0-linux64.tar.gz
+          mv geckodriver /usr/local/bin/geckodriver
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install poetry
+        run: |
+          pip install poetry
+          poetry env use python${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: poetry install --with test
+
+      - name: Test ${{ matrix.app_name }} app
+        run: poetry run python fig_tree/manage.py test
 
   report-test-status:
     name: Report Test Status

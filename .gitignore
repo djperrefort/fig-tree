@@ -51,3 +51,6 @@ docs/build/
 
 # Poetry stuff
 *.lock
+
+# Webdirver stuff
+geckodriver.log
