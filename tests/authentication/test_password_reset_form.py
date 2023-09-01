@@ -1,6 +1,6 @@
 """Function tests for users requesting a password reset link."""
 
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 from selenium.webdriver.common.by import By
 
@@ -9,14 +9,14 @@ from ..test_utils import CustomTestBase, PageTitleTest
 URL_REVERSE = 'auth:password-reset'
 
 
-class PageTitle(PageTitleTest, LiveServerTestCase):
+class PageTitle(PageTitleTest, StaticLiveServerTestCase):
     """Test the page title is correctly set"""
 
     url_reverse = URL_REVERSE
     page_title = 'Reset Password'
 
 
-class PasswordResetForm(CustomTestBase, LiveServerTestCase):
+class PasswordResetForm(CustomTestBase, StaticLiveServerTestCase):
     """Test the page is populated with the password reset request form"""
 
     url_reverse = URL_REVERSE

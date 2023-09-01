@@ -2,14 +2,14 @@
 link has been sent via email.
 """
 
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from ..test_utils import PageTitleTest
 
 URL_REVERSE = 'auth:password-reset-done'
 
 
-class PageTitle(PageTitleTest, LiveServerTestCase):
+class PageTitle(PageTitleTest, StaticLiveServerTestCase):
     """Test the page title is correctly set"""
 
     url_reverse = URL_REVERSE

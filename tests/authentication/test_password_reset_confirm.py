@@ -2,7 +2,7 @@
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -14,7 +14,7 @@ URL_REVERSE = 'auth:password-reset-confirm'
 URL_REVERSE_KWARGS = dict(uidb64='MQ', token='b0eoao-12ccb812deafbe6e742fdd536108ee53')
 
 
-class PageTitle(PageTitleTest, LiveServerTestCase):
+class PageTitle(PageTitleTest, StaticLiveServerTestCase):
     """Test the page title is correctly set"""
 
     url_reverse = URL_REVERSE
@@ -22,7 +22,7 @@ class PageTitle(PageTitleTest, LiveServerTestCase):
     page_title = 'Reset Password'
 
 
-class InvalidOrExpiredLink(CustomTestBase, LiveServerTestCase):
+class InvalidOrExpiredLink(CustomTestBase, StaticLiveServerTestCase):
     """Tests page behavior for an invalid or expired password reset link"""
 
     url_reverse = URL_REVERSE
@@ -36,7 +36,7 @@ class InvalidOrExpiredLink(CustomTestBase, LiveServerTestCase):
         self.assertEqual(expected_url, self.webdriver.current_url)
 
 
-class ValidResetLink(CustomTestBase, LiveServerTestCase):
+class ValidResetLink(CustomTestBase, StaticLiveServerTestCase):
     """Tests page behavior for a valid password reset link"""
 
     url_reverse = URL_REVERSE
