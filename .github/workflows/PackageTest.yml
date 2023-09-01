@@ -30,8 +30,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
-        matrix: ${{ fromJSON(needs.discover_apps.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.discover_apps.outputs.matrix) }}
 
     steps:
       - name: Setup Python
