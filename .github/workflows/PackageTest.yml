@@ -91,7 +91,7 @@ jobs:
   report-test-status:
     name: Report Test Status
     if: always()
-    needs: [ unit_tests ]
+    needs: [ unit_tests, functin_tests ]
     runs-on: ubuntu-latest
 
     steps:
