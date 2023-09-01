@@ -5,7 +5,7 @@ on:
   push:
 
 env:
-  PYTHON_VERSION: 3.8
+  PYTHON_VERSION: 3.11
 
 jobs:
   discover_apps:
@@ -24,7 +24,6 @@ jobs:
         run: |
           # Find application directories containing a 'tests' subdirectory
           test_dirs=$(find fig_tree/apps -type d -name "tests" -exec dirname {} \; | jq -R . | jq -s . | tr -d '\n')
-          echo "matrix={\"app_name\":$test_dirs}"
           echo "matrix={\"app_name\":$test_dirs}" >> $GITHUB_OUTPUT
 
   unit_tests:
@@ -37,6 +36,9 @@ jobs:
       matrix: ${{ fromJSON(needs.discover_apps.outputs.matrix) }}
 
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -46,9 +48,6 @@ jobs:
         run: |
           pip install poetry
           poetry env use python${{ env.PYTHON_VERSION }}
-
-      - name: Checkout source
-        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: poetry install --with test
