@@ -48,3 +48,6 @@ docs/build/
 
 # Pycharm stuff
 .idea/
+
+# Poetry stuff
+*.lock
