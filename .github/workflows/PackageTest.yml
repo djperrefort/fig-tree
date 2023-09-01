@@ -31,7 +31,7 @@ jobs:
 
   unit_tests:
     runs-on: ubuntu-latest
-    name: Application Unit Tests
+    name: Unit Tests
     needs: [ discover_apps ]
 
     strategy:
