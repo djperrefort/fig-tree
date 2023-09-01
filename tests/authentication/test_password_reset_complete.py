@@ -1,6 +1,6 @@
 """Function tests for the confirmation page indicating a successful password reset."""
 
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import LiveServerTestCase
 from django.urls import reverse
 from selenium.webdriver.common.by import By
 
@@ -9,14 +9,14 @@ from ..test_utils import CustomTestBase, PageTitleTest
 URL_REVERSE = 'auth:password-reset-complete'
 
 
-class PageTitle(PageTitleTest, StaticLiveServerTestCase):
+class PageTitle(PageTitleTest, LiveServerTestCase):
     """Test the page title is correctly set"""
 
     url_reverse = URL_REVERSE
     page_title = 'Reset Password'
 
 
-class LoginLink(CustomTestBase, StaticLiveServerTestCase):
+class LoginLink(CustomTestBase, LiveServerTestCase):
     """Test the direction of users to login page via the login link"""
 
     url_reverse = URL_REVERSE
@@ -29,7 +29,7 @@ class LoginLink(CustomTestBase, StaticLiveServerTestCase):
         self.assertEqual(expected_url, self.webdriver.current_url)
 
 
-class HomepageLink(CustomTestBase, StaticLiveServerTestCase):
+class HomepageLink(CustomTestBase, LiveServerTestCase):
     """Test the direction of users to login page via the login link"""
 
     url_reverse = URL_REVERSE

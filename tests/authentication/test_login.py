@@ -1,7 +1,7 @@
 """Function tests for the login page."""
 
 from django.contrib.auth import get_user_model
-from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import LiveServerTestCase
 from django.urls import reverse
 from selenium.webdriver.common.by import By
 
@@ -10,14 +10,14 @@ from ..test_utils import CustomTestBase, PageTitleTest
 URL_REVERSE = 'auth:login'
 
 
-class PageTitle(PageTitleTest, StaticLiveServerTestCase):
+class PageTitle(PageTitleTest, LiveServerTestCase):
     """Test the page title is correctly set"""
 
     url_reverse = URL_REVERSE
     page_title = 'Login'
 
 
-class LoginFormBehavior(CustomTestBase, StaticLiveServerTestCase):
+class LoginFormBehavior(CustomTestBase, LiveServerTestCase):
     """Test the contents and behavior of the login form"""
 
     url_reverse = URL_REVERSE
@@ -72,7 +72,7 @@ class LoginFormBehavior(CustomTestBase, StaticLiveServerTestCase):
         self.assertEqual(home_url, self.webdriver.current_url)
 
 
-class PasswordResetLinks(CustomTestBase, StaticLiveServerTestCase):
+class PasswordResetLinks(CustomTestBase, LiveServerTestCase):
     """Tests for the forgot/reset password links"""
 
     url_reverse = URL_REVERSE
