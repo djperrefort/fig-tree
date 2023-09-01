@@ -6,6 +6,8 @@ on:
 
 env:
   PYTHON_VERSION: 3.11
+  DEBUG: True
+  SECRET_KEY: this_is_a_fake_key
 
 jobs:
   discover_apps:
