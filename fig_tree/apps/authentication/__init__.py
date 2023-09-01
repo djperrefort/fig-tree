@@ -43,5 +43,5 @@ users logged in for a given duration. The length of this duration is configurabl
 
    >>> from datetime import timedelta
    >>>
-   >>> REMEMBER_ME_DURATION = timedelta(weeks=4).total_seconds()
+   >>> REMEMBER_ME_DURATION = timedelta(days=4)
 """

@@ -28,7 +28,7 @@ SITE_ID = 1
 AUTH_USER_MODEL = 'signup.AuthUser'
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'auth:login'
-REMEMBER_ME_DURATION = timedelta(days=7).total_seconds()
+REMEMBER_ME_DURATION = timedelta(days=7)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
