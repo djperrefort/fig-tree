@@ -13,14 +13,14 @@ class CreateUser(TestCase):
         """Test users are created without admin permissions"""
 
         new_user = AuthUserManager.create_user(username='test_user', email='test@user.com', password='foo')
-        self.assertFalse(new_user.is_staff, 'User is staff')
-        self.assertFalse(new_user.is_superuser, 'User is superuser')
+        self.assertFalse(new_user.is_staff)
+        self.assertFalse(new_user.is_superuser)
 
-    def test_user_is_active(self) -> None:
+    def test_user_is_not_active(self) -> None:
         """Test new user accounts are marked as active"""
 
         new_user = AuthUserManager.create_user(username='test_user', email='test@user.com', password='foo')
-        self.assertTrue(new_user.is_active, 'User is not active')
+        self.assertFalse(new_user.is_active)
 
     def test_user_data(self) -> None:
         """Test user accounts are created with the correct user information"""
@@ -54,7 +54,7 @@ class CreateStaffUser(TestCase):
         """Test new user accounts are marked as active"""
 
         new_user = AuthUserManager.create_staff_user(username='test_user', email='test@user.com', password='foo')
-        self.assertTrue(new_user.is_active, 'User is not active')
+        self.assertTrue(new_user.is_active)
 
     def test_user_data(self) -> None:
         """Test user accounts are created with the correct user information"""
@@ -79,7 +79,7 @@ class CreateSuperUser(TestCase):
         """Test new user accounts are marked as active"""
 
         new_user = AuthUserManager.create_superuser(username='test_user', email='test@user.com', password='foo')
-        self.assertTrue(new_user.is_active, 'User is not active')
+        self.assertTrue(new_user.is_active)
 
     def test_user_data(self) -> None:
         """Test user accounts are created with the correct user information"""
