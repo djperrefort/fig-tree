@@ -62,7 +62,9 @@ class LoginFormBehavior(CustomTestBase, LiveServerTestCase):
         get_user_model().objects.create_user(
             username=test_username,
             email='test@user.com',
-            password=test_password)
+            password=test_password,
+            is_active=True
+        )
 
         self.username_field.send_keys(test_username)
         self.password_field.send_keys(test_password)
