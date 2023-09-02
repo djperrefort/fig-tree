@@ -97,7 +97,7 @@ class ActivateAccountView(View):
             user = None
 
         if user is not None and activation_token_generator.check_token(user, token):
-            user.email_validated = True
+            user.is_active = True
             user.save()
             return render(request, 'signup/activation_success.html')
 

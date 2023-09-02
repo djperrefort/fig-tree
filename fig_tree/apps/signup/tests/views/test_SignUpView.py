@@ -7,8 +7,8 @@ from apps.signup.forms import UserCreationForm
 from apps.signup.views import SignUpView
 
 
-class UserNotification(TestCase):
-    """Test users are sent a confirmation email"""
+class FormValid(TestCase):
+    """Test the handling of valid form submissions"""
 
     def test_email_sent_on_valid_form(self) -> None:
         """Test a user activation email is sent when a valid form is submitted"""

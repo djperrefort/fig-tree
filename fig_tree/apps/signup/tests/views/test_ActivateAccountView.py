@@ -28,7 +28,7 @@ class TokenHandling(TestCase):
         self.test_token = views.activation_token_generator.make_token(self.test_user)
 
     def test_invalid_token_template(self) -> None:
-        """Test get request with invalid token redirects to invalid token page"""
+        """Test get requests with invalid tokens redirect to invalid token page"""
 
         bad_signup_token = {'uidb64': 'AB', 'token': 'CDE-FGHIJK'}
         url = reverse(self.url_name, kwargs=bad_signup_token)
@@ -37,8 +37,15 @@ class TokenHandling(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, self.invalid_token_template)
 
+    def test_invalid_token_not_activated(self) -> None:
+        """Test user accounts are inactive after submitting a valid token"""
+
+        bad_signup_token = {'uidb64': 'AB', 'token': 'CDE-FGHIJK'}
+        self.client.get(reverse(self.url_name, kwargs=bad_signup_token))
+        self.assertFalse(models.AuthUser.objects.get(pk=1).is_active)
+
     def test_valid_token_template(self) -> None:
-        """Test get request with invalid token redirects to success page"""
+        """Test get requests with valid tokens redirect to success page"""
 
         good_signup_token = {'uidb64': self.uidb64, 'token': self.test_token}
         url = reverse(self.url_name, kwargs=good_signup_token)
@@ -46,3 +53,10 @@ class TokenHandling(TestCase):
 
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed(response, self.valid_token_template)
+
+    def test_valid_token_activated(self) -> None:
+        """Test user accounts are active after submitting a valid token"""
+
+        good_signup_token = {'uidb64': self.uidb64, 'token': self.test_token}
+        self.client.get(reverse(self.url_name, kwargs=good_signup_token))
+        self.assertTrue(models.AuthUser.objects.get(pk=1).is_active)

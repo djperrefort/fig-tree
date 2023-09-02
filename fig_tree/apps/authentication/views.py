@@ -9,12 +9,16 @@ Whenever possible, generic base classes are used to implement common behavior
 for HTTP request handling.
 """
 
+from datetime import timedelta
+
 from django.conf import settings
 from django.contrib.auth import login, views
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
 from .forms import AuthenticationForm
+
+DEFAULT_REMEMBER_ME_DURATION = timedelta(days=7)
 
 
 class LoginView(views.LoginView):
@@ -29,7 +33,8 @@ class LoginView(views.LoginView):
 
         login(self.request, form.get_user())
         if form.cleaned_data['remember_me']:
-            self.request.session.set_expiry(settings.REMEMBER_ME_DURATION)
+            duration = getattr(settings, 'REMEMBER_ME_DURATION', DEFAULT_REMEMBER_ME_DURATION)
+            self.request.session.set_expiry(duration)
 
         else:
             self.request.session.set_expiry(0)

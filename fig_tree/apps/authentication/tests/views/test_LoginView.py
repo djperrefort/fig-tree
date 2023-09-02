@@ -42,7 +42,10 @@ class FormValid(TestCase):
 
         self.assertEqual(view.get_success_url(), response.url)
         self.assertFalse(session.get_expire_at_browser_close())
-        self.assertAlmostEqual(settings.REMEMBER_ME_DURATION.total_seconds(), session.get_expiry_age(), places=-1)
+        self.assertAlmostEqual(
+            settings.REMEMBER_ME_DURATION.total_seconds(),
+            session.get_expiry_age(),
+            places=-1)
 
     def test_session_duration_remember_me_false(self) -> None:
         """Test the setting of the session duration when ``remember_me`` is set to ``False``"""

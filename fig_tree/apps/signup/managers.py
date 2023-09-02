@@ -28,7 +28,7 @@ class AuthUserManager(BaseUserManager):
         validate_email(email)
 
         user_model = get_user_model()
-        user = user_model(username=username, **extra_fields)
+        user = user_model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save()
         return user

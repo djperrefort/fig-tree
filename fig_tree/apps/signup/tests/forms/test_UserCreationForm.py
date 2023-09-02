@@ -17,10 +17,10 @@ class FormFields(TestCase):
 
         for field_name, field in self.form.fields.items():
             if field_name in self.required_fields:
-                self.assertTrue(field.required, f'Field {field_name} is should be required.')
+                self.assertTrue(field.required, f'Field {field_name} should be required.')
 
             else:
-                self.assertFalse(field.required, f'Field {field_name} is should not be required.')
+                self.assertFalse(field.required, f'Field {field_name} should not be required.')
 
 
 class UsesCustomAuthUser(TestCase):

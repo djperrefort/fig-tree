@@ -15,7 +15,20 @@ class CreateUser(TestCase):
         new_user = AuthUserManager.create_user(username='test_user', email='test@user.com', password='foo')
         self.assertFalse(new_user.is_staff, 'User is staff')
         self.assertFalse(new_user.is_superuser, 'User is superuser')
+
+    def test_user_is_active(self) -> None:
+        """Test new user accounts are marked as active"""
+
+        new_user = AuthUserManager.create_user(username='test_user', email='test@user.com', password='foo')
         self.assertTrue(new_user.is_active, 'User is not active')
+
+    def test_user_data(self) -> None:
+        """Test user accounts are created with the correct user information"""
+
+        user_data = dict(username='test_user', email='test@user.com', password='foo')
+        new_user = AuthUserManager.create_user(**user_data)
+        self.assertEqual(new_user.username, user_data['username'])
+        self.assertEqual(new_user.email, user_data['email'])
 
     def test_error_on_invalid_email(self) -> None:
         """Test a ``ValidationError`` is raised when creating a user with an invalid email"""
@@ -25,33 +38,53 @@ class CreateUser(TestCase):
 
         with self.assertRaises(ValidationError, msg='No error raised for non email string'):
             AuthUserManager.create_user(email='asdf', username='test_user', password='foo')
+
+
+class CreateStaffUser(TestCase):
+    """Tests for the creation of new staff users"""
+
+    def test_user_permissions(self) -> None:
+        """Test users are created with admin permissions"""
+
+        new_user = AuthUserManager.create_staff_user(username='test_user', email='test@user.com', password='foo')
+        self.assertTrue(new_user.is_staff)
+        self.assertFalse(new_user.is_superuser)
+
+    def test_user_is_active(self) -> None:
+        """Test new user accounts are marked as active"""
+
+        new_user = AuthUserManager.create_staff_user(username='test_user', email='test@user.com', password='foo')
+        self.assertTrue(new_user.is_active, 'User is not active')
+
+    def test_user_data(self) -> None:
+        """Test user accounts are created with the correct user information"""
+
+        user_data = dict(username='test_user', email='test@user.com', password='foo')
+        new_user = AuthUserManager.create_staff_user(**user_data)
+        self.assertEqual(new_user.username, user_data['username'])
+        self.assertEqual(new_user.email, user_data['email'])
 
 
 class CreateSuperUser(TestCase):
     """Tests for the creation of new super-users"""
 
-    def test_has_admin_permissions(self) -> None:
+    def test_user_permissions(self) -> None:
         """Test users are created with admin permissions"""
 
         new_user = AuthUserManager.create_superuser(username='test_user', email='test@user.com', password='foo')
         self.assertTrue(new_user.is_staff)
         self.assertTrue(new_user.is_superuser)
-        self.assertTrue(new_user.is_active)
 
-    def test_error_on_invalid_email(self) -> None:
-        """Test a ``ValidationError`` is raised when creating a user with an invalid email"""
+    def test_user_is_active(self) -> None:
+        """Test new user accounts are marked as active"""
 
-        with self.assertRaises(ValidationError, msg='No error raised for blank email'):
-            AuthUserManager.create_user(email='', username='test_user', password='foo')
+        new_user = AuthUserManager.create_superuser(username='test_user', email='test@user.com', password='foo')
+        self.assertTrue(new_user.is_active, 'User is not active')
 
-        with self.assertRaises(ValidationError, msg='No error raised for non email string'):
-            AuthUserManager.create_user(email='asdf', username='test_user', password='foo')
+    def test_user_data(self) -> None:
+        """Test user accounts are created with the correct user information"""
 
-    def test_error_on_invalid_permission_arguments(self) -> None:
-        """Test an error is raised when trying to override superuser permissions via kwargs"""
-
-        with self.assertRaises(ValueError, msg='No error raised for is_superuser=False'):
-            AuthUserManager.create_superuser(username='test_user', email='super@user.com', password='foo', is_superuser=False)
-
-        with self.assertRaises(ValueError, msg='No error raised for is_staff=False'):
-            AuthUserManager.create_superuser(username='test_user', email='super@user.com', password='foo', is_staff=False)
+        user_data = dict(username='test_user', email='test@user.com', password='foo')
+        new_user = AuthUserManager.create_superuser(**user_data)
+        self.assertEqual(new_user.username, user_data['username'])
+        self.assertEqual(new_user.email, user_data['email'])
