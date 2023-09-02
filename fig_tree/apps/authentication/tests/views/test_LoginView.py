@@ -19,7 +19,10 @@ class FormValid(TestCase):
         username = 'test_user'
         password = 'fooBAR123!'
         user = get_user_model().objects.create_user(
-            username=username, email='test@user.com', password=password)
+            username=username,
+            email='test@user.com',
+            password=password,
+            is_active=True)
 
         # Create a mock get request
         request = RequestFactory().get('')
