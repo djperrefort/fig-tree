@@ -19,7 +19,7 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['email', ]
 
     username = models.CharField(max_length=50, unique=True, null=False)
     email = models.EmailField(_('email address'), unique=True, null=False)
