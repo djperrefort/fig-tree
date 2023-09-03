@@ -8,7 +8,9 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /usr/src/app
 COPY . .
 
-# Install application dependencies
-RUN pip install --upgrade pip && pip install -e .
+# Install the application and its dependencies
+RUN pip install --upgrade pip \
+    && pip install uvicorn["standard"] \
+    && pip install -e .
 
 EXPOSE 8000
