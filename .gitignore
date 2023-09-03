@@ -48,3 +48,9 @@ docs/build/
 
 # Pycharm stuff
 .idea/
+
+# Poetry stuff
+*.lock
+
+# Webdirver stuff
+geckodriver.log

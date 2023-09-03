@@ -1,0 +1,100 @@
+name: Test Application
+
+on:
+  workflow_dispatch:
+  push:
+
+env:
+  PYTHON_VERSION: 3.11
+  # Django settings required for running tests
+  DEBUG: True
+  SECRET_KEY: this_is_a_fake_key
+
+jobs:
+  discover_apps:
+    runs-on: ubuntu-latest
+    name: Discover Applications
+
+    outputs:
+      matrix: ${{ steps.find_tests.outputs.matrix }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Find testable apps
+        id: find_tests
+        run: |
+          # Find application directories containing a 'tests' subdirectory
+          test_dirs=$(find fig_tree/apps -type d -name "tests" -exec dirname {} \; | jq -R . | jq -s . | tr -d '\n')
+          echo "matrix={\"app_name\":$test_dirs}" >> $GITHUB_OUTPUT
+
+  unit_tests:
+    runs-on: ubuntu-latest
+    name: App Unit Tests
+    needs: [ discover_apps ]
+
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover_apps.outputs.matrix) }}
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install poetry
+        run: |
+          pip install poetry
+          poetry env use python${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: poetry install --with test
+
+      - name: Test ${{ matrix.app_name }} app
+        run: poetry run python fig_tree/manage.py test ${{ matrix.app_name }}
+
+  function_tests:
+    runs-on: ubuntu-latest
+    name: Site Function Tests
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install webdriver
+        run: |
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+          tar -xf geckodriver-v0.33.0-linux64.tar.gz
+          mv geckodriver /usr/local/bin/geckodriver
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install poetry
+        run: |
+          pip install poetry
+          poetry env use python${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: poetry install --with test
+
+      - name: Test ${{ matrix.app_name }} app
+        run: poetry run python fig_tree/manage.py test
+
+  report-test-status:
+    name: Report Test Status
+    if: always()
+    needs: [ unit_tests, function_tests ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check build status
+        if: ${{ contains(needs.*.result, 'failure') }}
+        run: exit 1

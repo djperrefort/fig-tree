@@ -37,11 +37,13 @@ Configuring Application Settings
 --------------------------------
 
 The ``authentication`` app supports a *remember me* option that will keep
-users logged in for a given duration. The length of this duration is configurable:
+users logged in for a given duration. Users are remembered for seven days by
+default, but the length of this duration is configurable in the ``setings.py``
+file:
 
 .. doctest:: python
 
    >>> from datetime import timedelta
    >>>
-   >>> REMEMBER_ME_DURATION = timedelta(weeks=4).total_seconds()
+   >>> REMEMBER_ME_DURATION = timedelta(days=4)
 """
