@@ -19,7 +19,11 @@ if TYPE_CHECKING:  # Protect against circular import
 
 
 class AuthUserManager(BaseUserManager):
-    """Custom user model manager"""
+    """Custom user model manager
+
+    Regular user accounts are set to an inactive state by default. This is the
+    opposite of staff and superuser accounts, which default to being active.
+    """
 
     @staticmethod
     def create_user(username: str, password: str, email: str, **extra_fields) -> AuthUser:

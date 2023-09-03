@@ -15,7 +15,7 @@ class FormValid(TestCase):
     def generic_setup(self, remember_me: bool) -> tuple[AuthenticationForm, LoginView]:
         """Create instances of the login form and view"""
 
-        # Create a mock user
+        # Create an active mock user
         username = 'test_user'
         password = 'fooBAR123!'
         user = get_user_model().objects.create_user(
