@@ -39,4 +39,3 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/fig-tree:$VERSION,ghcr.io/${{ github.repository_owner }}/fig-tree:latest
-          build-args: SLURM_VERSION=${{ matrix.slurm-version }}
