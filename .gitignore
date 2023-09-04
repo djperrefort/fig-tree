@@ -39,6 +39,7 @@ coverage.xml
 .pytest_cache/
 
 # Django stuff:
+*.env
 *.sqlite3
 *.sqlite3-journal
 fig_tree/email
