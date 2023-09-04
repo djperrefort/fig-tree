@@ -1,6 +1,7 @@
 """Top level Django application settings."""
 
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -8,9 +9,11 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security and authentication settings
-
+# Setup runtime environment
+sys.path.insert(0, str(BASE_DIR))
 load_dotenv()
+
+# Security and authentication settings
 DEBUG = os.environ.get('DEBUG', default='0') != '0'
 SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
