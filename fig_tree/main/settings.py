@@ -1,6 +1,7 @@
 """Top level Django application settings."""
 
 import os
+import sys
 from datetime import timedelta
 from pathlib import Path
 
@@ -8,9 +9,11 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Security and authentication settings
-
+# Setup runtime environment
+sys.path.insert(0, str(BASE_DIR))
 load_dotenv()
+
+# Security and authentication settings
 DEBUG = os.environ.get('DEBUG', default='0') != '0'
 SECRET_KEY = os.environ['SECRET_KEY']
 ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
@@ -83,10 +86,17 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+_driver = os.environ.get('DB_DRIVER', 'sqlite3')
+_name = BASE_DIR / 'fig_tree.sqlite3' if _driver == 'sqlite3' else 'fig_tree'
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": f'django.db.backends.{_driver}',
+        "NAME": os.environ.get('DB_NAME', _name),
+        "USER": os.environ.get('DB_USER', ''),
+        "PASSWORD": os.environ.get('DB_PASSWORD', ''),
+        "HOST": os.environ.get('DB_HOST', ''),
+        "PORT": os.environ.get('DB_PORT', ''),
     }
 }
 
@@ -111,9 +121,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = os.environ.get('STATIC_URL', 'static/')
+STATIC_ROOT = Path(os.environ.get('STATIC_ROOT', BASE_DIR / 'static_root'))
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'static_root'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
