@@ -5,9 +5,21 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "fig-tree"
 version = "0.0.0"
+readme = "README.md"
 description = "Data management utility for geneological research"
 authors = ["Daniel Perrefort"]
 packages = [{ include = "fig_tree" }]
+keywords = ["Pitt", "CRC", "HPC", "wrappers"]
+classifiers = [
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Sociology :: Genealogy",
+    "Typing :: Typed"
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -25,5 +37,4 @@ fig-tree-manage = "fig_tree.manage:main"
 optional = true
 
 [tool.poetry.group.test.dependencies]
-coverage = "7.3.0"
 selenium = "4.11.2"

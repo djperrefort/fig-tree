@@ -8,6 +8,7 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 COPY fig_tree fig_tree
 COPY pyproject.toml pyproject.toml
+COPY README.md README.md
 
 # Install the application and its dependencies
 ENV PIP_ROOT_USER_ACTION=ignore

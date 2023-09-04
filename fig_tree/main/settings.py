@@ -86,6 +86,7 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 _driver = os.environ.get('DB_DRIVER', 'sqlite3')
 _name = BASE_DIR / 'fig_tree.sqlite3' if _driver == 'sqlite3' else 'fig_tree'
 DATABASES = {
