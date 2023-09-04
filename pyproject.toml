@@ -7,7 +7,6 @@ name = "fig-tree"
 version = "0.0.0"
 description = "Data management utility for geneological research"
 authors = ["Daniel Perrefort"]
-readme = "README.md"
 packages = [{ include = "fig_tree" }]
 
 [tool.poetry.dependencies]
@@ -16,6 +15,7 @@ django = "4.2.4"
 django-bootstrap5 = "23.3"
 djangorestframework = "3.14.0"
 django-widget-tweaks = "1.4.12"
+psycopg2-binary = "^2.9.7"
 python-dotenv = "1.0.0"
 
 [tool.poetry.scripts]

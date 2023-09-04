@@ -87,10 +87,11 @@ REST_FRAMEWORK = {
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 _driver = os.environ.get('DB_DRIVER', 'sqlite3')
+_name = BASE_DIR / 'fig_tree.sqlite3' if _driver == 'sqlite3' else 'fig_tree'
 DATABASES = {
     'default': {
         "ENGINE": f'django.db.backends.{_driver}',
-        "NAME": os.environ.get('DB_NAME', BASE_DIR / 'db.sqlite3'),
+        "NAME": os.environ.get('DB_NAME', _name),
         "USER": os.environ.get('DB_USER', ''),
         "PASSWORD": os.environ.get('DB_PASSWORD', ''),
         "HOST": os.environ.get('DB_HOST', ''),
