@@ -5,7 +5,7 @@ on:
     types: [ "released" ]
 
 jobs:
-  build:
+  test:
     name: Test
     uses: ./.github/workflows/PackageTest.yml
 
