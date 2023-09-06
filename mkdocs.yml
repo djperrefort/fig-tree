@@ -15,4 +15,8 @@ plugins:
   - offline
   - search
   - mkdocstrings
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 copyright: Copyright &copy; Daniel Perrefort. All rights reserved.

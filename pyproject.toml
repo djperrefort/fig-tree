@@ -38,6 +38,7 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 mkdocs-material = "9.2.8 "
+mkdocstrings = { version = "0.23.0", extras = ["python"] }
 
 [tool.poetry.group.tests]
 optional = true
