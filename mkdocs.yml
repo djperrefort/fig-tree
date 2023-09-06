@@ -15,4 +15,4 @@ plugins:
   - offline
   - search
   - mkdocstrings
-copyright: Copyright &copy; Daniel Perrefort
+copyright: Copyright &copy; Daniel Perrefort. All rights reserved.
