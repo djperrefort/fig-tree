@@ -21,10 +21,10 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 nav:
-  - index.md
+  - introduction.md
   - getting_started.md
   - Technical References:
-      - technical_reference/index.md
+      - technical_reference/overview.md
       - apps:
           - technical_reference/apps/authentication.md
           - technical_reference/apps/data_api.md

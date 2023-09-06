@@ -1,4 +1,4 @@
-# Technical References
+# Introduction
 
 This is the technical documentation for the Fig-Tree project.
 

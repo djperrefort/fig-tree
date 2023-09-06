@@ -1,4 +1,4 @@
-# Welcome to Fig Tree
+# Overview
 
 This is the technical documentation for the Fig-Tree project.
 
