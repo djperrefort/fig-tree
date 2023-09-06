@@ -21,11 +21,13 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 nav:
-  - introduction.md
-  - getting_started.md
+  - index.md
+  - Getting Started:
+    - getting_started/deployment.md
+    - getting_started/configuration.md
   - Technical References:
       - technical_reference/overview.md
-      - apps:
+      - Django Applications:
           - technical_reference/apps/authentication.md
           - technical_reference/apps/data_api.md
           - technical_reference/apps/signup.md
