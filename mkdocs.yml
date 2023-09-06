@@ -11,6 +11,7 @@ theme:
   features:
     - content.code.copy
     - search.suggest
+    - navigation.tabs
 plugins:
   - offline
   - search
@@ -19,4 +20,13 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+nav:
+  - index.md
+  - getting_started.md
+  - Technical References:
+      - technical_reference/index.md
+      - apps:
+          - technical_reference/apps/authentication.md
+          - technical_reference/apps/data_api.md
+          - technical_reference/apps/signup.md
 copyright: Copyright &copy; Daniel Perrefort. All rights reserved.
