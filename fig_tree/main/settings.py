@@ -16,7 +16,7 @@ load_dotenv()
 # Security and authentication settings
 DEBUG = os.environ.get('DEBUG', default='0') != '0'
 SECRET_KEY = os.environ['SECRET_KEY']
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="localhost").split(" ")
 
 # If running in debug mode, save emails to disk instead of sending them
 if DEBUG:
@@ -95,8 +95,8 @@ DATABASES = {
         "NAME": os.environ.get('DB_NAME', _name),
         "USER": os.environ.get('DB_USER', ''),
         "PASSWORD": os.environ.get('DB_PASSWORD', ''),
-        "HOST": os.environ.get('DB_HOST', ''),
-        "PORT": os.environ.get('DB_PORT', ''),
+        "HOST": os.environ.get('DB_HOST', 'localhost'),
+        "PORT": os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -122,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = os.environ.get('STATIC_URL', 'static/')
-STATIC_ROOT = Path(os.environ.get('STATIC_ROOT', BASE_DIR / 'static_root'))
+STATIC_ROOT = Path(os.environ.get('STATIC_ROOT', Path.cwd() / 'static_root'))
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
