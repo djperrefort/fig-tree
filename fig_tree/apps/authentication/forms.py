@@ -1,5 +1,4 @@
-"""Application forms for data input and validation.
-
+"""
 The ``forms`` module defines form classes used to define the structure, input
 fields, and validation rules for various data input forms. Server and client
 side form validation is handled by application views found in the ``views``

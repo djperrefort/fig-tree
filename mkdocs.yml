@@ -12,6 +12,7 @@ theme:
     - content.code.copy
     - search.suggest
     - navigation.tabs
+    - navigation.sections
 plugins:
   - offline
   - search
@@ -29,9 +30,13 @@ nav:
     - getting_started/deployment.md
     - getting_started/configuration.md
   - Technical References:
-      - technical_reference/overview.md
-      - Django Applications:
-          - technical_reference/apps/authentication.md
-          - technical_reference/apps/data_api.md
-          - technical_reference/apps/signup.md
+      - technical_references/overview.md
+      - Site Applications:
+          - authentication:
+            - technical_references/site_applications/authentication/overview.md
+            - technical_references/site_applications/authentication/forms.md
+            - technical_references/site_applications/authentication/urls.md
+            - technical_references/site_applications/authentication/views.md
+          - technical_references/site_applications/data_api.md
+          - technical_references/site_applications/signup.md
 copyright: Copyright &copy; Daniel Perrefort. All rights reserved.

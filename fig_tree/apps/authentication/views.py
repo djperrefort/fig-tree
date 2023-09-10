@@ -1,5 +1,4 @@
-"""Views for handling incoming HTTP requests.
-
+"""
 The ``views`` module defines classes for handling incoming HTTP requests.
 Each view class is responsible for processing of form/request data, interacting
 with database models/serializers, managing application business logic, and
