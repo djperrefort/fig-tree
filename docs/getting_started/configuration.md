@@ -1,16 +1,16 @@
 # Configuration and Settings
 
 Fig-Tree uses environmental variables to configure application settings.
-At a minimum, setting the `DEBUG=1` option is sufficient to launch a functional application instance.
+At a minimum, setting the `DEBUG=1` option is sufficient to launch a development instance.
 However, deployments in a formal production settings will require additional configuration.
 
 All settings are loaded dynamically at runtime, and persist for the lifetime of the application.
 This means an application restart is required for new settings to take effect.
 
-!!! danger "Important"
+!!! Danger
     Setting values should be selected carefully when deploying to a production environment.
     Improper configuration can lead to unexpected behavior and insecure deployments.
-    **Never** enable the `DEBUG` option in a production environment.
+    **Never** enable the `DEBUG` option in production.
 
 ## General Settings
 
