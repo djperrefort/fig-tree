@@ -26,9 +26,11 @@ markdown_extensions:
       permalink: true
 nav:
   - Introduction: index.md
-  - Getting Started:
-    - getting_started/deployment.md
-    - getting_started/configuration.md
+  - Developer Notes:
+      - developer_notes/first_time_setup.md
+  - Deployment Guide:
+    - deployment_guide/deployment.md
+    - deployment_guide/configuration.md
   - Technical References:
       - technical_references/architecture.md
       - technical_references/primary_url_routing.md
