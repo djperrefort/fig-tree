@@ -1,4 +1,5 @@
-"""The `data_api` application provides a comprehensive REST API for managing
+"""
+The `data_api` application provides a comprehensive REST API for managing
 genealogical data. The API is designed to facilitate the creation, retrieval,
 updating, and deletion of genealogical data in a flexible manner.
 
@@ -14,19 +15,19 @@ Installation
 
 Add the application to the ``installed_apps`` list in the package settings:
 
-.. doctest:: python
-
-   >>> INSTALLED_APPS = [
-   ...     'apps.gen_rest_api',
-   ... ]
+```python
+INSTALLED_APPS = [
+    'apps.gen_rest_api',
+]
+```
 
 Register application URLs in the package's primary URL configuration file:
 
-.. doctest:: python
+```python
+from django.urls import include, path
 
-   >>> from django.urls import include, path
-   >>>
-   >>> urlpatterns = [
-   ...     path('api/', include('apps.gen_rest_api.urls', namespace='gen_rest_api')),
-   ... ]
+urlpatterns = [
+    path('api/', include('apps.gen_rest_api.urls', namespace='gen_rest_api')),
+]
+```
 """

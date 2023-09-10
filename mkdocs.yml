@@ -37,7 +37,12 @@ nav:
             - technical_references/site_applications/authentication/forms.md
             - technical_references/site_applications/authentication/urls.md
             - technical_references/site_applications/authentication/views.md
-          - technical_references/site_applications/gen_rest_api.md
+          - gen_rest_api:
+            - technical_references/site_applications/gen_rest_api/overview.md
+            - technical_references/site_applications/gen_rest_api/models.md
+            - technical_references/site_applications/gen_rest_api/serializers.md
+            - technical_references/site_applications/gen_rest_api/urls.md
+            - technical_references/site_applications/gen_rest_api/views.md
           - signup:
             - technical_references/site_applications/signup/overview.md
             - technical_references/site_applications/signup/admin.md

@@ -1,67 +1,38 @@
-"""Application level URL routing.
-
+"""
 The ``urls`` module maps URL endpoints to django views defined by the parent
 application. For root level URL routing, see the project level ``urls`` module.
 View objects can be found in the ``views`` module.
 
-URL Routing Configuration
--------------------------
+# URL Routing Configuration
 
-+-------------------------+--------------------------+------------------------+
-| URL                     | View                     | Name                   |
-+=========================+==========================+========================+
-| ``address``             | ``AddressListView``      | ``address-list``       |
-+-------------------------+--------------------------+------------------------+
-| ``address/<str:id>``    | ``AddressDetailView``    | ``address-detail``     |
-+-------------------------+--------------------------+------------------------+
-| ``citation``            | ``CitationListView``     | ``citation-list``      |
-+-------------------------+--------------------------+------------------------+
-| ``citation/<str:id>``   | ``CitationDetailView``   | ``citation-detail``    |
-+-------------------------+--------------------------+------------------------+
-| ``event``               | ``EventListView``        | ``event-list``         |
-+-------------------------+--------------------------+------------------------+
-| ``event/<str:id>``      | ``EventDetailView``      | ``event-detail``       |
-+-------------------------+--------------------------+------------------------+
-| ``family``              | ``FamilyListView``       | ``family-list``        |
-+-------------------------+--------------------------+------------------------+
-| ``family/<str:id>``     | ``FamilyDetailView``     | ``family-detail``      |
-+-------------------------+--------------------------+------------------------+
-| ``media``               | ``MediaListView``        | ``media-list``         |
-+-------------------------+--------------------------+------------------------+
-| ``media/<str:id>``      | ``MediaDetailView``      | ``media-detail``       |
-+-------------------------+--------------------------+------------------------+
-| ``name``                | ``NameListView``         | ``name-list``          |
-+-------------------------+--------------------------+------------------------+
-| ``name/<str:id>``       | ``NameDetailView``       | ``name-detail``        |
-+-------------------------+--------------------------+------------------------+
-| ``note``                | ``NoteListView``         | ``note-list``          |
-+-------------------------+--------------------------+------------------------+
-| ``note/<str:id>``       | ``NoteDetailView``       | ``note-detail``        |
-+-------------------------+--------------------------+------------------------+
-| ``person``              | ``PersonListView``       | ``person-list``        |
-+-------------------------+--------------------------+------------------------+
-| ``person/<str:id>``     | ``PersonDetailView``     | ``person-detail``      |
-+-------------------------+--------------------------+------------------------+
-| ``place``               | ``PlaceListView``        | ``place-list``         |
-+-------------------------+--------------------------+------------------------+
-| ``place/<str:id>``      | ``PlaceDetailView``      | ``place-detail``       |
-+-------------------------+--------------------------+------------------------+
-| ``repository``          | ``RepositoryListView``   | ``repository-list``    |
-+-------------------------+--------------------------+------------------------+
-| ``repository/<str:id>`` | ``RepositoryDetailView`` | ``repository-detail``  |
-+-------------------------+--------------------------+------------------------+
-| ``source``              | ``SourceListView``       | ``source-list``        |
-+-------------------------+--------------------------+------------------------+
-| ``source/<str:id>``     | ``SourceDetailView``     | ``source-detail``      |
-+-------------------------+--------------------------+------------------------+
-| ``tag``                 | ``TagListView``          | ``tag-list``           |
-+-------------------------+--------------------------+------------------------+
-| ``tag/<str:id>``        | ``TagDetailView``        | ``tag-detail``         |
-+-------------------------+--------------------------+------------------------+
-| ``url``                 | ``URLListView``          | ``url-list``           |
-+-------------------------+--------------------------+------------------------+
-| ``url/<str:id>``        | ``URLDetailView``        | ``url-detail``         |
-+-------------------------+--------------------------+------------------------+
+| URL                   | View                   | Name                |
+|-----------------------|------------------------|---------------------|
+| `address`             | `AddressListView`      | `address-list`      |
+| `address/<str:id>`    | `AddressDetailView`    | `address-detail`    |
+| `citation`            | `CitationListView`     | `citation-list`     |
+| `citation/<str:id>`   | `CitationDetailView`   | `citation-detail`   |
+| `event`               | `EventListView`        | `event-list`        |
+| `event/<str:id>`      | `EventDetailView`      | `event-detail`      |
+| `family`              | `FamilyListView`       | `family-list`       |
+| `family/<str:id>`     | `FamilyDetailView`     | `family-detail`     |
+| `media`               | `MediaListView`        | `media-list`        |
+| `media/<str:id>`      | `MediaDetailView`      | `media-detail`      |
+| `name`                | `NameListView`         | `name-list`         |
+| `name/<str:id>`       | `NameDetailView`       | `name-detail`       |
+| `note`                | `NoteListView`         | `note-list`         |
+| `note/<str:id>`       | `NoteDetailView`       | `note-detail`       |
+| `person`              | `PersonListView`       | `person-list`       |
+| `person/<str:id>`     | `PersonDetailView`     | `person-detail`     |
+| `place`               | `PlaceListView`        | `place-list`        |
+| `place/<str:id>`      | `PlaceDetailView`      | `place-detail`      |
+| `repository`          | `RepositoryListView`   | `repository-list`   |
+| `repository/<str:id>` | `RepositoryDetailView` | `repository-detail` |
+| `source`              | `SourceListView`       | `source-list`       |
+| `source/<str:id>`     | `SourceDetailView`     | `source-detail`     |
+| `tag`                 | `TagListView`          | `tag-list`          |
+| `tag/<str:id>`        | `TagDetailView`        | `tag-detail`        |
+| `url`                 | `URLListView`          | `url-list`          |
+| `url/<str:id>`        | `URLDetailView`        | `url-detail`        |
 """
 
 from django.urls import path

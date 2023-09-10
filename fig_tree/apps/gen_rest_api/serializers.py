@@ -1,5 +1,4 @@
-"""Data serializers for application database models.
-
+"""
 The ``serializers`` module defines classes for serializing/deserializing
 database models and query sets. Each serializer class defines which fields are
 included in the serialized output and handles the conversion of data types to
