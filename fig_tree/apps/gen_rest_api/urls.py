@@ -68,7 +68,7 @@ from django.urls import path
 
 from . import views
 
-app_name = 'data_api'
+app_name = 'gen_rest_api'
 
 urlpatterns = [
     path('address', views.AddressListView.as_view(), name='address-list'),

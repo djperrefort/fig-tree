@@ -37,7 +37,7 @@ nav:
             - technical_references/site_applications/authentication/forms.md
             - technical_references/site_applications/authentication/urls.md
             - technical_references/site_applications/authentication/views.md
-          - technical_references/site_applications/data_api.md
+          - technical_references/site_applications/gen_rest_api.md
           - signup:
             - technical_references/site_applications/signup/overview.md
             - technical_references/site_applications/signup/admin.md

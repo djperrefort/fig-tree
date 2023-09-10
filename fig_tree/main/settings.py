@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'widget_tweaks',
     'apps.authentication',
-    'apps.data_api',
+    'apps.gen_rest_api',
     'apps.signup'
 ]
 

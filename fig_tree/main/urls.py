@@ -13,7 +13,7 @@ URL Routing Configuration
 +----------------------+----------------------------+-------------------------+
 | ``auth/``            | ``apps.authentication``    | ``auth``                |
 +----------------------+----------------------------+-------------------------+
-| ``api/``             | ``apps.data_api``          | ``data_api``            |
+| ``api/``             | ``apps.gen_rest_api``          | ``gen_rest_api``            |
 +----------------------+----------------------------+-------------------------+
 | ``signup/``          | ``apps.signup``            | ``signup``              |
 +----------------------+----------------------------+-------------------------+
@@ -27,6 +27,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='main/index.html'), name='home'),
     path('admin/', admin.site.urls),
     path('auth/', include('apps.authentication.urls', namespace='auth')),
-    path('api/', include('apps.data_api.urls', namespace='data_api')),
+    path('api/', include('apps.gen_rest_api.urls', namespace='gen_rest_api')),
     path('signup/', include('apps.signup.urls', namespace='signup')),
 ]

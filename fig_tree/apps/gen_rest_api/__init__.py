@@ -17,7 +17,7 @@ Add the application to the ``installed_apps`` list in the package settings:
 .. doctest:: python
 
    >>> INSTALLED_APPS = [
-   ...     'apps.data_api',
+   ...     'apps.gen_rest_api',
    ... ]
 
 Register application URLs in the package's primary URL configuration file:
@@ -27,6 +27,6 @@ Register application URLs in the package's primary URL configuration file:
    >>> from django.urls import include, path
    >>>
    >>> urlpatterns = [
-   ...     path('api/', include('apps.data_api.urls', namespace='data_api')),
+   ...     path('api/', include('apps.gen_rest_api.urls', namespace='gen_rest_api')),
    ... ]
 """
