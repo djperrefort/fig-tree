@@ -30,7 +30,8 @@ nav:
     - getting_started/deployment.md
     - getting_started/configuration.md
   - Technical References:
-      - technical_references/overview.md
+      - technical_references/architecture.md
+      - technical_references/primary_url_routing.md
       - Site Applications:
           - authentication:
             - technical_references/site_applications/authentication/overview.md

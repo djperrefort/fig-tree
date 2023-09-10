@@ -4,20 +4,15 @@ URL patterns are routed to different backend applications. Further traffic
 routing is handled internally by each application to route specific URLs to
 individual pages.
 
-URL Routing Configuration
--------------------------
+# URL Routing Configuration
 
-+----------------------+----------------------------+-------------------------+
-| URL Pattern          | Application                | Namespace               |
-+======================+============================+=========================+
-| ``admin/``           | ``apps.admin``             | ``admin``               |
-+----------------------+----------------------------+-------------------------+
-| ``auth/``            | ``apps.authentication``    | ``auth``                |
-+----------------------+----------------------------+-------------------------+
-| ``api/``             | ``apps.gen_rest_api``          | ``gen_rest_api``            |
-+----------------------+----------------------------+-------------------------+
-| ``signup/``          | ``apps.signup``            | ``signup``              |
-+----------------------+----------------------------+-------------------------+
+| URL Pattern  | Application                  | Namespace       |
+|--------------|------------------------------|-----------------|
+| ``admin/``   | ``apps.admin``               | ``admin``       |
+| ``auth/``    | ``apps.authentication``      | ``auth``        |
+| ``api/``     | ``apps.gen_rest_api``        | ``gen_rest_api``|
+| ``signup/``  | ``apps.signup``              | ``signup``      |
+
 """
 
 from django.contrib import admin
