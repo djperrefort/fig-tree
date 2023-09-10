@@ -1,11 +1,16 @@
 # Configuration and Settings
 
 Fig-Tree uses environmental variables to configure application settings.
-All settings are loaded dynamically at runtime, and persist for the lifetime of the running application.
+At a minimum, setting the `DEBUG=1` option is sufficient to launch a functional application instance.
+However, deployments in a formal production settings will require additional configuration.
+
+All settings are loaded dynamically at runtime, and persist for the lifetime of the application.
 This means an application restart is required for new settings to take effect.
 
-Setting values should be selected carefully when deploying to a production environment.
-Improper configuration can lead to unexpected behavior and insecure deployments.
+!!! danger "Important"
+    Setting values should be selected carefully when deploying to a production environment.
+    Improper configuration can lead to unexpected behavior and insecure deployments.
+    **Never** enable the `DEBUG` option in a production environment.
 
 ## General Settings
 
@@ -26,7 +31,7 @@ It is important to note the following security recommendations:
 
 Fig-Tree supports multiple database backends, including Sqlite and Postgres.
 In general, Sqlite is only recommended for use in development settings or for small deployments.
-Postgres is the suggested database for use in production settings.
+Postgres is the suggested database for use in production.
 Database connection settings are configured using the variables listed below.
 
 | Variable      | Default                   | Description                                                |
