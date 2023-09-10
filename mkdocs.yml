@@ -18,8 +18,11 @@ plugins:
   - mkdocstrings
 markdown_extensions:
   - pymdownx.superfences
+  - admonition
   - pymdownx.tabbed:
       alternate_style: true
+  - toc:
+      permalink: true
 nav:
   - index.md
   - Getting Started:
