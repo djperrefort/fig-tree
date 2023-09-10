@@ -13,7 +13,6 @@ View objects can be found in the ``views`` module.
 | `password_reset/done/`     | `PasswordResetDoneView`     | `password-reset-done`     |
 | `'reset/<uidb64>/<token>/` | `PasswordResetConfirmView`  | `password-reset-confirm`  |
 | `reset/done/`              | `PasswordResetCompleteView` | `password-reset-complete` |
-
 """
 
 from django.urls import path

@@ -1,16 +1,21 @@
 # Deploying Fig-Tree
 
-Fig-Tree provides multiple deployment options, each designed to fit a distinct set of needs.
-In general, deploying with Docker provides the simplest solution with minimal setup and configuration.
-However, alternative methods are provided for application developers or for users looking to experiment with customized instances.
+The following instructions detail how to install and deploy Fig-Tree.
 
+
+1. A configured instance of the Fig-Tree application
+2. A dedicated application database
+3. Dedicated static file hosting (optional, but recommended for deployment at scale)
+
+Fig-Tree is designed to be deployed using the Docker suite of containerization tools.
+However, developers may wish to install and run the application source code directly.
 The table below summarizes the suggested deployment strategies and their typical use case.
 
-| Deployment Method   | Use Case                                                                                                                 |
-|---------------------|--------------------------------------------------------------------------------------------------------------------------|
-| Docker              | Best for first time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
-| Docker Compose      | An "all in one" solution suitable for medium to large scale deployments or for users looking for a long term solution.   |
-| Running from Source | Intended for use by project developers to test and evaluate source code changes in real time.                            |
+| Deployment Method                           | Use Case                                                                                                                 |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| [Docker](#using-docker)                     | Best for first time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
+| [Docker Compose](#using-docker-compose)     | An "all in one" solution suitable for medium to large scale deployments or for users looking for a long term solution.   |
+| [Running from Source](#running-from-source) | Intended for use by project developers to test and evaluate source code changes in real time.                            |
 
 
 ### Using Docker
@@ -21,7 +26,7 @@ To deploy a new instance using docker, start by pulling the latest Fig-Tree imag
 docker pull ghcr.io/djperrefort/fig-tree:latest
 ```
 
-First time user's looking to test-drive the application
+
 
 ```bash
 docker run -p 8000:80 fig-tree
@@ -136,16 +141,56 @@ volumes:
 
 ### Running from Source
 
-```
+!!! note
+
+    The following instructions expect the [conda](https://docs.conda.io/en/latest/) and 
+    [poetry](https://python-poetry.org/) utilities are already installed in your working environment.
+    Please refer to their official documentation for installation and usage instructions.
+
+In keeping with best practices, new source installations should be run from a dedicated virtual environment:
+
+```bash
 conda create -y -n fig-tree python=3.11
 conda activate fig-tree
 ```
 
-```bash
-poetry install --with docs --with tests
-```
+Application dependencies are installed and managed using poetry.
+Optional dependency groups can be installed using the --with keyword.
+To install the necessary Python dependencies, select from the following commands:
+
+=== "Core Dependencies Only"
+
+    ```bash
+    # Install only core application dependencies
+    poetry install
+    ```
+
+=== "Install Everything"
+
+    ```bash
+    # Include utilitis for building docs and running tests
+    poetry install --with docs tests
+    ```
+
+The Django web framework provides a `manage.py` utility for executing administrative tasks.
+For your convenience, Fig-Tree exposes this utility as the `fig-tree-manage` command line utility.
+If your installation was successful, running the utility will display a list of available subcommands.
 
 ```bash
-python fig_tree/manage.py migrate
-python fig_tree/manage.py runserver
+fig-tree-manage
+```
+
+The remaining setup follows as standard for a Django based application:
+
+!!! danger
+
+    The following example enables debug mode (`DEBUG=True`).
+    This setting is insecure and intended for use locally in a develpment environemnt.
+    **Never** enable debug mode in a production setting.
+    See [Configuration and Settings](configuration.md) for more details.
+
+```bash
+export DEBUG=True
+fig-tree-manage migrate  # Migrate the applicatin database schema
+fig-tree-manage runserver  # Run the application
 ```

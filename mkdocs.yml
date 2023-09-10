@@ -38,5 +38,12 @@ nav:
             - technical_references/site_applications/authentication/urls.md
             - technical_references/site_applications/authentication/views.md
           - technical_references/site_applications/data_api.md
-          - technical_references/site_applications/signup.md
+          - signup:
+            - technical_references/site_applications/signup/overview.md
+            - technical_references/site_applications/signup/admin.md
+            - technical_references/site_applications/signup/forms.md
+            - technical_references/site_applications/signup/managers.md
+            - technical_references/site_applications/signup/models.md
+            - technical_references/site_applications/signup/urls.md
+            - technical_references/site_applications/signup/views.md
 copyright: Copyright &copy; Daniel Perrefort. All rights reserved.
