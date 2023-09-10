@@ -1,5 +1,4 @@
-"""Application interfaces for the website's admin panel.
-
+"""
 The ``admin`` module defines custom administrative interfaces used by the
 website admin portal. Admin classes are used to extend and enhance the
 management of application settings by customizing the appearance, functionality,

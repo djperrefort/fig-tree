@@ -1,4 +1,5 @@
-"""The primary website URL configuration. This module defines how different
+"""
+The primary website URL configuration. This module defines how different
 URL patterns are routed to different backend applications. Further traffic
 routing is handled internally by each application to route specific URLs to
 individual pages.

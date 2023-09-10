@@ -1,4 +1,5 @@
-"""The `signup` application is responsible for the creation and verification
+"""
+The `signup` application is responsible for the creation and verification
 of new user accounts.
 
 - Allows users to create new accounts using a unique username, email address, and password.

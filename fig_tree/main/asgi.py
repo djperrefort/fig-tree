@@ -1,4 +1,5 @@
-"""The ``asgi`` module exposes an ASGI callable named ``application`` as a
+"""
+The ``asgi`` module exposes an ASGI callable named ``application`` as a
 module-level variable. The callable object acts as an interface between the
 external web server and the internal Python application. Unlike the older
 WSGI standard, the ASGI interface supports asynchronous event handling.

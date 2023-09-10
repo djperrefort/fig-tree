@@ -1,4 +1,5 @@
-"""The ``authentication`` app is responsible for authenticating users with
+"""
+The ``authentication`` app is responsible for authenticating users with
 existing accounts. It handles user logins/logouts and password reset requests.
 It is **not** responsible for creating new user accounts.
 

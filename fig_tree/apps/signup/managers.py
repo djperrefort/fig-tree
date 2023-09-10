@@ -1,5 +1,4 @@
-"""Database model managers.
-
+"""
 The ``managers`` module defines custom model managers for encapsulating common
 query logic. Managers can be attached to database models to extend a model's
 default querying capabilities and to facilitate common data retrieval tasks.

@@ -1,5 +1,4 @@
-"""Application level URL routing.
-
+"""
 The ``urls`` module maps URL endpoints to django views defined by the parent
 application. For root level URL routing, see the project level ``urls`` module.
 View objects can be found in the ``views`` module.
