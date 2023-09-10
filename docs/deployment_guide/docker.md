@@ -1,4 +1,4 @@
-# Deploying Fig-Tree
+# Deployments with Docker
 
 The following instructions detail how to install and deploy Fig-Tree.
 

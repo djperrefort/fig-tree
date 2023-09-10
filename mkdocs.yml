@@ -28,9 +28,11 @@ nav:
   - Introduction: index.md
   - Developer Notes:
       - developer_notes/first_time_setup.md
+      - developer_notes/running_tests.md
+      - developer_notes/building_docs.md
   - Deployment Guide:
-    - deployment_guide/deployment.md
     - deployment_guide/configuration.md
+    - deployment_guide/docker.md
   - Technical References:
       - technical_references/architecture.md
       - technical_references/primary_url_routing.md
