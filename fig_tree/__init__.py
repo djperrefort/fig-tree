@@ -1,5 +1,4 @@
-# Application Architecture
-
+"""
 Fig-Tree is Python based web application built using the [Django web framework](https://www.djangoproject.com/).
 At a high level, the application comprises the following core components:
 
@@ -14,3 +13,4 @@ Further information on ach component is provided in the sections below.
 ## Site Applications
 
 ## Templates and Static Files
+"""

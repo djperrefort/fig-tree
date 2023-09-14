@@ -34,8 +34,9 @@ nav:
     - deployment_guide/configuration.md
     - deployment_guide/docker.md
   - Technical References:
-      - technical_references/architecture.md
+      - technical_references/overview.md
       - technical_references/primary_url_routing.md
+      - technical_references/asgi.md
       - Site Applications:
           - authentication:
             - technical_references/site_applications/authentication/overview.md

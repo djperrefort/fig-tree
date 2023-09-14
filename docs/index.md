@@ -5,8 +5,8 @@ hide:
 
 # Fig-Tree Technical Documentation
 
-Fig-Tree is a web-based data management utility for genealogical research.
-It is designed to streamline the research process by providing powerful data organization tools supported by an intuitive, easy to use interface.
+Welcome to the Fig-Tree developer documentation.
 
-This documentation provides a technical application overview, including details on deploying and managing application instances.
-It is intended for a developer audience, and is not a substitute for a dedicated user manual.
+This documentation is designed to support technical contributors to the Fig-Tree project.
+New contributors are encouraged to review the [Developer Notes](developer_notes/first_time_setup.md) section before getting started.
+Further technical details can be found as needed in the [Technical References](technical_references/overview.md) section.

@@ -1,41 +1,46 @@
 # Deployments with Docker
 
-The following instructions detail how to install and deploy Fig-Tree.
+A full Fig-Tree deployment includes the following components:
 
-
-1. A configured instance of the Fig-Tree application
+1. A configured, running instance of the Fig-Tree application
 2. A dedicated application database
-3. Dedicated static file hosting (optional, but recommended for deployment at scale)
+3. Dedicated static file hosting
 
-Fig-Tree is designed to be deployed using the Docker suite of containerization tools.
-However, developers may wish to install and run the application source code directly.
-The table below summarizes the suggested deployment strategies and their typical use case.
+ 
 
 | Deployment Method                           | Use Case                                                                                                                 |
 |---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| [Docker](#using-docker)                     | Best for first time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
-| [Docker Compose](#using-docker-compose)     | An "all in one" solution suitable for medium to large scale deployments or for users looking for a long term solution.   |
+| [Docker](#using-docker)                     | Best for first-time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
+| [Docker Compose](#using-docker-compose)     | An "all-in-one" solution suitable for medium to large-scale deployments or for users looking for a long-term solution.   |
 
 ### Using Docker
 
-To deploy a new instance using docker, start by pulling the latest Fig-Tree image from the project container registry.
+To launch a new instance using docker, start by pulling the latest Fig-Tree image from the project container registry.
 
 ```bash
 docker pull ghcr.io/djperrefort/fig-tree:latest
 ```
 
+Next, create a `.env` file defining the desired [application settings](configuration.md).
+The following example demonstrates settings for a remote postgres database.
 
 ```bash
-docker run -p 8000:80 fig-tree
+DB_NAME=fig_tree
+DB_USER=my_user
+DB_PASSWORD=secure_secret
+DB_HOST=my.host.com
+DB_PORT=5432
 ```
 
+Finally, launch the application using the `docker run` command:
+
 ```bash
-docker run -p 8000:80 --env-file .env fig-tree
+docker run -p 8000:80 --env-file .env djperrefort/fig-tree
 ```
 
 ### Using Docker Compose
 
-
+We start by setting up a web proxy 
 
 === "Dockerfile"
 
