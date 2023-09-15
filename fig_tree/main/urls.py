@@ -1,8 +1,7 @@
 """
 The `main.urls` module defines the primary website URL configuration.
-The able below outline routing patterns for HTTP requests how different URL patterns are routed to different backend applications. Further traffic
-routing is handled internally by each application to route specific URLs to
-individual pages.
+The table below outlines routing patterns different URL endpoints.
+Further traffic routing is handled internally by each application to route specific URLs to individual pages.
 
 | URL Pattern  | Application                  | Namespace       |
 |--------------|------------------------------|-----------------|

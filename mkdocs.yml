@@ -37,7 +37,7 @@ nav:
       - technical_references/overview.md
       - technical_references/primary_url_routing.md
       - technical_references/asgi.md
-      - Site Applications:
+      - Applications Docs:
           - authentication:
             - technical_references/site_applications/authentication/overview.md
             - technical_references/site_applications/authentication/forms.md
