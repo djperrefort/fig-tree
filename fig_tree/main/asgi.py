@@ -2,7 +2,7 @@
 Fig-Tree exclusively supports the ASGI standard and does not provide a WSGI entrypoint.
 In keeping with standard practice, the ASGI callable object is exposed as `main.asgi.application`.
 
-## What is ASGI
+# What is ASGI?
 
 Server gateways provide a standardized interface between web servers and Python applications.
 The Asynchronous Server Gateway Interface (ASGI) is one such specification.

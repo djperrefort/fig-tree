@@ -1,16 +1,12 @@
 # Deployments with Docker
  
-Fig-Tree is packaged and deployed using Docker.
+For instructions on deploying Fig-Tree against existing backend services (e.g., a database and static file host),
+see the [Using Docker](#using-docker) section. To deploy Fig-Tree in addition to any necessary supporting
+services, see the [Using Docker Compose](#using-docker-compose) section.
 
+## Using Docker
 
-| Deployment Method                       | Use Case                                                                                                                 |
-|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| [Docker](#using-docker)                 | Best for first-time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
-| [Docker Compose](#using-docker-compose) | An "all-in-one" solution suitable for medium to large-scale deployments or for users looking for a long-term solution.   |
-
-### Using Docker
-
-To launch a new instance using docker, start by pulling the latest Fig-Tree image from the project container registry.
+Start by pulling the latest Fig-Tree image from the project container registry.
 
 ```bash
 docker pull ghcr.io/djperrefort/fig-tree:latest
@@ -27,15 +23,16 @@ DB_HOST=my.host.com
 DB_PORT=5432
 ```
 
-Finally, launch the application using the `docker run` command:
+Finally, launch the application using the standard django management command:
 
 ```bash
-docker run -p 8000:80 --env-file .env djperrefort/fig-tree
+docker run --env-file .env djperrefort/fig-tree migrate --noinput
+docker run --env-file .env -p 8000:80 djperrefort/fig-tree uvicorn fig_tree.main.asgi:application --host 0.0.0.0 --port 8000
 ```
 
-### Using Docker Compose
+## Using Docker Compose
 
-We start by setting up a web proxy 
+
 
 === "Dockerfile"
 
