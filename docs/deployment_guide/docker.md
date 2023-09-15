@@ -1,17 +1,12 @@
 # Deployments with Docker
-
-A full Fig-Tree deployment includes the following components:
-
-1. A configured, running instance of the Fig-Tree application
-2. A dedicated application database
-3. Dedicated static file hosting
-
  
+Fig-Tree is packaged and deployed using Docker.
 
-| Deployment Method                           | Use Case                                                                                                                 |
-|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| [Docker](#using-docker)                     | Best for first-time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
-| [Docker Compose](#using-docker-compose)     | An "all-in-one" solution suitable for medium to large-scale deployments or for users looking for a long-term solution.   |
+
+| Deployment Method                       | Use Case                                                                                                                 |
+|-----------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| [Docker](#using-docker)                 | Best for first-time users or for deployments with an existing backend infrastructure (e.g. an existing database server). |
+| [Docker Compose](#using-docker-compose) | An "all-in-one" solution suitable for medium to large-scale deployments or for users looking for a long-term solution.   |
 
 ### Using Docker
 

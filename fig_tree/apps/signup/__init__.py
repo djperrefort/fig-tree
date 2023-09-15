@@ -2,10 +2,12 @@
 The `signup` application is responsible for the creation and verification
 of new user accounts.
 
+Application features include:
+
 - Allows users to create new accounts using a unique username, email address, and password.
-- Extends the default user database model with additional fields and functionality
-- Manages user account information via customized administrative interfaces in the website admin portal.
-- Verifys user contact information by sending confirmation requests to user email addresss.
+- An extended user database model with additional fields and functionality.
+- User account management via customized administrative interfaces in the website admin portal.
+- Account verification email confirmation requests.
 
 ## Installation
 

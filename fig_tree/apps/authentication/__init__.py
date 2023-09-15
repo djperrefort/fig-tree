@@ -3,15 +3,15 @@ The ``authentication`` app is responsible for authenticating users with
 existing accounts. It handles user logins/logouts and password reset requests.
 It is **not** responsible for creating new user accounts.
 
-Features:
-  - Extend built-in authentication functionality with useful features like "remember me" session cookies.
-  - Provide a secure, token-based mechanism for users to reset forgotten or outdated passwords.
+Application features include:
+
+- Extended authentication functionality with useful features like "remember me" session cookies.
+- A secure, token-based mechanism for users to reset forgotten or outdated passwords.
 
 # Installation
 
-Add the application to the ``installed_apps`` list in the package settings:
+Start by adding the application to the ``installed_apps`` list in the package settings:
 
-.. doctest:: python
 ```python
 INSTALLED_APPS = [
    'apps.authentication',
@@ -34,7 +34,7 @@ Finally, configure the pakage settings for the login URL using the same namespac
 LOGIN_URL = 'auth:login'
 ```
 
-# Configuring Application Settings
+# Application Settings
 
 The `authentication` app supports a *remember me* option that will keep
 users logged in for a given duration. Users are remembered for seven days by
