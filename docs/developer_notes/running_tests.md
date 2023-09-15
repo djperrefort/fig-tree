@@ -1,10 +1,10 @@
 # Running Tests
 
-Fig-Tree comprises multiple individual applications that collectively form a cohesive front-end interface. 
-In addition to testing individual applications, Fig-Tree also includes tests for the overall rendered interface. 
-This page provides a high-level overview of the Fig-Tree test suite and instructions for executing individual tests.
+Fig-Tree is built as a collection of applications that work together to form a cohesive front-end interface.
+In addition to testing each application individually, Fig-Tree also includes tests for the overall rendered front-end.
 
-For quick reference, the entire test suite can be executed using the Fig-Tree management utility:
+The entire test suite can be executed using the Fig-Tree management command listed below.
+Instructions for running subsets of tests are provided in later sections.
 
 ```bash
 fig-tree-manage test
@@ -12,9 +12,8 @@ fig-tree-manage test
 
 ## Unit Tests
 
-Unit tests are a type of software testing that assesses discrete units of code, such as functions, methods, or classes.
-These tests are used to verify the behavior of backend systems and utilities.
-Front end functionality is **not** covered by unit tests.
+Unit tests are used to verify behavior for discrete units of code (functions, methods, classes, etc.).
+These tests specifically target backend systems and utilities, and do not cover front end functionality.
 
 Each Fig-Tree application includes a dedicated set of unit tests located in the same directory as the parent application.
 Unit tests for one or more applications can be executed by specifying the application directory:
@@ -35,16 +34,16 @@ fig-tree-manage test fig_tree/apps
 
 ## Function Tests
 
-Function tests are used to evaluate the functionality of application front-ends by simulating user interactions.
-For Fig-Tree, these tests rely on the Selenium WebDriver to interact with rendered web pages and monitor the resulting behavior.
+Function tests are used to evaluate the functionality of application front-ends.
+These tests use a web driver to interact with rendered web pages and monitor the resulting behavior.
 Tests in this category do **not** cover back end functionality.
 
-Tests are collectively written under the `fig_tree/tests` directory.
+Function tests are stored in the `fig_tree/tests` directory.
 At first glance, the subdirectory structure is similar to that of the unit tests.
 However, instead of being organized to mimic the structure of individual applications, function tests are organized to reflect the structure of the rendered Fig-Tree website.
-The resulting structures are similar, but not always identical.
+The resulting structures are similar, but not necessarily identical.
 
-The full set of function tests can be executed using th following command:
+The full set of function tests can be executed using the following command:
 
 ```bash
 fig-tree-manage test fig_tree/tests 
