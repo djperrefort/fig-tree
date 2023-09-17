@@ -74,7 +74,7 @@ jobs:
 
       - name: Install webdriver
         run: |
-          wget ${{ matrix.url }} -O driver.tar.gz
+          wget -O driver.tar.gz ${{ matrix.url }} 
           tar -xf driver.tar.gz
           mv geckodriver /usr/local/bin/geckodriver
 
