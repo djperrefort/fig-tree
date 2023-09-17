@@ -51,5 +51,5 @@ jobs:
       - name: Update latest version
         if: ${{ inputs.latest }}
         run: |
-          poetry run mike alias --push $DOC_VERSION latest
+          poetry run mike alias --push ${{ inputs.version }} latest
           poetry run mike set-default --push latest

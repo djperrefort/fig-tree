@@ -59,6 +59,7 @@ jobs:
   function_tests:
     runs-on: ubuntu-latest
     name: Site Function Tests
+    needs: [ discover_apps ]
 
     steps:
       - name: Checkout source
