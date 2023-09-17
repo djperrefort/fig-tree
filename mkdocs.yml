@@ -13,6 +13,9 @@ theme:
     - navigation.tabs
     - navigation.sections
     - content.code.annotate
+extra:
+  version:
+    provider: mike
 extra_css:
   - _css/theme.css
 plugins:
