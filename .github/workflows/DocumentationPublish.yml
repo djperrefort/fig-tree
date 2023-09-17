@@ -6,9 +6,11 @@ on:
       version:
         description: 'The documentation version number'
         default: 'develop'
+        type: string
       latest:
         description: 'Set the new build as the latest version'
         default: false
+        type: boolean
   push:
     branches: [ main ]
 
