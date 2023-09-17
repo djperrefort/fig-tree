@@ -1,6 +1,7 @@
 name: Publish Docker Images
 
 on:
+  push:
   release:
     types: [ "released" ]
 
@@ -9,9 +10,9 @@ jobs:
     name: Test
     uses: ./.github/workflows/PackageTest.yml
 
-  publish:
+  publish-docker:
     runs-on: ubuntu-latest
-    name: Publish Images
+    name: Publish Docker Image
     needs: [ test ]
 
     steps:
@@ -39,3 +40,10 @@ jobs:
         with:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/fig-tree:$VERSION,ghcr.io/${{ github.repository_owner }}/fig-tree:latest
+
+  publish-docs:
+    name: Docs
+    needs: [ publish-docker ]
+    uses: ./.github/workflows/DocumentationPublish.yml
+    with:
+      version: ${{ github.event.release.tag_name }}

@@ -1,6 +1,7 @@
 name: Test Application
 
 on:
+  workflow_call:
   workflow_dispatch:
   push:
 
@@ -74,10 +75,10 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install poetry
-        run: |
-          pip install poetry
-          poetry env use python${{ env.PYTHON_VERSION }}
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
 
       - name: Install dependencies
         run: poetry install --with tests
