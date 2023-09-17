@@ -28,6 +28,12 @@ It is important to note the following security recommendations:
 | `SECRET_KEY`    | `<random>`  | Secret value used for security-related tasks.                               |
 | `ALLOWED_HOSTS` | `localhost` | Space-delimited list of hostnames allowed to serve the running application. |
 
+!!! note
+
+    Fig-Tree will automatically generate a secret key if one is not provided.
+    This key will not persist between sessions, and any previously generated tokens will be invalidated.
+    For this reason, setting an explicit secret key value is strongly recommended.
+
 ## Database Settings
 
 Fig-Tree supports multiple database backends, including SQLite and Postgres.
@@ -35,14 +41,14 @@ In general, SQLite is only recommended for use in development settings or for sm
 Postgres is the suggested database for use in production.
 Database connection settings are configured using the variables listed below.
 
-| Variable      | Default                   | Description                                                |
-|---------------|---------------------------|------------------------------------------------------------|
-| `DB_DRIVER`   | `sqlite3` or `postgresql` | The database engine to be used.                            |
-| `DB_NAME`     | `fig_tree`                | Name of the application database to use.                   |
-| `DB_USER`     |                           | Username to use when authenticating against the database.  |
-| `DB_PASSWORD` |                           | Password to use when authenticating against the database.  | 
-| `DB_HOST`     | `localhost`               | Host address of the database server.                       |
-| `DB_PORT`     | `5432`                    | Port number to use when connecting to the database server. |
+| Variable      | Default     | Description                                                   |
+|---------------|-------------|---------------------------------------------------------------|
+| `DB_DRIVER`   | `sqlite3`   | Whether to use the `sqlite3` or `postgresql` database engine. |
+| `DB_NAME`     | `fig_tree`  | Name of the application database to use.                      |
+| `DB_USER`     |             | Username to use when authenticating against the database.     |
+| `DB_PASSWORD` |             | Password to use when authenticating against the database.     | 
+| `DB_HOST`     | `localhost` | Host address of the database server.                          |
+| `DB_PORT`     | `5432`      | Port number to use when connecting to the database server.    |
 
 ## File Hosting
 

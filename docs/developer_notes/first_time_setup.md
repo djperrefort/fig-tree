@@ -44,7 +44,7 @@ fig-tree-manage
 ## Running Management Commands
 
 Fig-Tree can be configured using any of the available [application settings](../deployment_guide/configuration.md).
-Enabling debug mode allows developers to skip most of the required configuration to get up and running quickly.
+Enabling debug mode allows developers to get up and running quickly by skipping most of the required configuration.
 
 ```bash
 export DEBUG=1

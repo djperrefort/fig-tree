@@ -2,8 +2,7 @@ site_name: Fig Tree
 theme:
   name: material
   palette:
-    primary: indigo
-    accent: indigo
+    primary: custom
   font:
     text: Roboto
     code: Roboto Mono
@@ -13,6 +12,9 @@ theme:
     - search.suggest
     - navigation.tabs
     - navigation.sections
+    - content.code.annotate
+extra_css:
+  - _css/theme.css
 plugins:
   - offline
   - search

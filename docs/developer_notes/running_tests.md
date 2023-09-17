@@ -36,12 +36,12 @@ fig-tree-manage test fig_tree/apps
 
 Function tests are used to evaluate the functionality of application front-ends.
 These tests use a web driver to interact with rendered web pages and monitor the resulting behavior.
-Tests in this category do **not** cover back end functionality.
+Tests in this category do not cover back end functionality.
 
 Function tests are stored in the `fig_tree/tests` directory.
 At first glance, the subdirectory structure is similar to that of the unit tests.
 However, instead of being organized to mimic the structure of individual applications, function tests are organized to reflect the structure of the rendered Fig-Tree website.
-The resulting structures are similar, but not necessarily identical.
+The resulting test organization is similar, but not identical.
 
 The full set of function tests can be executed using the following command:
 

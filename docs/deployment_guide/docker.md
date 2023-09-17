@@ -1,8 +1,10 @@
 # Deployments with Docker
- 
-For instructions on deploying Fig-Tree against existing backend services (e.g., a database and static file host),
-see the [Using Docker](#using-docker) section. To deploy Fig-Tree in addition to any necessary supporting
-services, see the [Using Docker Compose](#using-docker-compose) section.
+
+For instructions on deploying Fig-Tree against existing backend services (e.g., a database and static file host)
+or in debug mode see the [Using Docker](#using-docker) section. 
+
+To deploy Fig-Tree in addition to any necessary supporting services, see the 
+[Using Docker Compose](#using-docker-compose) section.
 
 ## Using Docker
 
@@ -23,7 +25,7 @@ DB_HOST=my.host.com
 DB_PORT=5432
 ```
 
-Finally, launch the application using the standard django management command:
+Finally, launch the application using the standard django management commands:
 
 ```bash
 docker run --env-file .env djperrefort/fig-tree migrate --noinput
@@ -32,7 +34,62 @@ docker run --env-file .env -p 8000:80 djperrefort/fig-tree uvicorn fig_tree.main
 
 ## Using Docker Compose
 
+The following docker compose recipe includes all services necessary to deploy a full Fig-Tree instance.
 
+```yaml
+version: '3.4'
+
+services:
+   nginx: # (1)!
+      build: ./nginx
+      volumes:
+         - static_app_data:/home/app/web/staticfiles # (2)!
+      ports:
+         - "80:80"
+      depends_on:
+         - web
+
+   web: # (3)!
+      build: fig_tree
+      command: |
+         sh -c '
+           fig-tree-manage collectstatic --noinput
+           fig-tree-manage migrate --noinput
+           uvicorn fig_tree.main.asgi:application --host 0.0.0.0 --port 8000'
+      volumes:
+         - static_app_data:/app/fig_tree/static_root
+      expose:
+         - 8000
+      env_file:
+         - .web.env # (4)!
+      depends_on:
+         - db
+
+   db: # (5)!
+      image: postgres:15
+      volumes:
+         - postgres_data:/var/lib/postgresql/data/
+      env_file:
+         - .db.env # (6)!
+
+volumes:
+   postgres_data:
+   static_app_data: 
+```
+
+1. The `nginx` service uses a custom Nginx image to serve static files. 
+   SSL handling is left to the user and should be handled upstream.
+2. This volume is used to shared static files between the `web` and `nginx` services.
+3. This service launches a Fig-Tree application instance using the Unicorn ASGI web server.
+4. The `.web.env` file is used to define [application settings](configuration.md) for Fig-Tree.
+5. The `db` service deploys a Postgres database.
+6. The `.db.env` file is used to configure the Postgres database.
+   This will include some of the same values as `.web.env` (e.g., the database name, username, and password).
+
+For static file hosting, we use a custom image built using Nginx.
+We use the `nginx.conf` file to configure traffic routing.
+By default, all traffic is directed to the Fig-Tree application.
+Requests submitted to `/static/` are redirected to static files stored in the `static_app_data` volume mounted at `/home/app/web/staticfiles`.
 
 === "Dockerfile"
 
@@ -68,66 +125,26 @@ docker run --env-file .env -p 8000:80 djperrefort/fig-tree uvicorn fig_tree.main
     }
     ```
 
-this is a sentance
+The following examples demonstrate environmental files used to configure the `web` and `db` services.
+Database credentials (database name, username, and password) must match between the two files. 
 
 === ".web.env"
 
     ```env
     SECRET_KEY=asdf
-    DB_DRIVER=postgresql
-    DB_USER=asdf
-    DB_PASSWORD=asdf
-    DB_HOST=db
+    DB_NAME=fig_tree
+    DB_USER=fig_tree_app
+    DB_PASSWORD=securepassword
+    DB_HOST=db  # Maches the name of the docker database service
     DB_PORT=5432
     ```
 
 === ".db.env"
 
     ```env
-    POSTGRES_USER=asdf
-    POSTGRES_PASSWORD=asdf
     POSTGRES_DB=fig_tree
+    POSTGRES_USER=fig_tree_app
+    POSTGRES_PASSWORD=securepassword
     ```
 
 
-```yaml
-version: '3.4'
-
-services:
-  nginx:
-    build: ./nginx
-    volumes:
-      - static_app_data:/home/app/web/staticfiles
-    ports:
-      - 80:80
-    depends_on:
-      - web
-
-  web:
-    build: fig_tree
-    command: |
-      sh -c '
-        fig-tree-manage collectstatic --noinput
-        fig-tree-manage migrate --noinput
-        uvicorn fig_tree.main.asgi:application --host 0.0.0.0 --port 8000
-      '
-    volumes:
-      - static_app_data:/app/fig_tree/static_root
-    expose:
-      - 8000
-    env_file:
-      - .web.env
-    depends_on:
-      - db
-
-  db:
-    image: postgres:15
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .db.env
-
-volumes:
-  postgres_data:
-  static_app_data:
-```
