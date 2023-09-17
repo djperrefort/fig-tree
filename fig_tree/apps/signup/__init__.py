@@ -1,46 +1,46 @@
-"""The ``signup`` application is responsible for the creation and verification
+"""
+The `signup` application is responsible for the creation and verification
 of new user accounts.
 
-Features:
-  - Allow users to create new accounts by providing a unique username, email address, and password.
-  - Extend the default user database model with additional fields and functionality
-  - Manage user account information view customized administrative interfaces in the website admin portal.
-  - Verify user contact information by sending confirmation requests to user email addresss.
+Application features include:
 
-Installation
-------------
+- Allows users to create new accounts using a unique username, email address, and password.
+- An extended user database model with additional fields and functionality.
+- User account management via customized administrative interfaces in the website admin portal.
+- Account verification email confirmation requests.
+
+## Installation
 
 Add the application and it's required dependencies to the ``installed_apps``
 list in the package settings:
 
-.. doctest:: python
-
-   >>> INSTALLED_APPS = [
-   ...     'django.contrib.sites',
-   ...     'apps.signup',
-   ... ]
-
+```python
+INSTALLED_APPS = [
+    'django.contrib.sites',
+    'apps.signup',
+]
+```
 
 Register application URLs in the package's primary URL configuration file:
 
-.. doctest:: python
+```python
+from django.urls import include, path
 
-   >>> from django.urls import include, path
-   >>>
-   >>> urlpatterns = [
-   ...     path('signup/', include('apps.signup.urls', namespace='signup')),
-   ... ]
+urlpatterns = [
+    path('signup/', include('apps.signup.urls', namespace='signup')),
+]
+```
 
-Using the same namespace value as chosen in the previous step, overide the
-default user model by adding the following to the package settings file:
+Using the same namespace value as chosen in the previous step, override the
+default user model by adding the following definition to the package settings file:
 
-.. doctest:: python
-
-   >>> AUTH_USER_MODEL = 'signup.AuthUser'
+```python
+AUTH_USER_MODEL = 'signup.AuthUser'
+```
 
 To make sure everything is integrated correctly, run the application test suite:
 
-.. code-block:: bash
-
-   $ python pkg/source/manage.py test apps.signup
+```bash
+fig-tree-manage test apps.signup
+```
 """

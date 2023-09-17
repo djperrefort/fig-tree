@@ -1,21 +1,15 @@
-"""Application level URL routing.
-
-The ``urls`` module maps URL endpoints to django views defined by the parent
+"""
+The ``urls`` module maps URL endpoints to django views defined in the parent
 application. For root level URL routing, see the project level ``urls`` module.
 View objects can be found in the ``views`` module.
 
-URL Routing Configuration
--------------------------
+# URL Routing Configuration
 
-+---------------------------+--------------------------+----------------------+
-| URL                       | View                     | Name                 |
-+===========================+==========================+======================+
-|``/``                      | ``SignUpView``           | ``new-user``         |
-+---------------------------+--------------------------+----------------------+
-|``act_sent/``              | ``activation_sent_view`` | ``activation-sent``  |
-+---------------------------+--------------------------+----------------------+
-|``[AUTHENTICATION-TOKEN]`` | ``ActivateAccountView``  | ``activate``         |
-+---------------------------+--------------------------+----------------------+
+| URL                      | View                   | Name              |
+|--------------------------|------------------------|-------------------|
+| `/`                      | `SignUpView`           | `new-user`        |
+| `act_sent/`              | `activation_sent_view` | `activation-sent` |
+| `[AUTHENTICATION-TOKEN]` | `ActivateAccountView`  | `activate`        |
 """
 
 from django.urls import path, re_path

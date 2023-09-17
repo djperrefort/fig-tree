@@ -1,27 +1,18 @@
-"""Application level URL routing.
-
-The ``urls`` module maps URL endpoints to django views defined by the parent
+"""
+The ``urls`` module maps URL endpoints to django views defined in the parent
 application. For root level URL routing, see the project level ``urls`` module.
 View objects can be found in the ``views`` module.
 
-URL Routing Configuration
--------------------------
+# URL Routing Configuration
 
-+------------------------------+-------------------------------+-----------------------------+
-| URL Pattern                  | View                          | name                        |
-+==============================+===============================+=============================+
-| ``login/``                   | ``LoginView``                 | ``login``                   |
-+------------------------------+-------------------------------+-----------------------------+
-| ``logout/``                  | ``LogoutView``                | ``logout``                  |
-+------------------------------+-------------------------------+-----------------------------+
-| ``password_reset/``          | ``PasswordResetView``         | ``password-reset``          |
-+------------------------------+-------------------------------+-----------------------------+
-| ``password_reset/done/``     | ``PasswordResetDoneView``     | ``password-reset-done``     |
-+------------------------------+-------------------------------+-----------------------------+
-| ``'reset/<uidb64>/<token>/`` | ``PasswordResetConfirmView``  | ``password-reset-confirm``  |
-+------------------------------+-------------------------------+-----------------------------+
-| ``reset/done/``              | ``PasswordResetCompleteView`` | ``password-reset-complete`` |
-+------------------------------+-------------------------------+-----------------------------+
+| URL Pattern                | View Class                  | Registered Name           |
+|----------------------------|-----------------------------|---------------------------|
+| `login/`                   | `LoginView`                 | `login`                   |
+| `logout/`                  | `LogoutView`                | `logout`                  |
+| `password_reset/`          | `PasswordResetView`         | `password-reset`          |
+| `password_reset/done/`     | `PasswordResetDoneView`     | `password-reset-done`     |
+| `'reset/<uidb64>/<token>/` | `PasswordResetConfirmView`  | `password-reset-confirm`  |
+| `reset/done/`              | `PasswordResetCompleteView` | `password-reset-complete` |
 """
 
 from django.urls import path

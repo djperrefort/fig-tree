@@ -1,49 +1,49 @@
-"""The ``authentication`` app is responsible for authenticating users with
+"""
+The ``authentication`` app is responsible for authenticating users with
 existing accounts. It handles user logins/logouts and password reset requests.
 It is **not** responsible for creating new user accounts.
 
-Features:
-  - Extend built-in authentication functionality with useful features like "remember me" session cookies.
-  - Provide a secure, token-based mechanism for users to reset forgotten or outdated passwords.
+Application features include:
 
-Installation
-------------
+- Extended authentication functionality with useful features like "remember me" session cookies.
+- A secure, token-based mechanism for users to reset forgotten or outdated passwords.
 
-Add the application to the ``installed_apps`` list in the package settings:
+# Installation
 
-.. doctest:: python
+Start by adding the application to the ``installed_apps`` list in the package settings:
 
-   >>> INSTALLED_APPS = [
-   ...    'apps.authentication',
-   ... ]
+```python
+INSTALLED_APPS = [
+   'apps.authentication',
+]
+```
 
 Next, register the application URLs in the package's primary URL configuration file:
 
-.. doctest:: python
+```python
+from django.urls import include, path
 
-   >>> from django.urls import include, path
-   >>>
-   >>> urlpatterns = [
-   ...     path('auth/', include('apps.authentication.urls', namespace='auth')),
-   ... ]
+urlpatterns = [
+    path('auth/', include('apps.authentication.urls', namespace='auth')),
+]
+```
 
 Finally, configure the pakage settings for the login URL using the same namespace value:
 
-.. doctest:: python
+```python
+LOGIN_URL = 'auth:login'
+```
 
-   >>> LOGIN_URL = 'auth:login'
+# Application Settings
 
-Configuring Application Settings
---------------------------------
-
-The ``authentication`` app supports a *remember me* option that will keep
+The `authentication` app supports a *remember me* option that will keep
 users logged in for a given duration. Users are remembered for seven days by
 default, but the length of this duration is configurable in the ``setings.py``
 file:
 
-.. doctest:: python
+```python
+from datetime import timedelta
 
-   >>> from datetime import timedelta
-   >>>
-   >>> REMEMBER_ME_DURATION = timedelta(days=4)
+REMEMBER_ME_DURATION = timedelta(days=4)
+```
 """

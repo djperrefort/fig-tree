@@ -1,7 +1,14 @@
-"""The ``asgi`` module exposes an ASGI callable named ``application`` as a
-module-level variable. The callable object acts as an interface between the
-external web server and the internal Python application. Unlike the older
-WSGI standard, the ASGI interface supports asynchronous event handling.
+"""
+Fig-Tree exclusively supports the ASGI standard and does not provide a WSGI entrypoint.
+In keeping with standard practice, the ASGI callable object is exposed as `main.asgi.application`.
+
+# What is ASGI?
+
+Server gateways provide a standardized interface between web servers and Python applications.
+The Asynchronous Server Gateway Interface (ASGI) is one such specification.
+Unlike the older Web Server Gateway Interface (WSGI), ASGI natively supports asynchronous operation.
+
+ASGI support is built directly into the Django framework used to build Fig-Tree.
 """
 
 import os

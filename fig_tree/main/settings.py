@@ -5,6 +5,7 @@ import sys
 from datetime import timedelta
 from pathlib import Path
 
+from django.core.management.utils import get_random_secret_key
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -15,8 +16,8 @@ load_dotenv()
 
 # Security and authentication settings
 DEBUG = os.environ.get('DEBUG', default='0') != '0'
-SECRET_KEY = os.environ['SECRET_KEY']
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="*").split(" ")
+SECRET_KEY = os.environ.get('SECRET_KEY', get_random_secret_key())
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="localhost").split(" ")
 
 # If running in debug mode, save emails to disk instead of sending them
 if DEBUG:
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'widget_tweaks',
     'apps.authentication',
-    'apps.data_api',
+    'apps.gen_rest_api',
     'apps.signup'
 ]
 
@@ -95,8 +96,8 @@ DATABASES = {
         "NAME": os.environ.get('DB_NAME', _name),
         "USER": os.environ.get('DB_USER', ''),
         "PASSWORD": os.environ.get('DB_PASSWORD', ''),
-        "HOST": os.environ.get('DB_HOST', ''),
-        "PORT": os.environ.get('DB_PORT', ''),
+        "HOST": os.environ.get('DB_HOST', 'localhost'),
+        "PORT": os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -122,7 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = os.environ.get('STATIC_URL', 'static/')
-STATIC_ROOT = Path(os.environ.get('STATIC_ROOT', BASE_DIR / 'static_root'))
+STATIC_ROOT = Path(os.environ.get('STATIC_ROOT', Path.cwd() / 'static_root'))
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type

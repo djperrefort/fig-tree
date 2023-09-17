@@ -6,9 +6,6 @@ on:
 
 env:
   PYTHON_VERSION: 3.11
-  # Django settings required for running tests
-  DEBUG: True
-  SECRET_KEY: this_is_a_fake_key
 
 jobs:
   discover_apps:
@@ -53,10 +50,10 @@ jobs:
           poetry env use python${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: poetry install --with test
+        run: poetry install --with tests
 
       - name: Test ${{ matrix.app_name }} app
-        run: poetry run python fig_tree/manage.py test ${{ matrix.app_name }}
+        run: poetry run fig-tree-manage test ${{ matrix.app_name }}
 
   function_tests:
     runs-on: ubuntu-latest
@@ -83,10 +80,10 @@ jobs:
           poetry env use python${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
-        run: poetry install --with test
+        run: poetry install --with tests
 
       - name: Test ${{ matrix.app_name }} app
-        run: poetry run python fig_tree/manage.py test
+        run: poetry run fig-tree-manage test fig_tree/tests
 
   report-test-status:
     name: Report Test Status

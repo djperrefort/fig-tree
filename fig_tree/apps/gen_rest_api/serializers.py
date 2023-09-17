@@ -1,11 +1,9 @@
-"""Data serializers for application database models.
-
-The ``serializers`` module defines classes for serializing/deserializing
-database models and query sets. Each serializer class defines which fields are
-included in the serialized output and handles the conversion of data types to
-and from their serialized representations. Serializers also ensure data
-integrate by handling data validation tasks as required by the relevant
-business domain.
+"""
+The ``serializers`` module handles serializing/deserializing database models
+and query sets. Each serializer class defines which fields are included in the
+serialized output and handles the conversion of data types to and from their
+serialized representations. Serializers also ensure data integrate by handling
+data validation tasks as required by the relevant business domain.
 """
 
 from rest_framework import serializers
