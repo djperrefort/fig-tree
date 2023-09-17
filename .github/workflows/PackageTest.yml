@@ -61,14 +61,21 @@ jobs:
     name: Site Function Tests
     needs: [ discover_apps ]
 
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - browser: firefox
+            url: https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
 
       - name: Install webdriver
         run: |
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
-          tar -xf geckodriver-v0.33.0-linux64.tar.gz
+          wget ${{ matrix.url }} -O driver.tar.gz
+          tar -xf driver.tar.gz
           mv geckodriver /usr/local/bin/geckodriver
 
       - name: Setup Python
