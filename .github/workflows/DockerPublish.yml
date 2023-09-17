@@ -19,6 +19,9 @@ jobs:
     needs: [ test ]
 
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
       - name: Get tagged version
         id: version
         run: |
