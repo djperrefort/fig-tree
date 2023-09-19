@@ -95,7 +95,7 @@ jobs:
         run: poetry run fig-tree-manage test --parallel auto fig_tree/tests
 
   report-test-status:
-    name: Report Status
+    name: Report Test Status
     if: always()
     needs: [ unit_tests, function_tests ]
     runs-on: ubuntu-latest
