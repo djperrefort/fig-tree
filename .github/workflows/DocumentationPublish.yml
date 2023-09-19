@@ -46,7 +46,7 @@ jobs:
           git config --global user.email docs@dummy.bot.com
 
       - name: Build and publish
-        run: poetry run mike deploy --push ${{ inputs.version }}
+        run: poetry run mike deploy --push ${{ inputs.version || 'develop' }}
 
       - name: Update latest version
         if: ${{ inputs.latest }}
