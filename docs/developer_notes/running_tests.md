@@ -10,6 +10,11 @@ Instructions for running subsets of tests are provided in later sections.
 fig-tree-manage test
 ```
 
+!!! note
+
+    All testing commands in this document support the `--parallel auto` option to run tests in parallel.
+    The `auto` feature will automatically run one test process for each available processor core.
+
 ## Unit Tests
 
 Unit tests are used to verify behavior for discrete units of code (functions, methods, classes, etc.).
