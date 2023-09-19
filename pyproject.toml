@@ -26,10 +26,10 @@ fig-tree-manage = "fig_tree.manage:main"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-django = "4.2.4"
+django = "4.2.5"
 django-bootstrap5 = "23.3"
 djangorestframework = "3.14.0"
-django-widget-tweaks = "1.4.12"
+django-widget-tweaks = "1.5.0"
 psycopg2-binary = "^2.9.7"
 python-dotenv = "1.0.0"
 
@@ -38,11 +38,11 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 mike = "1.1.2"
-mkdocs-material = "9.2.8 "
+mkdocs-material = "9.3.1"
 mkdocstrings = { version = "0.23.0", extras = ["python"] }
 
 [tool.poetry.group.tests]
 optional = true
 
 [tool.poetry.group.tests.dependencies]
-selenium = "4.11.2"
+selenium = "4.12.0"
