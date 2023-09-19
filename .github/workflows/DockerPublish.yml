@@ -4,22 +4,36 @@ on:
   release:
     types: [ "released" ]
 
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/fig-tree
+
 jobs:
   test:
     name: Test
     uses: ./.github/workflows/PackageTest.yml
 
-  publish:
+  publish-docker:
     runs-on: ubuntu-latest
-    name: Publish Images
+    name: Publish Docker Image
     needs: [ test ]
 
     steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
       - name: Get tagged version
+        id: version
         run: |
           release_tag=${{github.ref}}
-          export VERSION="${release_tag#refs/tags/v}"
-          echo "::set-env name=VERSION::$VERSION"
+          echo "version=${release_tag#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
+
+      - name: Set package version
+        run: poetry version ${{ steps.version.outputs.version }}
           
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -31,11 +45,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set package version
-        run: poetry version $VERSION
-
       - name: Build and publish image
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/fig-tree:$VERSION,ghcr.io/${{ github.repository_owner }}/fig-tree:latest
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }},${{ env.IMAGE_NAME }}:latest
+
+  publish-docs:
+    name: Docs
+    needs: [ publish-docker ]
+    uses: ./.github/workflows/DocumentationPublish.yml
+    with:
+      version: ${{ github.event.release.tag_name }}

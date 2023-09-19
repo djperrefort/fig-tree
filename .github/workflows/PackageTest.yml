@@ -1,6 +1,7 @@
 name: Test Application
 
 on:
+  workflow_call:
   workflow_dispatch:
   push:
 
@@ -22,13 +23,13 @@ jobs:
       - name: Find testable apps
         id: find_tests
         run: |
-          # Find application directories containing a 'tests' subdirectory
+          # Find application directories containing a 'tests' subdirectory nd format the result as JSON
           test_dirs=$(find fig_tree/apps -type d -name "tests" -exec dirname {} \; | jq -R . | jq -s . | tr -d '\n')
           echo "matrix={\"app_name\":$test_dirs}" >> $GITHUB_OUTPUT
 
   unit_tests:
     runs-on: ubuntu-latest
-    name: App Unit Tests
+    name: Unit Tests
     needs: [ discover_apps ]
 
     strategy:
@@ -44,20 +45,28 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install poetry
-        run: |
-          pip install poetry
-          poetry env use python${{ env.PYTHON_VERSION }}
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
 
       - name: Install dependencies
         run: poetry install --with tests
 
       - name: Test ${{ matrix.app_name }} app
-        run: poetry run fig-tree-manage test ${{ matrix.app_name }}
+        run: poetry run fig-tree-manage test --parallel auto ${{ matrix.app_name }}
 
   function_tests:
     runs-on: ubuntu-latest
-    name: Site Function Tests
+    name: Function Tests
+    needs: [ discover_apps ]
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - browser: firefox
+            url: https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
 
     steps:
       - name: Checkout source
@@ -65,8 +74,8 @@ jobs:
 
       - name: Install webdriver
         run: |
-          wget https://github.com/mozilla/geckodriver/releases/download/v0.33.0/geckodriver-v0.33.0-linux64.tar.gz
-          tar -xf geckodriver-v0.33.0-linux64.tar.gz
+          wget -O driver.tar.gz ${{ matrix.url }} 
+          tar -xf driver.tar.gz
           mv geckodriver /usr/local/bin/geckodriver
 
       - name: Setup Python
@@ -74,16 +83,16 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      - name: Install poetry
-        run: |
-          pip install poetry
-          poetry env use python${{ env.PYTHON_VERSION }}
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
 
       - name: Install dependencies
         run: poetry install --with tests
 
       - name: Test ${{ matrix.app_name }} app
-        run: poetry run fig-tree-manage test fig_tree/tests
+        run: poetry run fig-tree-manage test --parallel auto fig_tree/tests
 
   report-test-status:
     name: Report Test Status

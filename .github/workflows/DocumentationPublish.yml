@@ -1,10 +1,21 @@
 name: Publish Documentation
 
 on:
-  release:
-    types: [ published ]
+  workflow_call:
+    inputs:
+      version:
+        description: 'The documentation version number'
+        default: 'develop'
+        type: string
+      latest:
+        description: 'Set the new build as the latest version'
+        default: false
+        type: boolean
   push:
     branches: [ main ]
+
+env:
+  PYTHON_VERSION: 3.11
 
 jobs:
   publish:
@@ -18,7 +29,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -34,13 +45,11 @@ jobs:
           git config --global user.name "Documentation CI"
           git config --global user.email docs@dummy.bot.com
 
-      - name: Set release version
-        if: ${{ github.event_name == 'release'}}
-        run: |
-          DOC_VERSION=${{ github.event.release.tag_name }}
-          poetry run mike deploy --push --update-aliases $DOC_VERSION latest
-          poetry run mike set-default --push latest
+      - name: Build and publish
+        run: poetry run mike deploy --push ${{ inputs.version }}
 
-      - name: Set development version
-        if: ${{ github.event_name == 'push'}}
-        run: poetry run mike deploy --push --update-aliases develop
+      - name: Update latest version
+        if: ${{ inputs.latest }}
+        run: |
+          poetry run mike alias --push ${{ inputs.version }} latest
+          poetry run mike set-default --push latest
