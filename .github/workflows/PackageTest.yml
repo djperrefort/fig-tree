@@ -29,7 +29,7 @@ jobs:
 
   unit_tests:
     runs-on: ubuntu-latest
-    name: App Unit Tests
+    name: Unit Tests
     needs: [ discover_apps ]
 
     strategy:
@@ -58,7 +58,7 @@ jobs:
 
   function_tests:
     runs-on: ubuntu-latest
-    name: Site Function Tests
+    name: Function Tests
     needs: [ discover_apps ]
 
     strategy:
@@ -95,7 +95,7 @@ jobs:
         run: poetry run fig-tree-manage test --parallel auto fig_tree/tests
 
   report-test-status:
-    name: Report Test Status
+    name: Report Status
     if: always()
     needs: [ unit_tests, function_tests ]
     runs-on: ubuntu-latest
