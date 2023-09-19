@@ -1196,6 +1196,11 @@ In addition to testing each application individually, Fig-Tree also includes tes
 Instructions for running subsets of tests are provided in later sections.</p>
 <div class="highlight"><pre><span></span><code>fig-tree-manage<span class="w"> </span><span class="nb">test</span>
 </code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All testing commands in this document support the <code>--parallel auto</code> option to run tests in parallel.
+The <code>auto</code> feature will automatically run one test process for each available processor core.</p>
+</div>
 <h2 id="unit-tests">Unit Tests<a class="headerlink" href="#unit-tests" title="Permanent link">&para;</a></h2>
 <p>Unit tests are used to verify behavior for discrete units of code (functions, methods, classes, etc.).
 These tests specifically target backend systems and utilities, and do not cover front end functionality.</p>
