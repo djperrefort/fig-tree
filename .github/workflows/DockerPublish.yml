@@ -1,21 +1,15 @@
-name: Publish Docker Images
+name: Publish Docker Image
 
 on:
-  release:
-    types: [ "released" ]
+  workflow_call:
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/fig-tree
 
 jobs:
-  test:
-    name: Test
-    uses: ./.github/workflows/PackageTest.yml
-
   publish-docker:
     runs-on: ubuntu-latest
-    name: Publish Docker Image
-    needs: [ test ]
+    name: Publish Image
 
     steps:
       - name: Checkout source
@@ -50,10 +44,3 @@ jobs:
         with:
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }},${{ env.IMAGE_NAME }}:latest
-
-  publish-docs:
-    name: Docs
-    needs: [ publish-docker ]
-    uses: ./.github/workflows/DocumentationPublish.yml
-    with:
-      version: ${{ github.event.release.tag_name }}
