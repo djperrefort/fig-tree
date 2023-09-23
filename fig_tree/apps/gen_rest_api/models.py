@@ -134,6 +134,8 @@ class Person(BaseModel):
     """A single individual"""
 
     class Sex(IntegerChoices):
+        """The individuals biological sex at birth"""
+
         FEMALE = 0, _('female')
         MALE = 1, _('male')
         Other = 2, _('other')
