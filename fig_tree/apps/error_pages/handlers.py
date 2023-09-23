@@ -5,6 +5,8 @@ HTML template. Dedicated handler objects are provided for each HTTP error
 supported by Django.
 """
 
+from typing import Optional
+
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
@@ -41,19 +43,19 @@ def error_render(error_code: int, request: HttpRequest) -> HttpResponse:
     return render(request, template, status=error_code, context=context)
 
 
-def handler400(request: HttpRequest, exception: int) -> HttpResponse:
+def handler400(request: HttpRequest, exception: Optional[int] = None) -> HttpResponse:
     """Render a response to a 400 error"""
 
     return error_render(400, request)
 
 
-def handler403(request: HttpRequest, exception: int) -> HttpResponse:
+def handler403(request: HttpRequest, exception: Optional[int] = None) -> HttpResponse:
     """Render a response to a 403 error"""
 
     return error_render(403, request)
 
 
-def handler404(request: HttpRequest, exception: int) -> HttpResponse:
+def handler404(request: HttpRequest, exception: Optional[int] = None) -> HttpResponse:
     """Render a response to a 404 error"""
 
     return error_render(404, request)
