@@ -494,8 +494,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#general-settings" class="md-nav__link">
-    General Settings
+  <a href="#security-settings" class="md-nav__link">
+    Security Settings
   </a>
   
 </li>
@@ -510,6 +510,13 @@
         <li class="md-nav__item">
   <a href="#file-hosting" class="md-nav__link">
     File Hosting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-settings" class="md-nav__link">
+    Development Settings
   </a>
   
 </li>
@@ -1168,8 +1175,8 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#general-settings" class="md-nav__link">
-    General Settings
+  <a href="#security-settings" class="md-nav__link">
+    Security Settings
   </a>
   
 </li>
@@ -1184,6 +1191,13 @@
         <li class="md-nav__item">
   <a href="#file-hosting" class="md-nav__link">
     File Hosting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-settings" class="md-nav__link">
+    Development Settings
   </a>
   
 </li>
@@ -1211,15 +1225,14 @@ However, deployments in a formal production setting will require additional conf
 This means an application restart is required for new settings to take effect.</p>
 <div class="admonition danger">
 <p class="admonition-title">Danger</p>
-<p>Setting values should be selected carefully when deploying to a production environment.
+<p>Settings should be selected carefully when deploying to a production environment.
 Improper configuration can lead to unexpected behavior and insecure deployments.
 <strong>Never</strong> enable the <code>DEBUG</code> option in production.</p>
 </div>
-<h2 id="general-settings">General Settings<a class="headerlink" href="#general-settings" title="Permanent link">&para;</a></h2>
+<h2 id="security-settings">Security Settings<a class="headerlink" href="#security-settings" title="Permanent link">&para;</a></h2>
 <p>The values listed below directly affect application security and should be chosen with care.
 It is important to note the following security recommendations:</p>
 <ul>
-<li>Debug mode should <strong>never</strong> be enabled in a production environment.</li>
 <li>The <code>SECRET_KEY</code> value should be a random, cryptographically secure value.</li>
 <li>The list of <code>ALLOWED_HOSTS</code> should be as restrictive as possible.</li>
 </ul>
@@ -1233,18 +1246,13 @@ It is important to note the following security recommendations:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>DEBUG</code></td>
-<td><code>0</code></td>
-<td>Used to enable (<code>1</code>) or disable (<code>0</code>) debug mode.</td>
-</tr>
-<tr>
 <td><code>SECRET_KEY</code></td>
 <td><code>&lt;random&gt;</code></td>
 <td>Secret value used for security-related tasks.</td>
 </tr>
 <tr>
 <td><code>ALLOWED_HOSTS</code></td>
-<td><code>localhost</code></td>
+<td><code>localhost 127.0.0.1</code></td>
 <td>Space-delimited list of hostnames allowed to serve the running application.</td>
 </tr>
 </tbody>
@@ -1323,6 +1331,30 @@ When hosting static files from a separate location, <code>STATIC_URL</code> shou
 <td><code>STATIC_ROOT</code></td>
 <td><code>$(pwd)/static_root</code></td>
 <td>Local directory where static files are collected when running management commands.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="development-settings">Development Settings<a class="headerlink" href="#development-settings" title="Permanent link">&para;</a></h2>
+<p>The following settings are provided to assist in the development process and are only supported when <code>DEBUG</code> mode is
+enabled.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DEBUG</code></td>
+<td><code>0</code></td>
+<td>Used to enable (<code>1</code>) or disable (<code>0</code>) debug mode.</td>
+</tr>
+<tr>
+<td><code>EMAIL_FILE_PATH</code></td>
+<td><code>&lt;project root&gt;/email</code></td>
+<td>Emails issued by the application are stored as files in the given directory instead of being sent.</td>
 </tr>
 </tbody>
 </table>
