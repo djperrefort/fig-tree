@@ -1,5 +1,7 @@
 {% extends 'base/center_card.html' %}
 
+{% block title %}{{ error_code }} Error{% endblock %}
+
 {% block card_body_content %}
   <p>{{ error_code }}</p>
   <p>{{ description }}</p>
