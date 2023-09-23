@@ -16,6 +16,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 
+from apps.error_pages import handlers
+
+# Add handlers for different error codes as desired
+handler400 = handlers.handler400
+handler403 = handlers.handler403
+handler404 = handlers.handler404
+handler500 = handlers.handler500
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name='main/index.html'), name='home'),
     path('admin/', admin.site.urls),

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'apps.authentication',
     'apps.gen_rest_api',
-    'apps.signup'
+    'apps.signup',
+    'apps.error_pages',
 ]
 
 MIDDLEWARE = [
