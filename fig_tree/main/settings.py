@@ -17,12 +17,12 @@ load_dotenv()
 # Security and authentication settings
 DEBUG = os.environ.get('DEBUG', default='0') != '0'
 SECRET_KEY = os.environ.get('SECRET_KEY', get_random_secret_key())
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="localhost").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="localhost 127.0.0.1").split(" ")
 
 # If running in debug mode, save emails to disk instead of sending them
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = BASE_DIR / 'email'
+    EMAIL_FILE_PATH = Path(os.environ.get('EMAIL_FILE_PATH', BASE_DIR.parent / 'email'))
 
 # Application Configuration
 
