@@ -810,7 +810,7 @@
             
   
   <span class="md-ellipsis">
-    gen_rest_api
+    error_pages
   </span>
   
 
@@ -819,6 +819,88 @@
         
         <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            error_pages
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="site_applications/error_pages/overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="site_applications/error_pages/handlers.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Handlers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_3" >
+        
+          <label class="md-nav__link" for="__nav_4_4_3" id="__nav_4_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    gen_rest_api
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_3">
             <span class="md-nav__icon md-icon"></span>
             gen_rest_api
           </label>
@@ -946,9 +1028,9 @@
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_4" >
         
-          <label class="md-nav__link" for="__nav_4_4_3" id="__nav_4_4_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_4_4" id="__nav_4_4_4_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -959,8 +1041,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_4_3">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_4">
             <span class="md-nav__icon md-icon"></span>
             signup
           </label>
@@ -1191,7 +1273,8 @@
   
       <p>The <code>main.urls</code> module defines the primary website URL configuration.
 The table below outlines routing patterns different URL endpoints.
-Further traffic routing is handled internally by each application to route specific URLs to individual pages.</p>
+Further traffic routing is handled internally by each application to
+route specific URLs to individual pages.</p>
 <table>
 <thead>
 <tr>
@@ -1220,6 +1303,38 @@ Further traffic routing is handled internally by each application to route speci
 <td><code>signup/</code></td>
 <td><code>apps.signup</code></td>
 <td><code>signup</code></td>
+</tr>
+</tbody>
+</table>
+<p>The following pages are included to support testing and development.</p>
+<table>
+<thead>
+<tr>
+<th>URL Pattern</th>
+<th>Description</th>
+<th>Registered Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tests/400</code></td>
+<td>Renders a 400 HTTP error code.</td>
+<td><code>test-400</code></td>
+</tr>
+<tr>
+<td><code>tests/403</code></td>
+<td>Renders a 403 HTTP error code.</td>
+<td><code>test-403</code></td>
+</tr>
+<tr>
+<td><code>tests/404</code></td>
+<td>Renders a 404 HTTP error code.</td>
+<td><code>test-404</code></td>
+</tr>
+<tr>
+<td><code>tests/500</code></td>
+<td>Renders a 500 HTTP error code.</td>
+<td><code>test-500</code></td>
 </tr>
 </tbody>
 </table>
