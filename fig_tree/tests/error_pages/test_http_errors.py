@@ -1,4 +1,4 @@
-"""Tests for HTTP error pages"""
+"""Tests for HTTP error pages."""
 
 from django.test import LiveServerTestCase
 from django.urls import reverse
