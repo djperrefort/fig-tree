@@ -9,24 +9,22 @@ This means an application restart is required for new settings to take effect.
 
 !!! danger
 
-    Setting values should be selected carefully when deploying to a production environment.
+    Settings should be selected carefully when deploying to a production environment.
     Improper configuration can lead to unexpected behavior and insecure deployments.
     **Never** enable the `DEBUG` option in production.
 
-## General Settings
+## Security Settings
 
 The values listed below directly affect application security and should be chosen with care.
 It is important to note the following security recommendations:
 
-- Debug mode should **never** be enabled in a production environment.
 - The `SECRET_KEY` value should be a random, cryptographically secure value.
 - The list of `ALLOWED_HOSTS` should be as restrictive as possible.
 
-| Variable        | Default     | Description                                                                 |
-|-----------------|-------------|-----------------------------------------------------------------------------|
-| `DEBUG`         | `0`         | Used to enable (`1`) or disable (`0`) debug mode.                           |
-| `SECRET_KEY`    | `<random>`  | Secret value used for security-related tasks.                               |
-| `ALLOWED_HOSTS` | `localhost` | Space-delimited list of hostnames allowed to serve the running application. |
+| Variable        | Default               | Description                                                                 |
+|-----------------|-----------------------|-----------------------------------------------------------------------------|
+| `SECRET_KEY`    | `<random>`            | Secret value used for security-related tasks.                               |
+| `ALLOWED_HOSTS` | `localhost 127.0.0.1` | Space-delimited list of hostnames allowed to serve the running application. |
 
 !!! note
 
@@ -60,3 +58,13 @@ When hosting static files from a separate location, `STATIC_URL` should be set t
 |---------------|----------------------|------------------------------------------------------------------------------------|
 | `STATIC_URL`  | `static/`            | Base URL (including http protocol) of the static content server.                   |
 | `STATIC_ROOT` | `$(pwd)/static_root` | Local directory where static files are collected when running management commands. |
+
+## Development Settings
+
+The following settings are provided to assist in the development process and are only supported when `DEBUG` mode is
+enabled.
+
+| Variable          | Default                | Description                                                                                        |
+|-------------------|------------------------|----------------------------------------------------------------------------------------------------|
+| `DEBUG`           | `0`                    | Used to enable (`1`) or disable (`0`) debug mode.                                                  |
+| `EMAIL_FILE_PATH` | `<project root>/email` | Emails issued by the application are stored as files in the given directory instead of being sent. |

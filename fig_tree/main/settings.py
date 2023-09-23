@@ -22,7 +22,7 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="localhost 127.0.0.1").s
 # If running in debug mode, save emails to disk instead of sending them
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = BASE_DIR / 'email'
+    EMAIL_FILE_PATH = Path(os.environ.get('EMAIL_FILE_PATH', BASE_DIR.parent / 'email'))
 
 # Application Configuration
 
