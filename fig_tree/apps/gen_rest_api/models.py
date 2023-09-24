@@ -178,6 +178,8 @@ class Place(BaseModel):
 
     @property
     def encloses(self) -> list[Place]:
+        """Return a list of places enclosed by the current place"""
+
         return self.objects.filter(enclodes_by=self.id).all()
 
 
