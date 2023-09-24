@@ -8,7 +8,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from selenium.webdriver.common.by import By
 
-from ..test_utils import CustomTestBase, PageTitleTest
+from ..utils import CustomTestBase, PageTitleTest
 
 URL_REVERSE = 'auth:password-reset-confirm'
 URL_REVERSE_KWARGS = dict(uidb64='MQ', token='b0eoao-12ccb812deafbe6e742fdd536108ee53')

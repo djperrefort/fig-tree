@@ -4,7 +4,7 @@ from django.test import LiveServerTestCase
 from django.urls import reverse
 from selenium.webdriver.common.by import By
 
-from ..test_utils import CustomTestBase, PageTitleTest
+from ..utils import CustomTestBase, PageTitleTest
 
 URL_REVERSE = 'auth:password-reset-complete'
 

@@ -5,4 +5,4 @@ hide:
 
 # Overview
 
-::: fig_tree.apps.authentication
+::: fig_tree.apps.error_pages

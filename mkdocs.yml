@@ -48,6 +48,9 @@ nav:
             - technical_references/site_applications/authentication/forms.md
             - technical_references/site_applications/authentication/urls.md
             - technical_references/site_applications/authentication/views.md
+          - error_pages:
+              - technical_references/site_applications/error_pages/overview.md
+              - technical_references/site_applications/error_pages/handlers.md
           - gen_rest_api:
             - technical_references/site_applications/gen_rest_api/overview.md
             - technical_references/site_applications/gen_rest_api/models.md

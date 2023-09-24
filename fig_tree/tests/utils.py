@@ -1,8 +1,4 @@
-"""Configurable function tests that can be reused for multiple pages.
-
-Tests provided by this module evaluate the behavior of rendered page content
-using a webdriver.
-"""
+"""General utilities and reusable tests fr building application function tests."""
 
 from time import sleep
 
@@ -85,6 +81,8 @@ class RedirectOnSuccessTest(CustomTestBase):
     """Wait the given number of seconds before checking the redirected URL"""
 
     def runTest(self):
+        """Test the user is redirected"""
+
         sleep(self.redirect_delay)  # Wait for client to be redirected
         end_url = self.live_server_url + reverse(self.url_reverse_end)
         self.assertEqual(end_url, self.webdriver.current_url)

@@ -1,0 +1,17 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ error_code }} Error{% endblock %}
+
+{% block body %}
+  <div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center">
+      <h1 class="display-1 fw-bold">{{ error_code }}</h1>
+      <p class="fs-3">
+        <span class="text-danger">Error:</span> {{ description }}</p>
+      <p class="lead">
+        {{ description_long }}
+      </p>
+      <a id="id_home" href="{% url 'home' %}" class="btn btn-primary">Go Home</a>
+    </div>
+  </div>
+{% endblock %}

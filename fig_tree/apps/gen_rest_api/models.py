@@ -134,6 +134,8 @@ class Person(BaseModel):
     """A single individual"""
 
     class Sex(IntegerChoices):
+        """The individuals biological sex at birth"""
+
         FEMALE = 0, _('female')
         MALE = 1, _('male')
         Other = 2, _('other')
@@ -176,6 +178,8 @@ class Place(BaseModel):
 
     @property
     def encloses(self) -> list[Place]:
+        """Return a list of places enclosed by the current place"""
+
         return self.objects.filter(enclodes_by=self.id).all()
 
 
