@@ -2,7 +2,7 @@
 
 from django.test import LiveServerTestCase
 
-from ..test_utils import PageTitleTest, RedirectOnSuccessTest
+from ..utils import PageTitleTest, RedirectOnSuccessTest
 
 URL_REVERSE = 'auth:logout'
 

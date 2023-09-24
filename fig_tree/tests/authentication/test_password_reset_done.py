@@ -4,7 +4,7 @@ link has been sent via email.
 
 from django.test import LiveServerTestCase
 
-from ..test_utils import PageTitleTest
+from ..utils import PageTitleTest
 
 URL_REVERSE = 'auth:password-reset-done'
 
