@@ -51,7 +51,7 @@ class LoginFormBehavior(CustomTestBase, LiveServerTestCase):
         self.password_field.send_keys('fake_password')
         self.submit_btn.click()
 
-        alert_msg = self.webdriver.find_element(By.CSS_SELECTOR, 'div.alert strong')
+        alert_msg = self.webdriver.find_element(By.CSS_SELECTOR, 'div.alert')
         self.assertEqual('Incorrect username or password.', alert_msg.text)
 
     def test_redirect_on_good_login(self) -> None:
