@@ -42,7 +42,7 @@ class ValidLink(CustomTestBase, LiveServerTestCase):
     # Mock user account data
     mock_username = 'test_user'
     mock_password = 'fooBAR123!'
-    mock_email = 'test@user.com',
+    mock_email = 'test@user.com'
 
     def setUp(self) -> None:
         """Set up the webdriver using a valid activation link"""
