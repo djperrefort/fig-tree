@@ -38,7 +38,6 @@ class PasswordResetForm(CustomTestBase, LiveServerTestCase):
 
         self.assertEqual('email', self.email_field.get_property('type'))
         self.assertEqual('name@domain.com', self.email_field.get_property('placeholder'))
-
         self.assertEqual('submit', self.submit_btn.get_property('type'))
 
     def test_form_submit_blank(self) -> None:
@@ -48,7 +47,7 @@ class PasswordResetForm(CustomTestBase, LiveServerTestCase):
         self.submit_btn.click()
         self.assertEqual(self.initial_url, self.webdriver.current_url)
 
-        alert_msg = self.webdriver.find_element(By.CLASS_NAME, 'alert')
+        alert_msg = self.webdriver.find_element(By.ID, 'id_email_error')
         self.assertEqual('This field is required.', alert_msg.text)
 
     def test_form_submit_invalid_email(self) -> None:
@@ -59,7 +58,7 @@ class PasswordResetForm(CustomTestBase, LiveServerTestCase):
         self.submit_btn.click()
         self.assertEqual(self.initial_url, self.webdriver.current_url)
 
-        alert_msg = self.webdriver.find_element(By.CLASS_NAME, 'alert')
+        alert_msg = self.webdriver.find_element(By.ID, 'id_email_error')
         self.assertEqual('Enter a valid email address.', alert_msg.text)
 
     def test_form_submit_valid(self) -> None:

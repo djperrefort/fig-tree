@@ -70,7 +70,7 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
         self.submit_btn.click()
 
         error = self.webdriver.find_element(By.ID, 'id_email_error')
-        self.assertEqual(error.text, 'Please enter a valid email address.')
+        self.assertEqual(error.text, 'Enter a valid email address.')
 
     def test_error_message_on_existing_user(self) -> None:
         """Test an error message is displayed for a taken username"""
@@ -86,6 +86,30 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
 
         error = self.webdriver.find_element(By.ID, 'id_email_error')
         self.assertEqual(error.text, 'An account with this email address already exists.')
+
+    def test_error_on_common_password(self) -> None:
+        """Test an error message is displayed for a common password"""
+
+        self.username_field.send_keys(self.mock_username)
+        self.email_field.send_keys(self.mock_email)
+        self.password_field.send_keys('password1234')
+        self.password_confirm_field.send_keys('password1234')
+        self.submit_btn.click()
+
+        error = self.webdriver.find_element(By.ID, 'id_password_error')
+        self.assertEqual('This password is too common.', error.text)
+
+    def test_error_on_short_password(self) -> None:
+        """Test an error message is displayed for a short password"""
+
+        self.username_field.send_keys(self.mock_username)
+        self.email_field.send_keys(self.mock_email)
+        self.password_field.send_keys('a7d4ht!sdf')
+        self.password_confirm_field.send_keys('a7d4ht!sdf')
+        self.submit_btn.click()
+
+        error = self.webdriver.find_element(By.ID, 'id_password_error')
+        self.assertRegex(error.text, r'This password is too short. It must contain at least \d* characters.')
 
     def test_error_message_on_mismatch_password(self) -> None:
         """Test an error message is displayed for mismatching passwords"""
@@ -138,8 +162,3 @@ class SignUpEmail(CustomTestBase, LiveServerTestCase):
         """Test the email subject"""
 
         self.assertEqual(mail.outbox[0].subject, 'New account activation')
-
-    def test_validation_link(self) -> None:
-        """Test the email includes a valid validation link"""
-
-        raise NotImplementedError

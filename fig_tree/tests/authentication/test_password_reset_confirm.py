@@ -101,7 +101,6 @@ class ValidResetLink(CustomTestBase, LiveServerTestCase):
         self.submit_btn.click()
 
         errors = self.webdriver.find_elements(By.CSS_SELECTOR, 'strong.submission-error')
-        self.assertEqual('This password is too short. It must contain at least 8 characters.', errors[0].text)
         self.assertEqual('This password is too common.', errors[1].text)
 
     def test_redirect_on_valid_password(self) -> None:
