@@ -12,7 +12,7 @@ URL_REVERSE = 'signup:new-user'
 
 
 class PageTitle(PageTitleTest, LiveServerTestCase):
-    """Test the page title is correctly set"""
+    """Test the page title is set correctly"""
 
     url_reverse = URL_REVERSE
     page_title = 'Sign Up'
@@ -23,8 +23,13 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
 
     url_reverse = URL_REVERSE
 
+    # Mock user data for testing form submissions
+    mock_username = 'this_is_my_username'
+    mock_email = 'user@test.com'
+    mock_password = 'asd!u93o28u@'
+
     def setUp(self) -> None:
-        """Render the page and identify form content for use in tests"""
+        """Render the page and identify form elements for use in tests"""
 
         super().setUp()
         self.username_field = self.webdriver.find_element(By.ID, 'id_username')
@@ -36,10 +41,10 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
     def submit_valid_form(self):
         """Helper function for submitting valid form content"""
 
-        self.username_field.send_keys('this_is_my_username')
-        self.email_field.send_keys('user@test.com')
-        self.password_field.send_keys('asd!u93o28u@')
-        self.password_confirm_field.send_keys('asd!u93o28u@')
+        self.username_field.send_keys(self.mock_username)
+        self.email_field.send_keys(self.mock_email)
+        self.password_field.send_keys(self.mock_password)
+        self.password_confirm_field.send_keys(self.mock_password)
         self.submit_btn.click()
 
     def test_csrf_protection(self) -> None:
@@ -50,7 +55,6 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
     def test_field_types(self) -> None:
         """Test form fields are the correct types"""
 
-        # Make sure fields are the correct type
         self.assertEqual('text', self.username_field.get_property('type'))
         self.assertEqual('email', self.email_field.get_property('type'))
         self.assertEqual('password', self.password_field.get_property('type'))
@@ -59,17 +63,41 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
     def test_error_message_on_bad_email(self) -> None:
         """Test for displayed error messages on an invalid email"""
 
-        raise NotImplementedError()
+        self.username_field.send_keys(self.mock_username)
+        self.email_field.send_keys('bad@email')
+        self.password_field.send_keys(self.mock_password)
+        self.password_confirm_field.send_keys(self.mock_password)
+        self.submit_btn.click()
 
-    def test_error_message_on_bad_password(self) -> None:
-        """Test for displayed error messages on an invalid password"""
-
-        raise NotImplementedError()
+        error = self.webdriver.find_element(By.ID, 'id_email_error')
+        self.assertEqual(error.text, 'Please enter a valid email address.')
 
     def test_error_message_on_existing_user(self) -> None:
-        """Test for displayed error messages on an invalid email"""
+        """Test an error message is displayed for a taken username"""
 
-        raise NotImplementedError()
+        get_user_model().objects.create_user(
+            username=self.mock_username,
+            email=self.mock_email,
+            password=self.mock_password)
+
+        self.submit_valid_form()
+        error = self.webdriver.find_element(By.ID, 'id_username_error')
+        self.assertEqual(error.text, 'An account with this username already exists.')
+
+        error = self.webdriver.find_element(By.ID, 'id_email_error')
+        self.assertEqual(error.text, 'An account with this email address already exists.')
+
+    def test_error_message_on_mismatch_password(self) -> None:
+        """Test an error message is displayed for mismatching passwords"""
+
+        self.username_field.send_keys(self.mock_username)
+        self.email_field.send_keys(self.mock_email)
+        self.password_field.send_keys('password_foo')
+        self.password_confirm_field.send_keys('password_bar')
+        self.submit_btn.click()
+
+        error = self.webdriver.find_element(By.ID, 'id_password_error')
+        self.assertEqual(error.text, 'The two password fields didn’t match.')
 
     def test_user_redirect(self) -> None:
         """Test the user is redirected to the confirmation page"""
@@ -92,6 +120,8 @@ class SignUpEmail(CustomTestBase, LiveServerTestCase):
     url_reverse = URL_REVERSE
 
     def setUp(self) -> None:
+        """Submit a valid sign up form"""
+
         super().setUp()
         self.webdriver.find_element(By.ID, 'id_username').send_keys('this_is_my_username')
         self.webdriver.find_element(By.ID, 'id_email').send_keys('user@test.com')
@@ -99,9 +129,17 @@ class SignUpEmail(CustomTestBase, LiveServerTestCase):
         self.webdriver.find_element(By.ID, 'id_password2').send_keys('asd!u93o28u@')
         self.webdriver.find_element(By.ID, 'id_submit').click()
 
-    def test_email_subject(self) -> None:
+    def test_email_is_sent(self) -> None:
+        """Test one and only one email is issued to the user"""
+
         self.assertEqual(len(mail.outbox), 1)
+
+    def test_email_subject(self) -> None:
+        """Test the email subject"""
+
         self.assertEqual(mail.outbox[0].subject, 'New account activation')
 
-    def test_email_link(self) -> None:
+    def test_validation_link(self) -> None:
+        """Test the email includes a valid validation link"""
+
         raise NotImplementedError
