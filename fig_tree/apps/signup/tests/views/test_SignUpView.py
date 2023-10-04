@@ -17,10 +17,8 @@ class FormValid(TestCase):
         form = UserCreationForm(data=dict(
             username='username',
             email=user_email,
-            first_name='first',
-            last_name='last',
-            password1='dummy_pass',
-            password2='dummy_pass'
+            password1='dummy_pass12',
+            password2='dummy_pass12'
         ))
         SignUpView().form_valid(form)
 

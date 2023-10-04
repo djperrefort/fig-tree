@@ -54,7 +54,7 @@ class ValidLink(CustomTestBase, LiveServerTestCase):
     def create_temporary_reset_token(self) -> tuple[str, str]:
         """Create a temporary signup token used to build the page url
 
-        Token is valid for only a single call from the webdriver and cannot
+        Token is only valid for a single call from the webdriver and cannot
         be reused between tests.
 
         Return:

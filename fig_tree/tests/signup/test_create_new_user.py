@@ -1,4 +1,4 @@
-"""Function tests for the user signup page"""
+"""Function tests for the user signup page."""
 
 from django.contrib.auth import get_user_model
 from django.core import mail
@@ -60,20 +60,8 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
         self.assertEqual('password', self.password_field.get_property('type'))
         self.assertEqual('password', self.password_confirm_field.get_property('type'))
 
-    def test_error_message_on_bad_email(self) -> None:
-        """Test for displayed error messages on an invalid email"""
-
-        self.username_field.send_keys(self.mock_username)
-        self.email_field.send_keys('bad@email')
-        self.password_field.send_keys(self.mock_password)
-        self.password_confirm_field.send_keys(self.mock_password)
-        self.submit_btn.click()
-
-        error = self.webdriver.find_element(By.ID, 'id_email_error')
-        self.assertEqual(error.text, 'Enter a valid email address.')
-
     def test_error_message_on_existing_user(self) -> None:
-        """Test an error message is displayed for a taken username"""
+        """Test error messages are displayed for a taken username/email"""
 
         get_user_model().objects.create_user(
             username=self.mock_username,
@@ -86,6 +74,18 @@ class SignupFormBehavior(CustomTestBase, LiveServerTestCase):
 
         error = self.webdriver.find_element(By.ID, 'id_email_error')
         self.assertEqual(error.text, 'An account with this email address already exists.')
+
+    def test_error_message_on_bad_email(self) -> None:
+        """Test for displayed error messages on an invalid email"""
+
+        self.username_field.send_keys(self.mock_username)
+        self.email_field.send_keys('bad@email')
+        self.password_field.send_keys(self.mock_password)
+        self.password_confirm_field.send_keys(self.mock_password)
+        self.submit_btn.click()
+
+        error = self.webdriver.find_element(By.ID, 'id_email_error')
+        self.assertEqual(error.text, 'Enter a valid email address.')
 
     def test_error_on_common_password(self) -> None:
         """Test an error message is displayed for a common password"""
