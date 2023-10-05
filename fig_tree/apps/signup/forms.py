@@ -16,6 +16,15 @@ _user_field_classes = {
     'email': form_fields.EmailField
 }
 
+_error_messages = {
+    "username": {
+        "unique": "An account with this username already exists."
+    },
+    "email": {
+        "unique": "An account with this email address already exists."
+    },
+}
+
 
 class UserCreationForm(forms.UserCreationForm):
     """Form for creating a new user account"""
@@ -24,6 +33,7 @@ class UserCreationForm(forms.UserCreationForm):
         model = AuthUser
         fields = _user_fields
         field_classes = _user_field_classes
+        error_messages = _error_messages
 
 
 class UserChangeForm(forms.UserChangeForm):
@@ -33,3 +43,4 @@ class UserChangeForm(forms.UserChangeForm):
         model = AuthUser
         fields = _user_fields
         field_classes = _user_field_classes
+        error_messages = _error_messages

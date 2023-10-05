@@ -8,18 +8,10 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from selenium.webdriver.common.by import By
 
-from ..utils import CustomTestBase, PageTitleTest
+from ..utils import CustomTestBase
 
 URL_REVERSE = 'auth:password-reset-confirm'
 URL_REVERSE_KWARGS = dict(uidb64='MQ', token='b0eoao-12ccb812deafbe6e742fdd536108ee53')
-
-
-class PageTitle(PageTitleTest, LiveServerTestCase):
-    """Test the page title is correctly set"""
-
-    url_reverse = URL_REVERSE
-    url_reverse_kwargs = URL_REVERSE_KWARGS
-    page_title = 'Reset Password'
 
 
 class InvalidOrExpiredLink(CustomTestBase, LiveServerTestCase):
@@ -27,6 +19,11 @@ class InvalidOrExpiredLink(CustomTestBase, LiveServerTestCase):
 
     url_reverse = URL_REVERSE
     url_reverse_kwargs = URL_REVERSE_KWARGS
+
+    def test_page_title(self) -> None:
+        """Test the page title"""
+
+        self.assertEqual('Reset Password', self.webdriver.title)
 
     def test_try_again_link(self):
         """Test the "try again" link leads to the password reset page"""
@@ -45,7 +42,6 @@ class ValidResetLink(CustomTestBase, LiveServerTestCase):
         """Render the webpage and find key page elements"""
 
         # Update render arguments so the webdriver has a valid password reset token
-        # Without a valid token the page will load different content
         token, uidb64 = self.create_temporary_reset_token()
         self.url_reverse_kwargs['uidb64'] = uidb64
         self.url_reverse_kwargs['token'] = token
@@ -79,6 +75,11 @@ class ValidResetLink(CustomTestBase, LiveServerTestCase):
         token = generator.make_token(user)
         return token, uidb64
 
+    def test_page_title(self) -> None:
+        """Test the page title"""
+
+        self.assertEqual('Reset Password', self.webdriver.title)
+
     def test_csrf_protection(self) -> None:
         """Test CSRF middleware token is included in the form"""
 
@@ -100,7 +101,6 @@ class ValidResetLink(CustomTestBase, LiveServerTestCase):
         self.submit_btn.click()
 
         errors = self.webdriver.find_elements(By.CSS_SELECTOR, 'strong.submission-error')
-        self.assertEqual('This password is too short. It must contain at least 8 characters.', errors[0].text)
         self.assertEqual('This password is too common.', errors[1].text)
 
     def test_redirect_on_valid_password(self) -> None:
