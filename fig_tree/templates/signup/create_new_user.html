@@ -1,43 +1,51 @@
 {% extends 'base/center_card.html' %}
 {% load static widget_tweaks %}
 
-{% block title %}{{ site_title }} - Sign Up{% endblock %}
+{% block title %}Sign Up{% endblock %}
 
 {% block card_header_content %}
   <h3>Create a New Account</h3>
 {% endblock %}
 
 {% block card_body_content %}
-
-  {% if form.errors %}
-    {% for field in form %}
-      {% for error in field.errors %}
-        <div class="alert alert-danger">
-          <strong>{{ error|escape }}</strong>
-        </div>
-      {% endfor %}
-    {% endfor %}
-  {% endif %}
-
   <form method="post" action="{% url 'signup:new-user' %}">
     {% csrf_token %}
+
     <div class="mb-3">
       <label for="id_username" class="form-label">Username</label>
-    {% render_field form.username class="form-control" placeholder="username" %}
+      {% render_field form.username class="form-control" placeholder="username" %}
+      {% if form.username.errors %}
+        <p id="id_username_error" class="text-danger pt-1">
+          {{ form.username.errors.0|escape }}
+        </p>
+      {% endif %}
     </div>
+
     <div class="mb-3">
       <label for="id_email" class="form-label">Email</label>
       {% render_field form.email class="form-control" placeholder="name@domain.com" %}
+      {% if form.email.errors %}
+        <p id="id_email_error" class="text-danger pt-1">
+          {{ form.email.errors.0|escape }}
+        </p>
+      {% endif %}
     </div>
+
     <div class="mb-3">
       <label for="id_password1" class="form-label">Password</label>
       {% render_field form.password1 class="form-control" placeholder="password" %}
     </div>
+
     <div class="mb-4">
       <label for="i3_password2" class="form-label">Confirm Password</label>
       {% render_field form.password2 class="form-control" placeholder="password" %}
+      {% if form.password2.errors %}
+        <p id="id_password_error" class="text-danger pt-1">
+          {{ form.password2.errors.0|escape }}
+        </p>
+      {% endif %}
     </div>
-    
+
     <button id="id_submit" type="submit" class="btn btn-primary w-100">Sign Up</button>
     <hr class="my-4">
     <div class="text-center text-muted">

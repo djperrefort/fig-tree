@@ -16,6 +16,9 @@ from .managers import AuthUserManager
 class AuthUser(AbstractBaseUser, PermissionsMixin):
     """Custom model for user account data"""
 
+    class Meta:
+        verbose_name = 'User'
+
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email', ]

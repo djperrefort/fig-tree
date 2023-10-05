@@ -20,15 +20,16 @@ class AuthenticatedUserAdmin(UserAdmin):
     model = AuthUser
 
     # Fields shown in the main admin summary page
-    list_display = ('username', 'email')
+    list_display = ('username', 'email', 'is_active', 'date_joined')
 
     # Fields shown when editing a new user
     fieldsets = (
-        ('User Data', {'fields': list_display}),
+        ('User Data', {'fields': ('username', 'email', 'password')}),
+        ('Account Activation', {'fields': ('is_active',)}),
         ('Staff Status', {'fields': ('is_staff', 'is_super_user')}),
     )
 
-    search_fields = ('username', 'email')
+    search_fields = ('username', 'email', 'is_active')
     ordering = ('username',)
 
 

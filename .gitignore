@@ -44,6 +44,7 @@ coverage.xml
 *.sqlite3-journal
 fig_tree/email
 fig_tree/static_root
+email/
 
 # Sphinx documentation
 docs/build/
