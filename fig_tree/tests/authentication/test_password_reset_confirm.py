@@ -92,16 +92,35 @@ class ValidResetLink(CustomTestBase, LiveServerTestCase):
         self.assertEqual('password', self.new_password2.get_property('type'))
         self.assertEqual('submit', self.submit_btn.get_property('type'))
 
-    def test_error_on_invalid_password(self) -> None:
-        """Test error messages are displayed for an invalid password"""
+    def test_error_on_common_password(self) -> None:
+        """Test an error message is displayed for a common password"""
 
-        invalid_password = 'asdf'
-        self.new_password1.send_keys(invalid_password)
-        self.new_password2.send_keys(invalid_password)
+        self.new_password1.send_keys('password1234')
+        self.new_password2.send_keys('password1234')
         self.submit_btn.click()
 
-        errors = self.webdriver.find_elements(By.CSS_SELECTOR, 'strong.submission-error')
-        self.assertEqual('This password is too common.', errors[1].text)
+        error = self.webdriver.find_element(By.ID, 'id_password_error')
+        self.assertEqual('This password is too common.', error.text)
+
+    def test_error_on_short_password(self) -> None:
+        """Test an error message is displayed for a short password"""
+
+        self.new_password1.send_keys('a7d4ht!sdf')
+        self.new_password2.send_keys('a7d4ht!sdf')
+        self.submit_btn.click()
+
+        error = self.webdriver.find_element(By.ID, 'id_password_error')
+        self.assertRegex(error.text, r'This password is too short. It must contain at least \d* characters.')
+
+    def test_error_message_on_mismatch_password(self) -> None:
+        """Test an error message is displayed for mismatching passwords"""
+
+        self.new_password1.send_keys('password_foo')
+        self.new_password2.send_keys('password_bar')
+        self.submit_btn.click()
+
+        error = self.webdriver.find_element(By.ID, 'id_password_error')
+        self.assertEqual(error.text, 'The two password fields didn’t match.')
 
     def test_redirect_on_valid_password(self) -> None:
         """Test page redirect on valid password"""
