@@ -41,7 +41,9 @@ class CustomTestBase:
 
         driver_class = cls.driver_class
         options = Options()
-        options.headless = not cls.show_webdriver
+        if not cls.show_webdriver:
+            options.add_argument('--headless')
+
         cls.webdriver = driver_class(options=options)
 
     @classmethod
