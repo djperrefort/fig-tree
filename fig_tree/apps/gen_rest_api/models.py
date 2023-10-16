@@ -7,10 +7,39 @@ with table data.
 
 from __future__ import annotations
 
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import IntegerChoices
 from django.utils.translation import gettext_lazy as _
 
+
+# -----------------------------------------------------------------------------
+# Models used to organize genealogical records and permissions into trees
+# -----------------------------------------------------------------------------
+
+class Tree(models.Model):
+    """Database model used to group records together into familial groups"""
+
+    tree_name = models.TextField(null=False)
+
+
+class TreePermission(models.Model):
+    """User permissions for family trees"""
+
+    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), db_index=True, on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
+    private = models.BooleanField(default=False)
+    write = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('tree', 'user',),)
+
+
+# -----------------------------------------------------------------------------
+# Models used to represent individual genealogical record types
+# -----------------------------------------------------------------------------
 
 class BaseModel(models.Model):
     """Abstract class for creating DB models with common columns"""
@@ -20,6 +49,7 @@ class BaseModel(models.Model):
 
     private = models.BooleanField(default=True)
     modified = models.DateTimeField(auto_now=True)
+    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
 
 
 class Address(BaseModel):
@@ -119,7 +149,7 @@ class Name(BaseModel):
     surname = models.TextField(null=True)
     suffix = models.TextField(null=True)
     prefix = models.TextField(null=True)
-    citation = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
+    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
 
 
 class Note(BaseModel):
