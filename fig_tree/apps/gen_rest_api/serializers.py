@@ -6,12 +6,28 @@ serialized representations. Serializers also ensure data integrate by handling
 data validation tasks as required by the relevant business domain.
 """
 
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
 
 from . import models
 
 
-class AddressSerializer(serializers.ModelSerializer):
+class TreeSerializer(ModelSerializer):
+    """Data serializer for the ``Tree`` database model"""
+
+    class Meta:
+        model = models.Tree
+        fields = '__all__'
+
+
+class TreePermissionSerializer(ModelSerializer):
+    """Data serializer for the ``TreePermission`` database model"""
+
+    class Meta:
+        model = models.TreePermission
+        fields = '__all__'
+
+
+class AddressSerializer(ModelSerializer):
     """Data serializer for the ``Address`` database model"""
 
     class Meta:
@@ -20,7 +36,7 @@ class AddressSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class CitationSerializer(serializers.ModelSerializer):
+class CitationSerializer(ModelSerializer):
     """Data serializer for the ``Citation`` database model"""
 
     class Meta:
@@ -29,7 +45,7 @@ class CitationSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class EventSerializer(serializers.ModelSerializer):
+class EventSerializer(ModelSerializer):
     """Data serializer for the ``Event`` database model"""
 
     class Meta:
@@ -38,16 +54,15 @@ class EventSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class FamilySerializer(serializers.ModelSerializer):
+class FamilySerializer(ModelSerializer):
     """Data serializer for the ``Family`` database model"""
 
     class Meta:
         model = models.Family
         fields = '__all__'
-        depth = 1
 
 
-class MediaSerializer(serializers.ModelSerializer):
+class MediaSerializer(ModelSerializer):
     """Data serializer for the ``Media`` database model"""
 
     class Meta:
@@ -56,7 +71,7 @@ class MediaSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class NameSerializer(serializers.ModelSerializer):
+class NameSerializer(ModelSerializer):
     """Data serializer for the ``Name`` database model"""
 
     class Meta:
@@ -65,7 +80,7 @@ class NameSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class NoteSerializer(serializers.ModelSerializer):
+class NoteSerializer(ModelSerializer):
     """Data serializer for the ``Note`` database model"""
 
     class Meta:
@@ -74,7 +89,7 @@ class NoteSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class PersonSerializer(serializers.ModelSerializer):
+class PersonSerializer(ModelSerializer):
     """Data serializer for the ``Person`` database model"""
 
     class Meta:
@@ -83,7 +98,7 @@ class PersonSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class PlaceSerializer(serializers.ModelSerializer):
+class PlaceSerializer(ModelSerializer):
     """Data serializer for the ``Place`` database model"""
 
     class Meta:
@@ -92,7 +107,7 @@ class PlaceSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class RepositorySerializer(serializers.ModelSerializer):
+class RepositorySerializer(ModelSerializer):
     """Data serializer for the ``Repository`` database model"""
 
     class Meta:
@@ -101,7 +116,7 @@ class RepositorySerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class SourceSerializer(serializers.ModelSerializer):
+class SourceSerializer(ModelSerializer):
     """Data serializer for the ``Source`` database model"""
 
     class Meta:
@@ -110,7 +125,7 @@ class SourceSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class TagSerializer(serializers.ModelSerializer):
+class TagSerializer(ModelSerializer):
     """Data serializer for the ``Tag`` database model"""
 
     class Meta:
@@ -119,7 +134,7 @@ class TagSerializer(serializers.ModelSerializer):
         depth = 1
 
 
-class URLSerializer(serializers.ModelSerializer):
+class URLSerializer(ModelSerializer):
     """Data serializer for the ``URL`` database model"""
 
     class Meta:
