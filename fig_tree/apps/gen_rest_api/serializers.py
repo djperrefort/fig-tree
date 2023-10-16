@@ -33,7 +33,6 @@ class AddressSerializer(ModelSerializer):
     class Meta:
         model = models.Address
         fields = '__all__'
-        depth = 1
 
 
 class CitationSerializer(ModelSerializer):
@@ -42,7 +41,6 @@ class CitationSerializer(ModelSerializer):
     class Meta:
         model = models.Citation
         fields = '__all__'
-        depth = 1
 
 
 class EventSerializer(ModelSerializer):
@@ -51,7 +49,6 @@ class EventSerializer(ModelSerializer):
     class Meta:
         model = models.Event
         fields = '__all__'
-        depth = 1
 
 
 class FamilySerializer(ModelSerializer):
@@ -68,7 +65,6 @@ class MediaSerializer(ModelSerializer):
     class Meta:
         model = models.Media
         fields = '__all__'
-        depth = 1
 
 
 class NameSerializer(ModelSerializer):
@@ -77,7 +73,6 @@ class NameSerializer(ModelSerializer):
     class Meta:
         model = models.Name
         fields = '__all__'
-        depth = 1
 
 
 class NoteSerializer(ModelSerializer):
@@ -86,7 +81,6 @@ class NoteSerializer(ModelSerializer):
     class Meta:
         model = models.Note
         fields = '__all__'
-        depth = 1
 
 
 class PersonSerializer(ModelSerializer):
@@ -95,7 +89,6 @@ class PersonSerializer(ModelSerializer):
     class Meta:
         model = models.Person
         fields = '__all__'
-        depth = 1
 
 
 class PlaceSerializer(ModelSerializer):
@@ -104,7 +97,6 @@ class PlaceSerializer(ModelSerializer):
     class Meta:
         model = models.Place
         fields = '__all__'
-        depth = 1
 
 
 class RepositorySerializer(ModelSerializer):
@@ -113,7 +105,6 @@ class RepositorySerializer(ModelSerializer):
     class Meta:
         model = models.Repository
         fields = '__all__'
-        depth = 1
 
 
 class SourceSerializer(ModelSerializer):
@@ -122,7 +113,6 @@ class SourceSerializer(ModelSerializer):
     class Meta:
         model = models.Source
         fields = '__all__'
-        depth = 1
 
 
 class TagSerializer(ModelSerializer):
@@ -131,7 +121,6 @@ class TagSerializer(ModelSerializer):
     class Meta:
         model = models.Tag
         fields = '__all__'
-        depth = 1
 
 
 class URLSerializer(ModelSerializer):
@@ -140,4 +129,3 @@ class URLSerializer(ModelSerializer):
     class Meta:
         model = models.URL
         fields = '__all__'
-        depth = 1
