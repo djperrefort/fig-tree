@@ -9,6 +9,8 @@ View objects can be found in the ``views`` module.
 |-----------------------|------------------------|---------------------|
 | `tree/`               | `TreeViewSet`          | `tree-list`         |
 | `tree/<str:pk>`       | `TreeViewSet`          | `tree-detail`       |
+| `permission/`         | `PermissionViewSet`    | `permission-list`   |
+| `permission/<str:pk>` | `PermissionViewSet`    | `permission-detail` |
 | `address/`            | `AddressViewSet`       | `address-list`      |
 | `address/<str:pk>`    | `AddressViewSet`       | `address-detail`    |
 | `citation/`           | `CitationViewSet`      | `citation-list`     |
@@ -46,6 +48,8 @@ app_name = 'gen_rest_api'
 # Automatically generate URL definitions using a REST API router
 # See module docstring for the resulting definitions
 router = routers.SimpleRouter()
+router.register(r'tree', views.TreeViewSet),
+router.register(r'permission', views.TreePermissionViewSet),
 router.register(r'address', views.AddressViewSet),
 router.register(r'citation', views.CitationViewSet),
 router.register(r'event', views.EventViewSet),
