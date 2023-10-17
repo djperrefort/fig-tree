@@ -1,6 +1,6 @@
 """
-The ``permissions`` module defines permissions objects for regulating access
-to API endpoints. Permission classes implement permissions on the level of
+The ``permissions`` module defines permission objects for regulating access
+to API endpoints. Permission classes can implement permissions on the level of
 individual requests and/or objects (database records).
 """
 
@@ -78,7 +78,7 @@ class FamilyTreeObjectPermission(BasePermission):
     the `TreePermission` database table.
     """
 
-    def has_object_permission(self, request, view: View, obj: models.BaseModel) -> bool:
+    def has_object_permission(self, request, view: View, obj: models.BaseRecordModel) -> bool:
         """Return whether a request has permissions to interact with an object
 
         Args:

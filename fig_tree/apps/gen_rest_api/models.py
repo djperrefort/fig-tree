@@ -46,7 +46,7 @@ class TreePermission(models.Model):
 # Models used to represent individual genealogical record types
 # -----------------------------------------------------------------------------
 
-class BaseModel(models.Model):
+class BaseRecordModel(models.Model):
     """Abstract class for creating DB models with common columns"""
 
     class Meta:
@@ -57,7 +57,7 @@ class BaseModel(models.Model):
     tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
 
 
-class Address(BaseModel):
+class Address(BaseRecordModel):
     """The physical location of a ``Place``"""
 
     line1 = models.TextField()
@@ -72,7 +72,7 @@ class Address(BaseModel):
     citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
 
 
-class Citation(BaseModel):
+class Citation(BaseRecordModel):
     """Reference object between database objects and ``Source`` records"""
 
     class Confidence(IntegerChoices):
@@ -90,7 +90,7 @@ class Citation(BaseModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
 
 
-class Event(BaseModel):
+class Event(BaseRecordModel):
     """A single historical event"""
 
     class DateType(IntegerChoices):
@@ -120,7 +120,7 @@ class Event(BaseModel):
     citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
 
 
-class Family(BaseModel):
+class Family(BaseRecordModel):
     """A group of individuals forming a family unit"""
 
     # Relationships with genealogical meaning
@@ -136,7 +136,7 @@ class Family(BaseModel):
     citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
 
 
-class Media(BaseModel):
+class Media(BaseRecordModel):
     """A media object"""
 
     relative_path = models.FilePathField()
@@ -147,7 +147,7 @@ class Media(BaseModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
 
 
-class Name(BaseModel):
+class Name(BaseRecordModel):
     """The name of a single individual"""
 
     given_name = models.TextField(null=True)
@@ -157,7 +157,7 @@ class Name(BaseModel):
     citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
 
 
-class Note(BaseModel):
+class Note(BaseRecordModel):
     """A text note"""
 
     text = models.TextField()
@@ -165,7 +165,7 @@ class Note(BaseModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
 
 
-class Person(BaseModel):
+class Person(BaseRecordModel):
     """A single individual"""
 
     class Sex(IntegerChoices):
@@ -194,7 +194,7 @@ class Person(BaseModel):
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
 
 
-class Place(BaseModel):
+class Place(BaseRecordModel):
     """A place in the world separate from any physical location"""
 
     name = models.TextField()
@@ -218,7 +218,7 @@ class Place(BaseModel):
         return self.objects.filter(enclodes_by=self.id).all()
 
 
-class Repository(BaseModel):
+class Repository(BaseRecordModel):
     """A repository that hosts multiple historical sources"""
 
     type = models.TextField()
@@ -229,7 +229,7 @@ class Repository(BaseModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
 
 
-class Source(BaseModel):
+class Source(BaseRecordModel):
     """A historical source or piece of reference material"""
 
     title = models.TextField()
@@ -241,7 +241,7 @@ class Source(BaseModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
 
 
-class Tag(BaseModel):
+class Tag(BaseRecordModel):
     """Data label used to organize data into customizable categories"""
 
     name = models.TextField()
@@ -249,7 +249,7 @@ class Tag(BaseModel):
     description = models.TextField(null=True)
 
 
-class URL(BaseModel):
+class URL(BaseRecordModel):
     """An online resource locator"""
 
     href = models.TextField()
