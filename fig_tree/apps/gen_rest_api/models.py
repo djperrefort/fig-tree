@@ -26,15 +26,20 @@ class Tree(models.Model):
 class TreePermission(models.Model):
     """User permissions for family trees"""
 
-    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), db_index=True, on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
-    private = models.BooleanField(default=False)
-    write = models.BooleanField(default=False)
-    admin = models.BooleanField(default=False)
-
     class Meta:
         unique_together = (('tree', 'user',),)
+
+    class Role(IntegerChoices):
+        """User roles for facilitating RBAC"""
+
+        READ = 10, _('read')
+        READ_PRIVATE = 20, _('private')
+        WRITE = 30, _('write')
+        ADMIN = 40, _('admin')
+
+    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), db_index=True, on_delete=models.CASCADE)
+    role = models.IntegerField(choices=Role.choices, default='read')
 
 
 # -----------------------------------------------------------------------------

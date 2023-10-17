@@ -25,7 +25,7 @@ class BaseViewSet(
     viewsets.GenericViewSet
 ):
     """
-    Base viewset providing `list`, `create`, `retrieve`, `update`, and `delete` actions.
+    Base ViewSet providing `list`, `create`, `retrieve`, `update`, and `delete` actions.
 
     To use this class, inherit it and set the `queryset` and `serializer_class` attributes.
     """
@@ -48,7 +48,9 @@ class TreeViewSet(BaseViewSet):
         Records are only returned where the requesting user has `read` permissions or higher.
         """
 
-        return self.queryset.filter(treepermission__user=self.request.user.pk, treepermission__read=True)
+        return self.queryset.filter(
+            treepermission__user=self.request.user.pk,
+            treepermission__role__gte=models.TreePermission.Role.READ)
 
     def create(self, request, *args, **kwargs):
         """Create a new Family Tree
@@ -62,7 +64,7 @@ class TreeViewSet(BaseViewSet):
 
         # Create a new tree object and give the submitting user admin tree permissions
         tree_obj = serializer.create(serializer.validated_data)
-        treepermission_obj = models.TreePermission(user=request.user, tree=tree_obj, admin=True)
+        treepermission_obj = models.TreePermission(user=request.user, tree=tree_obj, role=models.TreePermission.Role.ADMIN)
         treepermission_obj.save()
 
         # Return the same response data/header as the parent class `create` method
@@ -84,7 +86,11 @@ class TreePermissionViewSet(BaseViewSet):
         """
 
         # Return all permission objects related to family trees where the user is an admin
-        tree_ids = models.TreePermission.objects.filter(user=self.request.user.pk, admin=True).values('tree_id')
+        tree_ids = models.TreePermission.objects.filter(
+            user=self.request.user.pk,
+            role__gte=models.TreePermission.Role.ADMIN
+        ).values('tree_id')
+
         return self.queryset.filter(tree_id__in=Subquery(tree_ids))
 
 

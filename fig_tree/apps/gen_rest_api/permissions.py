@@ -33,7 +33,13 @@ class IsTreeMember(BasePermission):
         """
 
         permission_record = obj.treepermission_set.filter(user=request.user).first()
-        return permission_record.admin or (request.method in SAFE_METHODS and permission_record.read)
+        if not permission_record:
+            return False
+
+        if request.method in SAFE_METHODS:
+            return permission_record.role >= models.TreePermission.Role.READ
+
+        return permission_record.role >= models.TreePermission.Role.ADMIN
 
 
 class IsTreePermissionObjectAdmin(BasePermission):
@@ -58,7 +64,11 @@ class IsTreePermissionObjectAdmin(BasePermission):
             A boolean indicating the success/failure of the permissions check
         """
 
-        return models.TreePermission.objects.filter(user=request.user, tree=obj.tree).values('is_admin').first()
+        permission_record = models.TreePermission.objects.filter(user=request.user.id, tree=obj.tree).first()
+        if not permission_record:
+            return False
+
+        return permission_record.role >= models.TreePermission.Role.ADMIN
 
 
 class FamilyTreeObjectPermission(BasePermission):
@@ -80,11 +90,18 @@ class FamilyTreeObjectPermission(BasePermission):
             Whether the request has permission to access the object
         """
 
-        permission_record = obj.tree.treepermission_set.filter(user=request.user, tree=obj.tree).first()
+        permission_record = obj.tree.treepermission_set.filter(user=request.user.id, tree=obj.tree).first()
+        if not permission_record:
+            return False
+
+        # Check the user's permission level
+        can_read_public = permission_record.role >= models.TreePermission.Role.READ
+        can_read_private = permission_record.role >= models.TreePermission.Role.READ_PRIVATE
+        can_write = permission_record.role >= models.TreePermission.Role.WRITE
 
         # Check permissions for read-only operations
         if request.method in SAFE_METHODS:
-            return permission_record.private or (not obj.private and permission_record.read)
+            return can_read_private or (can_read_public and not permission_record.private)
 
         # All other operations require write permissions at minimum
-        return permission_record.write
+        return can_write
