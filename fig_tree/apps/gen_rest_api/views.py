@@ -8,7 +8,7 @@ Whenever possible, generic base classes are used to implement common behavior
 for HTTP request handling.
 """
 
-from django.db.models import Subquery, Manager
+from django.db.models import Subquery, Manager, Q
 from rest_framework import mixins, viewsets, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -95,19 +95,43 @@ class TreePermissionViewSet(BaseViewSet):
 
 
 # -----------------------------------------------------------------------------
-# Viewsets for individual genealogical record types
+# ViewSets for individual genealogical record types
 # -----------------------------------------------------------------------------
 
 
-class AddressViewSet(BaseViewSet):
+class BaseRecordViewSet(BaseViewSet):
+    """Base ViewSet used to build REST endpoints for genealogical record types
+
+    This class modifies the class level queryset by limiting the records
+    returned during list operations. Records are only returned where the user
+    has appropriate permissions on the parent family tree.
+    """
+
+    def get_queryset(self) -> Manager:
+        """Filter the class level `queryset` attribute based on user tree permissions"""
+
+        user = self.request.user  # Assume the request is made from an authenticated session
+        return self.queryset.filter(
+            Q(
+                tree__treepermission__user=user,
+                tree__treepermission__role__gte=models.TreePermission.Role.READ_PRIVATE,
+            ) | Q(
+                tree__treepermission__user=user,
+                tree__treepermission__role__gte=models.TreePermission.Role.READ,
+                private=False
+            )
+        )
+
+
+class AddressViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Address` records"""
 
     serializer_class = serializers.AddressSerializer
     queryset = models.Address.objects
-    permission_classes = (permissions.FamilyTreeObjectPermission,)
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission,)
 
 
-class CitationViewSet(BaseViewSet):
+class CitationViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Citation` records"""
 
     serializer_class = serializers.CitationSerializer
@@ -115,7 +139,7 @@ class CitationViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class EventViewSet(BaseViewSet):
+class EventViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Event` records"""
 
     serializer_class = serializers.EventSerializer
@@ -123,7 +147,7 @@ class EventViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class FamilyViewSet(BaseViewSet):
+class FamilyViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Family` records"""
 
     serializer_class = serializers.FamilySerializer
@@ -131,7 +155,7 @@ class FamilyViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class MediaViewSet(BaseViewSet):
+class MediaViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Media` records"""
 
     serializer_class = serializers.MediaSerializer
@@ -139,7 +163,7 @@ class MediaViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class NameViewSet(BaseViewSet):
+class NameViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Name` records"""
 
     serializer_class = serializers.NameSerializer
@@ -147,7 +171,7 @@ class NameViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class NoteViewSet(BaseViewSet):
+class NoteViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Note` records"""
 
     serializer_class = serializers.NoteSerializer
@@ -155,7 +179,7 @@ class NoteViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class PersonViewSet(BaseViewSet):
+class PersonViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Person` records"""
 
     serializer_class = serializers.PersonSerializer
@@ -163,7 +187,7 @@ class PersonViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class PlaceViewSet(BaseViewSet):
+class PlaceViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Place` records"""
 
     serializer_class = serializers.PlaceSerializer
@@ -171,7 +195,7 @@ class PlaceViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class RepositoryViewSet(BaseViewSet):
+class RepositoryViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Repository` records"""
 
     serializer_class = serializers.RepositorySerializer
@@ -179,7 +203,7 @@ class RepositoryViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class SourceViewSet(BaseViewSet):
+class SourceViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Source` records"""
 
     serializer_class = serializers.SourceSerializer
@@ -187,7 +211,7 @@ class SourceViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class TagViewSet(BaseViewSet):
+class TagViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `Tag` records"""
 
     serializer_class = serializers.TagSerializer
@@ -195,7 +219,7 @@ class TagViewSet(BaseViewSet):
     permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class URLViewSet(BaseViewSet):
+class URLViewSet(BaseRecordViewSet):
     """ViewSet for CRUD operations on `URL` records"""
 
     serializer_class = serializers.URLSerializer
