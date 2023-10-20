@@ -1,5 +1,5 @@
 """
-The ``views`` module defines classes for rendering templates based on incoming
+The `views` module defines classes for rendering templates based on incoming
 HTTP requests. View classes are responsible for processing form/request data,
 interacting with database models/serializers, managing application business
 logic, and returning rendered HTTP responses.
@@ -8,189 +8,220 @@ Whenever possible, generic base classes are used to implement common behavior
 for HTTP request handling.
 """
 
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from django.db.models import Subquery, Manager, Q
+from rest_framework import mixins, viewsets, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from . import models
-from . import serializers
+from . import models, serializers, permissions
 
 
-class AddressListView(ListAPIView):
-    """Read-only view for fetching multiple ``Address`` records"""
+class BaseViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet
+):
+    """
+    Base ViewSet providing `list`, `create`, `retrieve`, `update`, and `delete` actions.
+
+    To use this class, inherit it and set the `queryset` and `serializer_class` attributes.
+    """
+
+
+# -----------------------------------------------------------------------------
+# ViewSets for family trees and their associated user permissions
+# -----------------------------------------------------------------------------
+
+class TreeViewSet(BaseViewSet):
+    """ViewSet for CRUD operations on `Tree` records"""
+
+    serializer_class = serializers.TreeSerializer
+    queryset = models.Tree.objects
+    permission_classes = (IsAuthenticated, permissions.IsTreeMember)
+
+    def get_queryset(self) -> Manager:
+        """Return the filtered queryset used by the API endpoint to execute DB queries
+
+        Records are only returned where the requesting user has `read` permissions or higher.
+        """
+
+        return self.queryset.filter(
+            treepermission__user=self.request.user.pk,
+            treepermission__role__gte=models.TreePermission.Role.READ)
+
+    def create(self, request, *args, **kwargs):
+        """Create a new Family Tree
+
+        The user crating the tree is automatically granted admin permissions.
+        """
+
+        serializer = serializers.TreeSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create a new tree object and give the submitting user admin tree permissions
+        tree_obj = serializer.create(serializer.validated_data)
+        treepermission_obj = models.TreePermission(user=request.user, tree=tree_obj, role=models.TreePermission.Role.ADMIN)
+        treepermission_obj.save()
+
+        # Return the same response data/header as the parent class `create` method
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class TreePermissionViewSet(BaseViewSet):
+    """ViewSet for CRUD operations on `TreePermission` records"""
+
+    serializer_class = serializers.TreePermissionSerializer
+    queryset = models.TreePermission.objects
+    permission_classes = (IsAuthenticated, permissions.IsTreePermissionObjectAdmin)
+
+    def get_queryset(self) -> Manager:
+        """Return the filtered queryset used by the API endpoint to execute DB queries
+
+        Records are only returned where the requesting user has `admin` permissions or higher.
+        """
+
+        # Return all permission objects related to family trees where the user is an admin
+        tree_ids = models.TreePermission.objects.filter(
+            user=self.request.user.pk,
+            role__gte=models.TreePermission.Role.ADMIN
+        ).values('tree_id')
+
+        return self.queryset.filter(tree_id__in=Subquery(tree_ids))
+
+
+# -----------------------------------------------------------------------------
+# ViewSets for individual genealogical record types
+# -----------------------------------------------------------------------------
+
+
+class BaseRecordViewSet(BaseViewSet):
+    """Base ViewSet used to build REST endpoints for genealogical record types
+
+    This class modifies the class level queryset by limiting the records
+    returned during list operations. Records are only returned where the user
+    has appropriate permissions on the parent family tree.
+    """
+
+    def get_queryset(self) -> Manager:
+        """Filter the class level `queryset` attribute based on user tree permissions"""
+
+        user = self.request.user  # Assume the request is made from an authenticated session
+        return self.queryset.filter(
+            Q(
+                tree__treepermission__user=user,
+                tree__treepermission__role__gte=models.TreePermission.Role.READ_PRIVATE,
+            ) | Q(
+                tree__treepermission__user=user,
+                tree__treepermission__role__gte=models.TreePermission.Role.READ,
+                private=False
+            )
+        )
+
+
+class AddressViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Address` records"""
 
     serializer_class = serializers.AddressSerializer
-    queryset = models.Address.objects.all()
+    queryset = models.Address.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission,)
 
 
-class AddressDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Address`` record"""
-
-    serializer_class = serializers.AddressSerializer
-    queryset = models.Address.objects.all()
-
-
-class CitationListView(ListAPIView):
-    """Read-only view for fetching multiple ``Citation`` records"""
+class CitationViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Citation` records"""
 
     serializer_class = serializers.CitationSerializer
-    queryset = models.Citation.objects.all()
+    queryset = models.Citation.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class CitationDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Citation`` record"""
-
-    serializer_class = serializers.CitationSerializer
-    queryset = models.Citation.objects.all()
-
-
-class EventListView(ListAPIView):
-    """Read-only view for fetching multiple ``Event`` records"""
+class EventViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Event` records"""
 
     serializer_class = serializers.EventSerializer
-    queryset = models.Event.objects.all()
+    queryset = models.Event.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class EventDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Event`` record"""
-
-    serializer_class = serializers.EventSerializer
-    queryset = models.Event.objects.all()
-
-
-class FamilyListView(ListAPIView):
-    """Read-only view for fetching multiple ``Family`` records"""
+class FamilyViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Family` records"""
 
     serializer_class = serializers.FamilySerializer
-    queryset = models.Family.objects.all()
+    queryset = models.Family.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class FamilyDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Family`` record"""
-
-    serializer_class = serializers.FamilySerializer
-    queryset = models.Family.objects.all()
-
-
-class MediaListView(ListAPIView):
-    """Read-only view for fetching multiple ``Media`` records"""
+class MediaViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Media` records"""
 
     serializer_class = serializers.MediaSerializer
-    queryset = models.Media.objects.all()
+    queryset = models.Media.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class MediaDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Media`` record"""
-
-    serializer_class = serializers.MediaSerializer
-    queryset = models.Media.objects.all()
-
-
-class NameListView(ListAPIView):
-    """Read-only view for fetching multiple ``Name`` records"""
+class NameViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Name` records"""
 
     serializer_class = serializers.NameSerializer
-    queryset = models.Name.objects.all()
+    queryset = models.Name.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class NameDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Name`` record"""
-
-    serializer_class = serializers.NameSerializer
-    queryset = models.Name.objects.all()
-
-
-class NoteListView(ListAPIView):
-    """Read-only view for fetching multiple ``Note`` records"""
+class NoteViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Note` records"""
 
     serializer_class = serializers.NoteSerializer
-    queryset = models.Note.objects.all()
+    queryset = models.Note.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class NoteDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Note`` record"""
-
-    serializer_class = serializers.NoteSerializer
-    queryset = models.Note.objects.all()
-
-
-class PersonListView(ListAPIView):
-    """Read-only view for fetching multiple ``Person`` records"""
+class PersonViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Person` records"""
 
     serializer_class = serializers.PersonSerializer
-    queryset = models.Person.objects.all()
+    queryset = models.Person.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class PersonDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Person`` record"""
-
-    serializer_class = serializers.PersonSerializer
-    queryset = models.Person.objects.all()
-
-
-class PlaceListView(ListAPIView):
-    """Read-only view for fetching multiple ``Place`` records"""
+class PlaceViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Place` records"""
 
     serializer_class = serializers.PlaceSerializer
-    queryset = models.Place.objects.all()
+    queryset = models.Place.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class PlaceDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Place`` record"""
-
-    serializer_class = serializers.PlaceSerializer
-    queryset = models.Place.objects.all()
-
-
-class RepositoryListView(ListAPIView):
-    """Read-only view for fetching multiple ``Repository`` records"""
+class RepositoryViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Repository` records"""
 
     serializer_class = serializers.RepositorySerializer
-    queryset = models.Repository.objects.all()
+    queryset = models.Repository.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class RepositoryDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Repository`` record"""
-
-    serializer_class = serializers.RepositorySerializer
-    queryset = models.Repository.objects.all()
-
-
-class SourceListView(ListAPIView):
-    """Read-only view for fetching multiple ``Source`` records"""
+class SourceViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Source` records"""
 
     serializer_class = serializers.SourceSerializer
-    queryset = models.Source.objects.all()
+    queryset = models.Source.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class SourceDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Source`` record"""
-
-    serializer_class = serializers.SourceSerializer
-    queryset = models.Source.objects.all()
-
-
-class TagListView(ListAPIView):
-    """Read-only view for fetching multiple ``Tag`` records"""
+class TagViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `Tag` records"""
 
     serializer_class = serializers.TagSerializer
-    queryset = models.Tag.objects.all()
+    queryset = models.Tag.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
 
 
-class TagDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``Tag`` record"""
-
-    serializer_class = serializers.TagSerializer
-    queryset = models.Tag.objects.all()
-
-
-class URLListView(ListAPIView):
-    """Read-only view for fetching multiple ``URL`` records"""
+class URLViewSet(BaseRecordViewSet):
+    """ViewSet for CRUD operations on `URL` records"""
 
     serializer_class = serializers.URLSerializer
-    queryset = models.URL.objects.all()
-
-
-class URLDetailView(RetrieveUpdateDestroyAPIView):
-    """Read/write view for CRUD operations on a single ``URL`` record"""
-
-    serializer_class = serializers.URLSerializer
-    queryset = models.URL.objects.all()
+    queryset = models.URL.objects
+    permission_classes = (IsAuthenticated, permissions.FamilyTreeObjectPermission)
