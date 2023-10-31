@@ -20,7 +20,15 @@ from django.utils.translation import gettext_lazy as _
 class Tree(models.Model):
     """Database model used to group records together into familial groups"""
 
-    tree_name = models.TextField(null=False)
+    class Meta:
+        verbose_name = 'Family Tree'
+
+    tree_name = models.CharField(max_length=250)
+
+    def __str__(self) -> str:
+        """Return the name of the family tree"""
+
+        return self.tree_name
 
 
 class TreePermission(models.Model):
@@ -40,6 +48,9 @@ class TreePermission(models.Model):
     tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
     user = models.ForeignKey(get_user_model(), db_index=True, on_delete=models.CASCADE)
     role = models.IntegerField(choices=Role.choices, default='read')
+
+    def __str__(self) -> str:
+        return f'User permissions for {self.user} on {self.tree}'
 
 
 # -----------------------------------------------------------------------------
