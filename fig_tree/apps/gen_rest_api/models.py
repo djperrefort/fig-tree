@@ -137,7 +137,7 @@ class Event(BaseRecordModel):
     description = models.TextField(null=True)
 
     place = models.OneToOneField('Place', on_delete=models.CASCADE, null=True)
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
     citations = cfields.GenericRelation('Citation')
@@ -151,9 +151,9 @@ class Family(BaseRecordModel):
     parent2 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent2', null=True)
     children = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_child', null=True)
 
-    # Generic relationships
+    # Other relationships
     events = models.ForeignKey('Event', on_delete=models.CASCADE, null=True)
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
     citations = cfields.GenericRelation('Citation')
@@ -166,7 +166,7 @@ class Media(BaseRecordModel):
     date = models.DateField(null=True)
     description = models.TextField(null=True)
 
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
     citations = cfields.GenericRelation('Citation')
 
 
@@ -184,8 +184,7 @@ class Note(BaseRecordModel):
     """A text note"""
 
     text = models.TextField()
-
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
 
 
 class Person(BaseRecordModel):
@@ -210,7 +209,7 @@ class Person(BaseRecordModel):
     parent_families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people_parent', null=True)
 
     # Generic relationships
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
     events = models.ForeignKey('Event', on_delete=models.CASCADE, null=True)
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
@@ -229,7 +228,7 @@ class Place(BaseRecordModel):
     date = models.DateField(null=True)
 
     address = models.ForeignKey('Address', on_delete=models.CASCADE, null=True)
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
     citations = cfields.GenericRelation('Citation')
@@ -249,7 +248,7 @@ class Repository(BaseRecordModel):
 
     address_list = models.ForeignKey('Address', on_delete=models.CASCADE, null=True)
     urls = models.ForeignKey('URL', on_delete=models.CASCADE, null=True)
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
 
 
 class Source(BaseRecordModel):
@@ -261,7 +260,7 @@ class Source(BaseRecordModel):
 
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    tags = cfields.GenericRelation('Tag')
 
 
 class Tag(BaseRecordModel):
@@ -270,6 +269,11 @@ class Tag(BaseRecordModel):
     name = models.TextField()
     modified = models.DateTimeField(auto_now=True)
     description = models.TextField(null=True)
+
+    # Fields required to support generic relationships
+    content_type = models.ForeignKey(cmodels.ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = cfields.GenericForeignKey()
 
 
 class URL(BaseRecordModel):
