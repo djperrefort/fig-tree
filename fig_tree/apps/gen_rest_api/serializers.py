@@ -1,5 +1,5 @@
 """
-The ``serializers`` module handles serializing/deserializing database models
+The `serializers` module handles serializing/deserializing database models
 and query sets. Each serializer class defines which fields are included in the
 serialized output and handles the conversion of data types to and from their
 serialized representations. Serializers also ensure data integrate by handling
@@ -8,7 +8,25 @@ data validation tasks as required by the relevant business domain.
 
 from rest_framework.serializers import ModelSerializer
 
-from . import models
+from .models import *
+
+__all__ = [
+    'TreeSerializer',
+    'TreePermissionSerializer',
+    'AddressSerializer',
+    'CitationSerializer',
+    'EventSerializer',
+    'FamilySerializer',
+    'MediaSerializer',
+    'NameSerializer',
+    'NoteSerializer',
+    'PersonSerializer',
+    'PlaceSerializer',
+    'RepositorySerializer',
+    'SourceSerializer',
+    'TagSerializer',
+    'URLSerializer',
+]
 
 
 # -----------------------------------------------------------------------------
@@ -16,18 +34,18 @@ from . import models
 # -----------------------------------------------------------------------------
 
 class TreeSerializer(ModelSerializer):
-    """Data serializer for the ``Tree`` database model"""
+    """Data serializer for the `Tree` database model"""
 
     class Meta:
-        model = models.Tree
+        model = Tree
         fields = '__all__'
 
 
 class TreePermissionSerializer(ModelSerializer):
-    """Data serializer for the ``TreePermission`` database model"""
+    """Data serializer for the `TreePermission` database model"""
 
     class Meta:
-        model = models.TreePermission
+        model = TreePermission
         fields = '__all__'
 
 
@@ -51,104 +69,104 @@ class BaseRecordSerializer(ModelSerializer):
 
 
 class AddressSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Address`` database model"""
+    """Data serializer for the `Address` database model"""
 
     class Meta:
-        model = models.Address
+        model = Address
         fields = '__all__'
 
 
 class CitationSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Citation`` database model"""
+    """Data serializer for the `Citation` database model"""
 
     class Meta:
-        model = models.Citation
+        model = Citation
         fields = '__all__'
 
 
 class EventSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Event`` database model"""
+    """Data serializer for the `Event` database model"""
 
     class Meta:
-        model = models.Event
+        model = Event
         fields = '__all__'
 
 
 class FamilySerializer(BaseRecordSerializer):
-    """Data serializer for the ``Family`` database model"""
+    """Data serializer for the `Family` database model"""
 
     class Meta:
-        model = models.Family
+        model = Family
         fields = '__all__'
 
 
 class MediaSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Media`` database model"""
+    """Data serializer for the `Media` database model"""
 
     class Meta:
-        model = models.Media
+        model = Media
         fields = '__all__'
 
 
 class NameSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Name`` database model"""
+    """Data serializer for the `Name` database model"""
 
     class Meta:
-        model = models.Name
+        model = Name
         fields = '__all__'
 
 
 class NoteSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Note`` database model"""
+    """Data serializer for the `Note` database model"""
 
     class Meta:
-        model = models.Note
+        model = Note
         fields = '__all__'
 
 
 class PersonSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Person`` database model"""
+    """Data serializer for the `Person` database model"""
 
     class Meta:
-        model = models.Person
+        model = Person
         fields = '__all__'
 
 
 class PlaceSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Place`` database model"""
+    """Data serializer for the `Place` database model"""
 
     class Meta:
-        model = models.Place
+        model = Place
         fields = '__all__'
 
 
 class RepositorySerializer(BaseRecordSerializer):
-    """Data serializer for the ``Repository`` database model"""
+    """Data serializer for the `Repository` database model"""
 
     class Meta:
-        model = models.Repository
+        model = Repository
         fields = '__all__'
 
 
 class SourceSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Source`` database model"""
+    """Data serializer for the `Source` database model"""
 
     class Meta:
-        model = models.Source
+        model = Source
         fields = '__all__'
 
 
 class TagSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Tag`` database model"""
+    """Data serializer for the `Tag` database model"""
 
     class Meta:
-        model = models.Tag
+        model = Tag
         fields = '__all__'
 
 
 class URLSerializer(BaseRecordSerializer):
-    """Data serializer for the ``URL`` database model"""
+    """Data serializer for the `URL` database model"""
 
     class Meta:
-        model = models.URL
+        model = URL
         fields = '__all__'

@@ -1,4 +1,4 @@
-"""Tests for the ``ActivateAccountView`` class"""
+"""Tests for the `ActivateAccountView` class"""
 
 from django.test import Client, TestCase
 from django.urls import reverse

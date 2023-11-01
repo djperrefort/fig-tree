@@ -12,7 +12,7 @@ Application features include:
 Installation
 ------------
 
-Add the application to the ``installed_apps`` list in the package settings:
+Add the application to the `installed_apps` list in the package settings:
 
 ```python
 INSTALLED_APPS = [

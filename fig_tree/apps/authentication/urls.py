@@ -1,7 +1,7 @@
 """
-The ``urls`` module maps URL endpoints to django views defined in the parent
-application. For root level URL routing, see the project level ``urls`` module.
-View objects can be found in the ``views`` module.
+The `urls` module maps URL endpoints to django views defined in the parent
+application. For root level URL routing, see the project level `urls` module.
+View objects can be found in the `views` module.
 
 # URL Routing Configuration
 
@@ -17,15 +17,15 @@ View objects can be found in the ``views`` module.
 
 from django.urls import path
 
-from . import views
+from .views import *
 
 app_name = 'authentication'
 
 urlpatterns = [
-    path('login/', views.LoginView.as_view(), name='login'),
-    path('logout/', views.LogoutView.as_view(), name='logout'),
-    path('password_reset/', views.PasswordResetView.as_view(), name='password-reset'),
-    path('password_reset/done/', views.PasswordResetDoneView.as_view(), name='password-reset-done'),
-    path('reset/<uidb64>/<token>/', views.PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
-    path('reset/done/', views.PasswordResetCompleteView.as_view(), name='password-reset-complete'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('password_reset/', PasswordResetView.as_view(), name='password-reset'),
+    path('password_reset/done/', PasswordResetDoneView.as_view(), name='password-reset-done'),
+    path('reset/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password-reset-confirm'),
+    path('reset/done/', PasswordResetCompleteView.as_view(), name='password-reset-complete'),
 ]

@@ -1,4 +1,4 @@
-"""Tests for the ``AuthUserManager`` class."""
+"""Tests for the `AuthUserManager` class."""
 
 from django.core.exceptions import ValidationError
 from django.test import TestCase
@@ -31,7 +31,7 @@ class CreateUser(TestCase):
         self.assertEqual(new_user.email, user_data['email'])
 
     def test_error_on_invalid_email(self) -> None:
-        """Test a ``ValidationError`` is raised when creating a user with an invalid email"""
+        """Test a `ValidationError` is raised when creating a user with an invalid email"""
 
         with self.assertRaises(ValidationError, msg='No error raised for blank email'):
             AuthUserManager.create_user(email='', username='test_user', password='foo')
