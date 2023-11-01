@@ -1,5 +1,5 @@
 """
-The ``models`` module uses data classes to define and interact with the
+The `models` module uses data classes to define and interact with the
 application database schema. Each model class reflects the schema for a
 distinct database table and provides a high-level API to query and interact
 with table data.

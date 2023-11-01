@@ -1,9 +1,9 @@
 """
-The ``managers`` module defines custom model managers for encapsulating common
+The `managers` module defines custom model managers for encapsulating common
 query logic. Managers are attached to database models to extend a model's
 default querying capabilities and to facilitate common data retrieval tasks.
 
-Model objects can be found in the ``models`` module.
+Model objects can be found in the `models` module.
 """
 
 from __future__ import annotations
@@ -48,7 +48,7 @@ class AuthUserManager(auth.base_user.BaseUserManager):
         extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have ``is_staff`` set to ``True```.')
+            raise ValueError('Superuser must have `is_staff` set to `True`.')
 
         return cls.create_user(username, password, email, **extra_fields)
 
@@ -61,9 +61,9 @@ class AuthUserManager(auth.base_user.BaseUserManager):
         extra_fields.setdefault('is_active', True)
 
         if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have ``is_staff`` set to ``True```.')
+            raise ValueError('Superuser must have `is_staff` set to `True`.')
 
         if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have ``is_superuser`` set to ``True``.')
+            raise ValueError('Superuser must have `is_superuser` set to `True`.')
 
         return cls.create_user(username, password, email, **extra_fields)

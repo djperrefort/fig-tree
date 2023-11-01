@@ -1,5 +1,5 @@
 """
-The ``permissions`` module defines permission objects for regulating access
+The `permissions` module defines permission objects for regulating access
 to API endpoints. Permission classes can implement permissions on the level of
 individual requests and/or objects (database records).
 """
@@ -33,7 +33,7 @@ class IsTreeMember(permissions.BasePermission):
         Args:
             request: The incoming HTTP request
             view: The view used to process the request
-            obj: Database model with a ``tree`` attribute
+            obj: Database model with a `tree` attribute
 
         Return:
             A boolean indicating the success/failure of the permissions check
@@ -65,7 +65,7 @@ class IsTreePermissionObjectAdmin(permissions.BasePermission):
         Args:
             request: The incoming HTTP request
             view: The view used to process the request
-            obj: Database model with a ``tree`` attribute
+            obj: Database model with a `tree` attribute
 
         Return:
             A boolean indicating the success/failure of the permissions check
@@ -91,7 +91,7 @@ class FamilyTreeObjectPermission(permissions.BasePermission):
         Args:
             request: The incoming HTTP request
             view: The view used to process the request
-            obj: Database model with a ``tree`` attribute
+            obj: Database model with a `tree` attribute
 
         Returns:
             Whether the request has permission to access the object

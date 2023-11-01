@@ -12,7 +12,7 @@ class CustomTestBase:
 
     This class automatically sets up a unique webdriver instance for each test.
     The attributes below are used to instantiate the web driver.
-    Set the ``url_reverse`` class attribute to configure the URL used when
+    Set the `url_reverse` class attribute to configure the URL used when
     instantiating the web driver.
     """
 
@@ -34,7 +34,7 @@ class CustomTestBase:
 
         super().setUpClass()
         if cls.url_reverse is None:
-            raise ValueError('Class attribute ``url_reverse`` cannot be None')
+            raise ValueError('Class attribute `url_reverse` cannot be None')
 
         if not hasattr(cls, 'url_reverse_kwargs'):
             cls.url_reverse_kwargs = dict()

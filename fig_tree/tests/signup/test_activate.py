@@ -27,7 +27,7 @@ class InvalidLink(CustomTestBase, LiveServerTestCase):
         self.assertEqual('Invalid Link', self.webdriver.title)
 
     def test_go_home_button(self) -> None:
-        """Test the ``Go Home`` button takes users to the home page"""
+        """Test the `Go Home` button takes users to the home page"""
 
         self.webdriver.find_element(By.ID, 'id_home').click()
         expected_url = self.live_server_url + reverse('home')
@@ -78,7 +78,7 @@ class ValidLink(CustomTestBase, LiveServerTestCase):
         self.assertEqual('Validation Successful', self.webdriver.title)
 
     def test_login_button(self) -> None:
-        """Test the ``Login`` button takes users to the login page"""
+        """Test the `Login` button takes users to the login page"""
 
         self.webdriver.find_element(By.ID, 'id_login').click()
         expected_url = self.live_server_url + reverse('auth:login')

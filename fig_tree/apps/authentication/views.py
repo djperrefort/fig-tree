@@ -1,5 +1,5 @@
 """
-The ``views`` module defines classes for rendering templates based on incoming
+The `views` module defines classes for rendering templates based on incoming
 HTTP requests. View classes are responsible for processing form/request data,
 interacting with database models/serializers, managing application business
 logic, and returning rendered HTTP responses.

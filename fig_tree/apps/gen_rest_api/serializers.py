@@ -1,5 +1,5 @@
 """
-The ``serializers`` module handles serializing/deserializing database models
+The `serializers` module handles serializing/deserializing database models
 and query sets. Each serializer class defines which fields are included in the
 serialized output and handles the conversion of data types to and from their
 serialized representations. Serializers also ensure data integrate by handling
@@ -34,7 +34,7 @@ __all__ = [
 # -----------------------------------------------------------------------------
 
 class TreeSerializer(ModelSerializer):
-    """Data serializer for the ``Tree`` database model"""
+    """Data serializer for the `Tree` database model"""
 
     class Meta:
         model = Tree
@@ -42,7 +42,7 @@ class TreeSerializer(ModelSerializer):
 
 
 class TreePermissionSerializer(ModelSerializer):
-    """Data serializer for the ``TreePermission`` database model"""
+    """Data serializer for the `TreePermission` database model"""
 
     class Meta:
         model = TreePermission
@@ -69,7 +69,7 @@ class BaseRecordSerializer(ModelSerializer):
 
 
 class AddressSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Address`` database model"""
+    """Data serializer for the `Address` database model"""
 
     class Meta:
         model = Address
@@ -77,7 +77,7 @@ class AddressSerializer(BaseRecordSerializer):
 
 
 class CitationSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Citation`` database model"""
+    """Data serializer for the `Citation` database model"""
 
     class Meta:
         model = Citation
@@ -85,7 +85,7 @@ class CitationSerializer(BaseRecordSerializer):
 
 
 class EventSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Event`` database model"""
+    """Data serializer for the `Event` database model"""
 
     class Meta:
         model = Event
@@ -93,7 +93,7 @@ class EventSerializer(BaseRecordSerializer):
 
 
 class FamilySerializer(BaseRecordSerializer):
-    """Data serializer for the ``Family`` database model"""
+    """Data serializer for the `Family` database model"""
 
     class Meta:
         model = Family
@@ -101,7 +101,7 @@ class FamilySerializer(BaseRecordSerializer):
 
 
 class MediaSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Media`` database model"""
+    """Data serializer for the `Media` database model"""
 
     class Meta:
         model = Media
@@ -109,7 +109,7 @@ class MediaSerializer(BaseRecordSerializer):
 
 
 class NameSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Name`` database model"""
+    """Data serializer for the `Name` database model"""
 
     class Meta:
         model = Name
@@ -117,7 +117,7 @@ class NameSerializer(BaseRecordSerializer):
 
 
 class NoteSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Note`` database model"""
+    """Data serializer for the `Note` database model"""
 
     class Meta:
         model = Note
@@ -125,7 +125,7 @@ class NoteSerializer(BaseRecordSerializer):
 
 
 class PersonSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Person`` database model"""
+    """Data serializer for the `Person` database model"""
 
     class Meta:
         model = Person
@@ -133,7 +133,7 @@ class PersonSerializer(BaseRecordSerializer):
 
 
 class PlaceSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Place`` database model"""
+    """Data serializer for the `Place` database model"""
 
     class Meta:
         model = Place
@@ -141,7 +141,7 @@ class PlaceSerializer(BaseRecordSerializer):
 
 
 class RepositorySerializer(BaseRecordSerializer):
-    """Data serializer for the ``Repository`` database model"""
+    """Data serializer for the `Repository` database model"""
 
     class Meta:
         model = Repository
@@ -149,7 +149,7 @@ class RepositorySerializer(BaseRecordSerializer):
 
 
 class SourceSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Source`` database model"""
+    """Data serializer for the `Source` database model"""
 
     class Meta:
         model = Source
@@ -157,7 +157,7 @@ class SourceSerializer(BaseRecordSerializer):
 
 
 class TagSerializer(BaseRecordSerializer):
-    """Data serializer for the ``Tag`` database model"""
+    """Data serializer for the `Tag` database model"""
 
     class Meta:
         model = Tag
@@ -165,7 +165,7 @@ class TagSerializer(BaseRecordSerializer):
 
 
 class URLSerializer(BaseRecordSerializer):
-    """Data serializer for the ``URL`` database model"""
+    """Data serializer for the `URL` database model"""
 
     class Meta:
         model = URL

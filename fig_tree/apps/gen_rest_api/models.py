@@ -1,5 +1,5 @@
 """
-The ``models`` module uses data classes to define and interact with the
+The `models` module uses data classes to define and interact with the
 application database schema. Each model class reflects the schema for a
 distinct database table and provides a high-level API to query and interact
 with table data.
@@ -75,7 +75,7 @@ class BaseRecordModel(models.Model):
 
 
 class Address(BaseRecordModel):
-    """The physical location of a ``Place``"""
+    """The physical location of a `Place`"""
 
     line1 = models.TextField()
     line2 = models.TextField(null=True)
@@ -90,7 +90,7 @@ class Address(BaseRecordModel):
 
 
 class Citation(BaseRecordModel):
-    """Reference object between database objects and ``Source`` records"""
+    """Reference object between database objects and `Source` records"""
 
     class Confidence(models.IntegerChoices):
         """The researcher's confidence level in the accuracy of the cited information"""

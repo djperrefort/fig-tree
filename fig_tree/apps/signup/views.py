@@ -1,5 +1,5 @@
 """
-The ``views`` module defines classes for rendering templates based on incoming
+The `views` module defines classes for rendering templates based on incoming
 HTTP requests. View classes are responsible for processing form/request data,
 interacting with database models/serializers, managing application business
 logic, and returning rendered HTTP responses.
@@ -38,7 +38,7 @@ class SignUpView(CreateView):
         """Creates a new user account and sends an email confirming user contact information
 
         This method is automatically called on POST requests after successfully
-        validating data submitted in the ``form_class`` form.
+        validating data submitted in the `form_class` form.
 
         Args:
             form: The form to validate
@@ -64,7 +64,7 @@ class SignUpView(CreateView):
         email_address = form.cleaned_data.get('email')
         EmailMessage(email_subject, message, to=[email_address]).send()
 
-        # The parent ``form_valid`` method redirects requests to ``self.success_url``
+        # The parent `form_valid` method redirects requests to `self.success_url`
         return super().form_valid(form)
 
 

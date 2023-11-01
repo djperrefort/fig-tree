@@ -1,5 +1,5 @@
 """
-The ``handlers`` module defines custom HTTP error handlers.
+The `handlers` module defines custom HTTP error handlers.
 Request handlers are used to process the routing of HTTP errors to the correct HTML template.
 Dedicated handler objects are provided for each HTTP error supported by Django.
 """

@@ -1,4 +1,4 @@
-"""Tests for the ``handlers`` module."""
+"""Tests for the `handlers` module."""
 
 import inspect
 from unittest import TestCase
@@ -10,7 +10,7 @@ from fig_tree.apps.error_pages.handlers import error_render
 
 
 class TestErrorRender(TestCase):
-    """Test responses rendered by the ``error_render`` function"""
+    """Test responses rendered by the `error_render` function"""
 
     def assert_returned_status_code(self, http_code: int) -> None:
         """Assert the returned page has the given error code
