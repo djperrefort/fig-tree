@@ -1,5 +1,5 @@
 """
-The ``authentication`` app is responsible for authenticating users with
+The `authentication` app is responsible for authenticating users with
 existing accounts. It handles user logins/logouts and password reset requests.
 It is **not** responsible for creating new user accounts.
 
@@ -10,7 +10,7 @@ Application features include:
 
 # Installation
 
-Start by adding the application to the ``installed_apps`` list in the package settings:
+Start by adding the application to the `installed_apps` list in the package settings:
 
 ```python
 INSTALLED_APPS = [
@@ -38,7 +38,7 @@ LOGIN_URL = 'auth:login'
 
 The `authentication` app supports a *remember me* option that will keep
 users logged in for a given duration. Users are remembered for seven days by
-default, but the length of this duration is configurable in the ``setings.py``
+default, but the length of this duration is configurable in the `settings.py`
 file:
 
 ```python

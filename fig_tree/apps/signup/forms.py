@@ -1,14 +1,16 @@
 """
-The ``forms`` module defines form classes used to define the structure, input
+The `forms` module defines form classes used to define the structure, input
 fields, and validation rules for various data input forms. Server and client
-side form validation is handled by application views found in the ``views``
+side form validation is handled by application views found in the `views`
 module.
 """
 
 from django.contrib.auth import forms
 from django.forms import fields as form_fields
 
-from .models import AuthUser
+from .models import *
+
+__all__ = ['UserCreationForm', 'UserChangeForm']
 
 _user_fields = ('username', 'email')
 _user_field_classes = {

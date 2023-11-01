@@ -1,5 +1,5 @@
 """
-The ``models`` module uses data classes to define and interact with the
+The `models` module uses data classes to define and interact with the
 application database schema. Each model class reflects the schema for a
 distinct database table and provides a high-level API to query and interact
 with table data.
@@ -7,10 +7,27 @@ with table data.
 
 from __future__ import annotations
 
-from django.contrib.auth import get_user_model
+from django.contrib import auth
 from django.db import models
-from django.db.models import IntegerChoices
 from django.utils.translation import gettext_lazy as _
+
+__all__ = [
+    'Tree',
+    'TreePermission',
+    'Address',
+    'Citation',
+    'Event',
+    'Family',
+    'Media',
+    'Name',
+    'Note',
+    'Person',
+    'Place',
+    'Repository',
+    'Source',
+    'Tag',
+    'URL',
+]
 
 
 # -----------------------------------------------------------------------------
@@ -18,7 +35,7 @@ from django.utils.translation import gettext_lazy as _
 # -----------------------------------------------------------------------------
 
 class Tree(models.Model):
-    """Database model used to group records together into familial groups"""
+    """Database model used to group records together into family trees"""
 
     class Meta:
         verbose_name = 'Family Tree'
@@ -37,7 +54,7 @@ class TreePermission(models.Model):
     class Meta:
         unique_together = (('tree', 'user',),)
 
-    class Role(IntegerChoices):
+    class Role(models.IntegerChoices):
         """User roles for facilitating RBAC"""
 
         READ = 10, _('read')
@@ -46,7 +63,7 @@ class TreePermission(models.Model):
         ADMIN = 40, _('admin')
 
     tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(get_user_model(), db_index=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(auth.get_user_model(), db_index=True, on_delete=models.CASCADE)
     role = models.IntegerField(choices=Role.choices, default='read')
 
     def __str__(self) -> str:
@@ -58,7 +75,7 @@ class TreePermission(models.Model):
 # -----------------------------------------------------------------------------
 
 class BaseRecordModel(models.Model):
-    """Abstract class for creating DB models with common columns"""
+    """Base class for creating DB models with common columns"""
 
     class Meta:
         abstract = True  # Tell django this model is an abstract base class
@@ -69,7 +86,7 @@ class BaseRecordModel(models.Model):
 
 
 class Address(BaseRecordModel):
-    """The physical location of a ``Place``"""
+    """The physical location of a `Place`"""
 
     line1 = models.TextField()
     line2 = models.TextField(null=True)
@@ -84,9 +101,9 @@ class Address(BaseRecordModel):
 
 
 class Citation(BaseRecordModel):
-    """Reference object between database objects and ``Source`` records"""
+    """Reference object between database objects and `Source` records"""
 
-    class Confidence(IntegerChoices):
+    class Confidence(models.IntegerChoices):
         """The researcher's confidence level in the accuracy of the cited information"""
 
         LOW = 0, _('low')
@@ -104,7 +121,7 @@ class Citation(BaseRecordModel):
 class Event(BaseRecordModel):
     """A single historical event"""
 
-    class DateType(IntegerChoices):
+    class DateType(models.IntegerChoices):
         """Date type for the event"""
 
         REGULAR = 0, _('regular')
@@ -179,7 +196,7 @@ class Note(BaseRecordModel):
 class Person(BaseRecordModel):
     """A single individual"""
 
-    class Sex(IntegerChoices):
+    class Sex(models.IntegerChoices):
         """The individuals biological sex at birth"""
 
         FEMALE = 0, _('female')

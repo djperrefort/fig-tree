@@ -1,4 +1,4 @@
-"""Tests for the ``UserCreationForm`` class."""
+"""Tests for the `UserCreationForm` class."""
 
 from django.test import TestCase
 

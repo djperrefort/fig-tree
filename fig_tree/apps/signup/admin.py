@@ -1,5 +1,5 @@
 """
-The ``admin`` module defines custom administrative interfaces used by the
+The `admin` module defines custom administrative interfaces used by the
 website admin portal. Admin classes are used to extend and enhance the
 management of application settings by customizing the appearance, functionality,
 and permissions of admin portal interfaces.
@@ -8,8 +8,10 @@ and permissions of admin portal interfaces.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import UserChangeForm, UserCreationForm
-from .models import AuthUser
+from .forms import *
+from .models import *
+
+__all__ = ['AuthenticatedUserAdmin']
 
 
 class AuthenticatedUserAdmin(UserAdmin):

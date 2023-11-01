@@ -11,7 +11,7 @@ Application features include:
 
 ## Installation
 
-Add the application and it's required dependencies to the ``installed_apps``
+Add the application and it's required dependencies to the `installed_apps`
 list in the package settings:
 
 ```python

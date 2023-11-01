@@ -1,4 +1,4 @@
-"""Tests for the ``LoginView`` class"""
+"""Tests for the `LoginView` class"""
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -37,7 +37,7 @@ class FormValid(TestCase):
         return form, view
 
     def test_session_duration_remember_me_true(self) -> None:
-        """Test the setting of the session duration when ``remember_me`` is set to ``True``"""
+        """Test the setting of the session duration when `remember_me` is set to `True`"""
 
         form, view = self.generic_setup(remember_me=True)
         response = view.form_valid(form)
@@ -51,7 +51,7 @@ class FormValid(TestCase):
             places=-1)
 
     def test_session_duration_remember_me_false(self) -> None:
-        """Test the setting of the session duration when ``remember_me`` is set to ``False``"""
+        """Test the setting of the session duration when `remember_me` is set to `False`"""
 
         form, view = self.generic_setup(remember_me=False)
         response = view.form_valid(form)

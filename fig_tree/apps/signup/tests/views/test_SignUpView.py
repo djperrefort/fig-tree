@@ -1,4 +1,4 @@
-"""Tests for the ``SignUpView`` class"""
+"""Tests for the `SignUpView` class"""
 
 from django.core import mail
 from django.test import TestCase
