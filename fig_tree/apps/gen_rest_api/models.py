@@ -8,6 +8,8 @@ with table data.
 from __future__ import annotations
 
 from django.contrib import auth
+from django.contrib.contenttypes import fields as cfields
+from django.contrib.contenttypes import models as cmodels
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -64,7 +66,7 @@ class TreePermission(models.Model):
 # -----------------------------------------------------------------------------
 
 class BaseRecordModel(models.Model):
-    """Base class for creating DB models with common columns"""
+    """Abstract class for creating DB models with common columns"""
 
     class Meta:
         abstract = True  # Tell django this model is an abstract base class
@@ -86,7 +88,7 @@ class Address(BaseRecordModel):
     code = models.IntegerField(null=True)
     date = models.DateField(null=True)
 
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
 
 class Citation(BaseRecordModel):
@@ -102,9 +104,13 @@ class Citation(BaseRecordModel):
     page_or_ref = models.TextField(null=True)
     confidence = models.IntegerField(choices=Confidence.choices, default=1)
 
+    # Fields required to support generic relationships
+    content_type = models.ForeignKey(cmodels.ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = cfields.GenericForeignKey()
+
     source = models.ForeignKey('Source', on_delete=models.CASCADE, null=True)
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
-    tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
 
 
 class Event(BaseRecordModel):
@@ -134,7 +140,7 @@ class Event(BaseRecordModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
 
 class Family(BaseRecordModel):
@@ -150,7 +156,7 @@ class Family(BaseRecordModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
 
 class Media(BaseRecordModel):
@@ -160,8 +166,8 @@ class Media(BaseRecordModel):
     date = models.DateField(null=True)
     description = models.TextField(null=True)
 
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
 
 class Name(BaseRecordModel):
@@ -171,7 +177,7 @@ class Name(BaseRecordModel):
     surname = models.TextField(null=True)
     suffix = models.TextField(null=True)
     prefix = models.TextField(null=True)
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
 
 class Note(BaseRecordModel):
@@ -206,9 +212,9 @@ class Person(BaseRecordModel):
     # Generic relationships
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
     events = models.ForeignKey('Event', on_delete=models.CASCADE, null=True)
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
 
 class Place(BaseRecordModel):
@@ -226,7 +232,7 @@ class Place(BaseRecordModel):
     tags = models.ForeignKey('Tag', on_delete=models.CASCADE, null=True)
     notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
     media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
-    citations = models.ForeignKey('Citation', on_delete=models.CASCADE, null=True)
+    citations = cfields.GenericRelation('Citation')
 
     @property
     def encloses(self) -> list[Place]:
