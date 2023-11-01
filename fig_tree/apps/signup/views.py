@@ -22,6 +22,8 @@ from django.views.generic import CreateView, TemplateView, View
 from .forms import UserCreationForm
 from .models import AuthUser
 
+__all__ = ['SignUpView', 'ActivationSentView', 'ActivateAccountView']
+
 activation_token_generator = PasswordResetTokenGenerator()
 
 

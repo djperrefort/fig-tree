@@ -5,15 +5,18 @@ distinct database table and provides a high-level API to query and interact
 with table data.
 """
 
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+import django.contrib.auth.models
+from django.contrib import auth
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from .managers import AuthUserManager
+from .managers import *
+
+__all__ = ['AuthUser']
 
 
-class AuthUser(AbstractBaseUser, PermissionsMixin):
+class AuthUser(auth.models.AbstractBaseUser, auth.models.PermissionsMixin):
     """Custom model for user account data"""
 
     class Meta:

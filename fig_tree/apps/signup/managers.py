@@ -10,15 +10,17 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from django.contrib.auth import get_user_model
-from django.contrib.auth.base_user import BaseUserManager
-from django.core.validators import validate_email
+from django.contrib import auth
+from django.contrib.auth import base_user
+from django.core import validators
 
 if TYPE_CHECKING:  # Protect against circular import
     from .models import AuthUser
 
+__all__ = ['AuthUserManager']
 
-class AuthUserManager(BaseUserManager):
+
+class AuthUserManager(auth.base_user.BaseUserManager):
     """Custom user model manager
 
     Regular user accounts are set to an inactive state by default. This is the
@@ -29,9 +31,9 @@ class AuthUserManager(BaseUserManager):
     def create_user(username: str, password: str, email: str, **extra_fields) -> AuthUser:
         """Create and save a new user with the given email and password"""
 
-        validate_email(email)
+        validators.validate_email(email)
 
-        user_model = get_user_model()
+        user_model = auth.get_user_model()
         user = user_model(username=username, email=email, **extra_fields)
         user.set_password(password)
         user.save()

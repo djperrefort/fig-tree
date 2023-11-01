@@ -8,8 +8,10 @@ and permissions of admin portal interfaces.
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import UserChangeForm, UserCreationForm
-from .models import AuthUser
+from .forms import *
+from .models import *
+
+__all__ = ['AuthenticatedUserAdmin']
 
 
 class AuthenticatedUserAdmin(UserAdmin):

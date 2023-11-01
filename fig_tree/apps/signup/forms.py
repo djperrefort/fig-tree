@@ -8,7 +8,9 @@ module.
 from django.contrib.auth import forms
 from django.forms import fields as form_fields
 
-from .models import AuthUser
+from .models import *
+
+__all__ = ['UserCreationForm', 'UserChangeForm']
 
 _user_fields = ('username', 'email')
 _user_field_classes = {
