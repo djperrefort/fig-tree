@@ -8,6 +8,7 @@ module.
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm as AuthForm
 
+__all__ = ['AuthenticationForm']
 
 class AuthenticationForm(AuthForm):
     """Extends the built-in form for authenticating users"""

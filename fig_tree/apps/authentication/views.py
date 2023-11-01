@@ -19,6 +19,14 @@ from .forms import AuthenticationForm
 
 DEFAULT_REMEMBER_ME_DURATION = timedelta(days=7)
 
+__all__ = [
+    'LoginView',
+    'LogoutView',
+    'PasswordResetView',
+    'PasswordResetDoneView',
+    'PasswordResetConfirmView',
+    'PasswordResetCompleteView',
+]
 
 class LoginView(views.LoginView):
     """View for handling existing user authentication"""
