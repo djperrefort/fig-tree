@@ -41,26 +41,26 @@ View objects can be found in the ``views`` module.
 
 from rest_framework import routers
 
-from . import views
+from .views import *
 
 app_name = 'gen_rest_api'
 
 # Automatically generate URL definitions using a REST API router
 # See module docstring for the resulting definitions
 router = routers.SimpleRouter()
-router.register(r'tree', views.TreeViewSet),
-router.register(r'permission', views.TreePermissionViewSet),
-router.register(r'address', views.AddressViewSet),
-router.register(r'citation', views.CitationViewSet),
-router.register(r'event', views.EventViewSet),
-router.register(r'family', views.FamilyViewSet),
-router.register(r'media', views.MediaViewSet),
-router.register(r'name', views.NameViewSet),
-router.register(r'note', views.NoteViewSet),
-router.register(r'person', views.PersonViewSet),
-router.register(r'place', views.PlaceViewSet),
-router.register(r'repository', views.RepositoryViewSet),
-router.register(r'source', views.SourceViewSet),
-router.register(r'tag', views.TagViewSet),
-router.register(r'url', views.URLViewSet),
+router.register(r'tree', TreeViewSet),
+router.register(r'permission', TreePermissionViewSet),
+router.register(r'address', AddressViewSet),
+router.register(r'citation', CitationViewSet),
+router.register(r'event', EventViewSet),
+router.register(r'family', FamilyViewSet),
+router.register(r'media', MediaViewSet),
+router.register(r'name', NameViewSet),
+router.register(r'note', NoteViewSet),
+router.register(r'person', PersonViewSet),
+router.register(r'place', PlaceViewSet),
+router.register(r'repository', RepositoryViewSet),
+router.register(r'source', SourceViewSet),
+router.register(r'tag', TagViewSet),
+router.register(r'url', URLViewSet),
 urlpatterns = router.urls
