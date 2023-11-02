@@ -78,9 +78,6 @@ class TreePermission(models.Model):
 
         return f'{self.role} permissions for {self.user} on {self.tree}'
 
-    def __str__(self) -> str:
-        return f'User permissions for {self.user} on {self.tree}'
-
 
 # -----------------------------------------------------------------------------
 # Models used to represent individual genealogical record types
@@ -156,6 +153,11 @@ class Citation(GenericRelationshipMixin, BaseRecordModel):
     # Relationships
     notes = cfields.GenericRelation('Note')
     source = models.ForeignKey('Source', on_delete=models.CASCADE, null=True)
+
+    def __str__(self) -> str:
+        """Return the name of the cited source and supported record"""
+
+        return f'"{self.source}" citation for "{self.content_object}"'
 
 
 class Event(BaseRecordModel):

@@ -54,8 +54,8 @@ class BaseRecordAdmin(admin.ModelAdmin):
         queryset.update(private=False)
 
     actions = [set_selected_to_private, set_selected_to_public]
-    list_filter = ['private']
     readonly_fields = ['last_modified']
+    exclude = ['object_id', 'content_type', 'content_object']
 
     def get_readonly_fields(self, request, obj=None):
         fields = list(self.readonly_fields)
@@ -70,5 +70,13 @@ class AddressAdmin(BaseRecordAdmin):
     """Admin interface for `Address` objects"""
 
     list_display = ['line1', 'municipality', 'country', 'private']
-    exclude = ['object_id', 'content_type', 'content_object']
+    list_filter = ['private']
     inlines = [CitationInline]
+
+
+@admin.register(Citation)
+class CitationAdmin(BaseRecordAdmin):
+    """Admin interface for `Citation` objects"""
+
+    list_display = ['page_or_reference', 'source', 'confidence', 'private']
+    list_filter = ['private', 'confidence']
