@@ -11,11 +11,13 @@ from django.contrib import auth
 from django.contrib.contenttypes import fields as cfields
 from django.contrib.contenttypes import models as cmodels
 from django.db import models
+from django.template import defaultfilters
 from django.utils.translation import gettext_lazy as _
 
 __all__ = [
     'Tree',
     'TreePermission',
+    'BaseRecordModel',
     'Address',
     'Citation',
     'Event',
@@ -36,10 +38,20 @@ __all__ = [
 # Models used to organize genealogical records and permissions into trees
 # -----------------------------------------------------------------------------
 
+
 class Tree(models.Model):
     """Database model used to group records together into family trees"""
 
-    tree_name = models.TextField(null=False)
+    class Meta:
+        verbose_name = 'Family Tree'
+
+    tree_name = models.CharField('Name', max_length=50)
+    last_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        """Return the name of the family tree"""
+
+        return self.tree_name
 
 
 class TreePermission(models.Model):
@@ -59,6 +71,12 @@ class TreePermission(models.Model):
     tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
     user = models.ForeignKey(auth.get_user_model(), db_index=True, on_delete=models.CASCADE)
     role = models.IntegerField(choices=Role.choices, default='read')
+    last_modified = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        """Return the permission level, username, and username and permission """
+
+        return f'{self.role} permissions for {self.user} on {self.tree}'
 
 
 # -----------------------------------------------------------------------------
@@ -69,29 +87,56 @@ class BaseRecordModel(models.Model):
     """Abstract class for creating DB models with common columns"""
 
     class Meta:
-        abstract = True  # Tell django this model is an abstract base class
+        abstract = True
 
     private = models.BooleanField(default=True)
-    modified = models.DateTimeField(auto_now=True)
+    last_modified = models.DateTimeField(auto_now=True)
     tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
 
 
-class Address(BaseRecordModel):
+class GenericRelationshipMixin(models.Model):
+    """Mixin class for adding database fields required for generic relationships
+
+    Generic relationships support many-to-one relationships between a single
+    left table and N right tables using two columns for foreign keys instead of
+    N. One column stores the foreign key while the other references which table
+    the foreign key belongs to.
+    """
+
+    class Meta:
+        abstract = True
+
+    object_id = models.PositiveIntegerField(null=True, blank=True)  # Foreign key
+    content_type = models.ForeignKey(cmodels.ContentType, null=True, blank=True, on_delete=models.CASCADE)
+    content_object = cfields.GenericForeignKey('content_type', 'object_id')
+
+
+class Address(GenericRelationshipMixin, BaseRecordModel):
     """The physical location of a `Place`"""
 
-    line1 = models.TextField()
-    line2 = models.TextField(null=True)
-    long = models.IntegerField(null=True)
-    lat = models.IntegerField(null=True)
-    municipality = models.TextField(null=True)
-    country = models.TextField(null=True)
-    code = models.IntegerField(null=True)
-    date = models.DateField(null=True)
+    class Meta:
+        verbose_name_plural = 'Addresses'
 
+    # Fields
+    line1 = models.CharField('Line 1', max_length=250)
+    line2 = models.CharField('Line 2', max_length=250, null=True, blank=True)
+    lat = models.IntegerField('Latitude', null=True, blank=True)
+    long = models.IntegerField('Longitude', null=True, blank=True)
+    municipality = models.CharField(max_length=250, null=True, blank=True)
+    country = models.CharField(max_length=250, null=True, blank=True)
+    code = models.IntegerField(null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+
+    # Relationships
     citations = cfields.GenericRelation('Citation')
 
+    def __str__(self) -> str:
+        """Return the primary address line"""
 
-class Citation(BaseRecordModel):
+        return defaultfilters.truncatechars(self.line1, 50)
+
+
+class Citation(GenericRelationshipMixin, BaseRecordModel):
     """Reference object between database objects and `Source` records"""
 
     class Confidence(models.IntegerChoices):
@@ -101,16 +146,13 @@ class Citation(BaseRecordModel):
         REGULAR = 1, _('regular')
         HIGH = 2, _('high')
 
-    page_or_ref = models.TextField(null=True)
+    # Fields
+    page_or_reference = models.CharField(max_length=100, null=True, blank=True)
     confidence = models.IntegerField(choices=Confidence.choices, default=1)
 
-    # Fields required to support generic relationships
-    content_type = models.ForeignKey(cmodels.ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = cfields.GenericForeignKey()
-
+    # Relationships
+    notes = cfields.GenericRelation('Note')
     source = models.ForeignKey('Source', on_delete=models.CASCADE, null=True)
-    notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
 
 
 class Event(BaseRecordModel):
@@ -126,6 +168,7 @@ class Event(BaseRecordModel):
         RANGE = 4, _('range')
         SPAN = 5, _('span')
 
+    # Fields
     date_type = models.IntegerField(choices=DateType.choices, default='regular')
     event_type = models.TextField()
     year_start = models.IntegerField(null=True)
@@ -136,38 +179,39 @@ class Event(BaseRecordModel):
     day_end = models.IntegerField(null=True)
     description = models.TextField(null=True)
 
+    # Relationships
+    person = models.ForeignKey('Person', on_delete=models.CASCADE)
     place = models.OneToOneField('Place', on_delete=models.CASCADE, null=True)
     tags = cfields.GenericRelation('Tag')
-    notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
-    media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
+    notes = cfields.GenericRelation('Note')
+    media = cfields.GenericRelation('Media')
     citations = cfields.GenericRelation('Citation')
 
 
 class Family(BaseRecordModel):
     """A group of individuals forming a family unit"""
 
-    # Relationships with genealogical meaning
+    # Relationships with familial meaning
     parent1 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent1', null=True)
     parent2 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent2', null=True)
     children = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_child', null=True)
 
     # Other relationships
-    events = models.ForeignKey('Event', on_delete=models.CASCADE, null=True)
-    tags = cfields.GenericRelation('Tag')
-    notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
-    media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
     citations = cfields.GenericRelation('Citation')
+    media = cfields.GenericRelation('Media')
+    notes = cfields.GenericRelation('Note')
+    tags = cfields.GenericRelation('Tag')
 
 
-class Media(BaseRecordModel):
+class Media(GenericRelationshipMixin, BaseRecordModel):
     """A media object"""
 
     relative_path = models.FilePathField()
     date = models.DateField(null=True)
     description = models.TextField(null=True)
 
-    tags = cfields.GenericRelation('Tag')
     citations = cfields.GenericRelation('Citation')
+    tags = cfields.GenericRelation('Tag')
 
 
 class Name(BaseRecordModel):
@@ -180,7 +224,7 @@ class Name(BaseRecordModel):
     citations = cfields.GenericRelation('Citation')
 
 
-class Note(BaseRecordModel):
+class Note(GenericRelationshipMixin, BaseRecordModel):
     """A text note"""
 
     text = models.TextField()
@@ -208,12 +252,11 @@ class Person(BaseRecordModel):
     families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people', null=True)
     parent_families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people_parent', null=True)
 
-    # Generic relationships
-    tags = cfields.GenericRelation('Tag')
-    events = models.ForeignKey('Event', on_delete=models.CASCADE, null=True)
-    notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
-    media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
+    # Other relationships
     citations = cfields.GenericRelation('Citation')
+    media = cfields.GenericRelation('Media')
+    notes = cfields.GenericRelation('Note')
+    tags = cfields.GenericRelation('Tag')
 
 
 class Place(BaseRecordModel):
@@ -227,11 +270,11 @@ class Place(BaseRecordModel):
     code = models.IntegerField(null=True)
     date = models.DateField(null=True)
 
-    address = models.ForeignKey('Address', on_delete=models.CASCADE, null=True)
-    tags = cfields.GenericRelation('Tag')
-    notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
-    media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
+    addresses = cfields.GenericRelation('Address')
     citations = cfields.GenericRelation('Citation')
+    media = cfields.GenericRelation('Media')
+    notes = cfields.GenericRelation('Note')
+    tags = cfields.GenericRelation('Tag')
 
     @property
     def encloses(self) -> list[Place]:
@@ -246,39 +289,39 @@ class Repository(BaseRecordModel):
     type = models.TextField()
     name = models.TextField()
 
-    address_list = models.ForeignKey('Address', on_delete=models.CASCADE, null=True)
-    urls = models.ForeignKey('URL', on_delete=models.CASCADE, null=True)
+    addresses = cfields.GenericRelation('Address')
     tags = cfields.GenericRelation('Tag')
 
 
 class Source(BaseRecordModel):
     """A historical source or piece of reference material"""
 
-    title = models.TextField()
-    author = models.TextField(null=True)
-    pubinfo = models.TextField(null=True)
+    title = models.CharField(max_length=250)
+    author = models.CharField(max_length=250, null=True, blank=True)
+    pubinfo = models.CharField(max_length=250, null=True, blank=True)
 
-    notes = models.ForeignKey('Note', on_delete=models.CASCADE, null=True)
-    media = models.ForeignKey('Media', on_delete=models.CASCADE, null=True)
+    media = cfields.GenericRelation('Media')
+    notes = cfields.GenericRelation('Note')
     tags = cfields.GenericRelation('Tag')
 
+    def __str__(self) -> str:
+        """Return the source title"""
 
-class Tag(BaseRecordModel):
+        return defaultfilters.truncatechars(self.title, 50)
+
+
+class Tag(GenericRelationshipMixin, BaseRecordModel):
     """Data label used to organize data into customizable categories"""
 
     name = models.TextField()
-    modified = models.DateTimeField(auto_now=True)
     description = models.TextField(null=True)
 
-    # Fields required to support generic relationships
-    content_type = models.ForeignKey(cmodels.ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-    content_object = cfields.GenericForeignKey()
 
-
-class URL(BaseRecordModel):
+class URL(GenericRelationshipMixin, BaseRecordModel):
     """An online resource locator"""
 
     href = models.TextField()
     name = models.TextField(null=True)
     date = models.DateField(null=True)
+
+    repository = models.ForeignKey('Repository', on_delete=models.CASCADE)
