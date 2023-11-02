@@ -6,6 +6,7 @@ and permissions of admin portal interfaces.
 """
 
 from django.contrib import admin
+from django.contrib.contenttypes import admin as cadmin
 
 from .models import *
 
@@ -15,14 +16,59 @@ class TreePermissionInline(admin.TabularInline):
 
     model = TreePermission
     show_change_link = False
-    extra = 0
+    extra = 1
+
+
+class CitationInline(cadmin.GenericTabularInline):
+    """Inline admin element for source citations"""
+
+    model = Citation
+    fk_name = 'citations'
+    extra = 1
+
+    def get_readonly_fields(self, request, obj=None):
+        return [] if obj is None else ['tree']
 
 
 @admin.register(Tree)
 class TreeAdmin(admin.ModelAdmin):
-    """Admin interface for family tree objects"""
+    """Admin interface for `Tree` objects"""
 
-    list_display = ('tree_name',)
+    list_display = ['tree_name']
     inlines = [TreePermissionInline]
     search_fields = ['tree_name']
     ordering = ['tree_name']
+
+
+class BaseRecordAdmin(admin.ModelAdmin):
+    @admin.action
+    def set_selected_to_private(self, request, queryset) -> None:
+        """Mark selected clusters as enabled"""
+
+        queryset.update(private=True)
+
+    @admin.action
+    def set_selected_to_public(self, request, queryset) -> None:
+        """Mark selected clusters as disabled"""
+
+        queryset.update(private=False)
+
+    actions = [set_selected_to_private, set_selected_to_public]
+    list_filter = ['private']
+    readonly_fields = ['last_modified']
+
+    def get_readonly_fields(self, request, obj=None):
+        fields = list(self.readonly_fields)
+        if obj:
+            fields.extend(['tree'])
+
+        return fields
+
+
+@admin.register(Address)
+class AddressAdmin(BaseRecordAdmin):
+    """Admin interface for `Address` objects"""
+
+    list_display = ['line1', 'municipality', 'country', 'private']
+    exclude = ['object_id', 'content_type', 'content_object']
+    inlines = [CitationInline]
