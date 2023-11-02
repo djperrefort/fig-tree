@@ -30,16 +30,6 @@ class CitationInline(cadmin.GenericTabularInline):
         return [] if obj is None else ['tree']
 
 
-@admin.register(Tree)
-class TreeAdmin(admin.ModelAdmin):
-    """Admin interface for `Tree` objects"""
-
-    list_display = ['tree_name']
-    inlines = [TreePermissionInline]
-    search_fields = ['tree_name']
-    ordering = ['tree_name']
-
-
 class BaseRecordAdmin(admin.ModelAdmin):
     @admin.action
     def set_selected_to_private(self, request, queryset) -> None:
@@ -63,6 +53,16 @@ class BaseRecordAdmin(admin.ModelAdmin):
             fields.extend(['tree'])
 
         return fields
+
+
+@admin.register(Tree)
+class TreeAdmin(admin.ModelAdmin):
+    """Admin interface for `Tree` objects"""
+
+    list_display = ['tree_name']
+    inlines = [TreePermissionInline]
+    search_fields = ['tree_name']
+    ordering = ['tree_name']
 
 
 @admin.register(Address)
