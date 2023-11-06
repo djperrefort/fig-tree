@@ -12,16 +12,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 __all__ = [
-    'Tree',
+    'FamilyTree',
     'TreePermission',
 ]
 
 
-class Tree(models.Model):
+class FamilyTree(models.Model):
     """Database model used to group records together into family trees"""
-
-    class Meta:
-        verbose_name = 'Family Tree'
 
     tree_name = models.CharField('Name', max_length=50)
     last_modified = models.DateTimeField(auto_now=True)
@@ -46,7 +43,7 @@ class TreePermission(models.Model):
         WRITE = 30, _('write')
         ADMIN = 40, _('admin')
 
-    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
+    tree = models.ForeignKey(FamilyTree, db_index=True, on_delete=models.CASCADE)
     user = models.ForeignKey(auth.get_user_model(), db_index=True, on_delete=models.CASCADE)
     role = models.IntegerField(choices=Role.choices, default='read')
     last_modified = models.DateTimeField(auto_now=True)

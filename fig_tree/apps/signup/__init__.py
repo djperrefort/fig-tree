@@ -36,11 +36,4 @@ default user model by adding the following definition to the package settings fi
 
 ```python
 AUTH_USER_MODEL = 'signup.AuthUser'
-```
-
-To make sure everything is integrated correctly, run the application test suite:
-
-```bash
-fig-tree-manage test apps.signup
-```
 """

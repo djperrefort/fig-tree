@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'rest_framework',
     'widget_tweaks',
-    'apps.trees',
+    'apps.family_trees',
     'apps.authentication',
     'apps.gen_rest_api',
     'apps.signup',

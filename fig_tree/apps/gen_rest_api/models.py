@@ -13,7 +13,7 @@ from django.db import models
 from django.template import defaultfilters
 from django.utils.translation import gettext_lazy as _
 
-import apps.trees.models as tree_models
+import apps.family_trees.models as tree_models
 
 __all__ = [
     'BaseRecordModel',
@@ -41,7 +41,7 @@ class BaseRecordModel(models.Model):
 
     private = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
-    tree = models.ForeignKey(tree_models.Tree, db_index=True, on_delete=models.CASCADE)
+    tree = models.ForeignKey(tree_models.FamilyTree, db_index=True, on_delete=models.CASCADE)
 
 
 class GenericRelationshipMixin(models.Model):

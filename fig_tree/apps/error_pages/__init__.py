@@ -3,7 +3,7 @@ The `error_pages` application extends the error handling functionality built
 into django. It provides automatic request routing to customizable error pages
 for 400, 403, 404, and 500 errors (the same as those supported by Django).
 
-# Installation
+## Installation
 
 Add the application to the `installed_apps` list in the package settings:
 
@@ -25,7 +25,7 @@ handler404 = handlers.handler404
 handler500 = handlers.handler500
 ```
 
-# Configuring Application Templates
+## Configuring Application Templates
 
 By default, all HTTP errors are redirected to the HTML template `error_pages/default.html`.
 Template files can also be specified for individual HTTP error codes using the
@@ -35,7 +35,7 @@ will render the template located at `error_pages/http_404.html`.
 Rendered templates are automatically provided with context values for describing
 the corresponding error code. A summary of these values is provided below.
 
-## Context Values for 400 Errors
+### Context Values for 400 Errors
 
 | Template Variable Name | Value                                                       |
 |------------------------|-------------------------------------------------------------|
@@ -43,7 +43,7 @@ the corresponding error code. A summary of these values is provided below.
 | `description`          | Bad Request                                                 |
 | `description_long`     | The server could not process your request.                  |
 
-## Context Values for 403 Errors
+### Context Values for 403 Errors
 
 | Template Variable Name | Value                                                       |
 |------------------------|-------------------------------------------------------------|
@@ -51,7 +51,7 @@ the corresponding error code. A summary of these values is provided below.
 | `description`          | Forbidden                                                   |
 | `description_long`     | You are not authorized for access to the requested content. |
 
-## Context Values for 404 Errors
+### Context Values for 404 Errors
 
 | Template Variable Name | Value                                                       |
 |------------------------|-------------------------------------------------------------|
@@ -59,7 +59,7 @@ the corresponding error code. A summary of these values is provided below.
 | `description`          | Page Not Found                                              |
 | `description_long`     | The server could not find the resource you requested.       |
 
-## Context Values for 500 Errors
+### Context Values for 500 Errors
 
 | Template Variable Name | Value                                                       |
 |------------------------|-------------------------------------------------------------|

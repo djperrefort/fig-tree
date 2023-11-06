@@ -18,7 +18,7 @@ __all__ = [
 
 
 class IsTreeMember(permissions.BasePermission):
-    """Object-level permissions for regulating access to `Tree` records
+    """Object-level permissions for regulating access to `FamilyTree` records
 
     Access permissions are determined based on the user permissions stored in
     the `TreePermission` database table.
@@ -27,7 +27,7 @@ class IsTreeMember(permissions.BasePermission):
     Write permissions are given to users with `admin` permissions or higher.
     """
 
-    def has_object_permission(self, request, view: views.View, obj: Tree) -> bool:
+    def has_object_permission(self, request, view: views.View, obj: FamilyTree) -> bool:
         """Return whether an incoming request has the necessary permissions
 
         Args:
@@ -50,7 +50,7 @@ class IsTreeMember(permissions.BasePermission):
 
 
 class IsTreePermissionObjectAdmin(permissions.BasePermission):
-    """Object-level permissions for regulating access to `Tree` records
+    """Object-level permissions for regulating access to `FamilyTree` records
 
     Access permissions are determined based on the user permissions stored in
     the `TreePermission` database table.

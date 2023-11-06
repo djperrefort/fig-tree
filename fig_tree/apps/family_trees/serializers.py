@@ -11,16 +11,16 @@ from rest_framework.serializers import ModelSerializer
 from .models import *
 
 __all__ = [
-    'TreeSerializer',
+    'FamilyTreeSerializer',
     'TreePermissionSerializer'
 ]
 
 
-class TreeSerializer(ModelSerializer):
-    """Data serializer for the `Tree` database model"""
+class FamilyTreeSerializer(ModelSerializer):
+    """Data serializer for the `FamilyTree` database model"""
 
     class Meta:
-        model = Tree
+        model = FamilyTree
         fields = '__all__'
 
 

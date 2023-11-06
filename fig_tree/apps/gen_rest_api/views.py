@@ -12,7 +12,7 @@ from django.db.models import Manager, Q
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 
-import apps.trees.permissions as tree_permissions
+import apps.family_trees.permissions as tree_permissions
 from .models import *
 from .serializers import *
 

@@ -18,12 +18,12 @@ from .permissions import *
 from .serializers import *
 
 __all__ = [
-    'TreeViewSet',
+    'FamilyTreeViewSet',
     'TreePermissionViewSet',
 ]
 
 
-class TreeViewSet(
+class FamilyTreeViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
     mixins.RetrieveModelMixin,
@@ -31,10 +31,10 @@ class TreeViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet
 ):
-    """ViewSet for CRUD operations on `Tree` records"""
+    """ViewSet for CRUD operations on `FamilyTree` records"""
 
-    serializer_class = TreeSerializer
-    queryset = Tree.objects
+    serializer_class = FamilyTreeSerializer
+    queryset = FamilyTree.objects
     permission_classes = (IsAuthenticated, IsTreeMember)
 
     def get_queryset(self) -> Manager:
@@ -53,7 +53,7 @@ class TreeViewSet(
         The user crating the tree is automatically granted admin 
         """
 
-        serializer = TreeSerializer(data=request.data)
+        serializer = FamilyTreeSerializer(data=request.data)
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
