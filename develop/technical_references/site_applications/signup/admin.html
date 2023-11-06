@@ -1110,9 +1110,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fig_tree.apps.signup.admin.AuthenticatedUserAdmin" class="md-nav__link">
-    AuthenticatedUserAdmin
+  <a href="#fig_tree.apps.signup.admin.AuthUserAdmin" class="md-nav__link">
+    AuthUserAdmin
   </a>
+  
+    <nav class="md-nav" aria-label="AuthUserAdmin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fig_tree.apps.signup.admin.AuthUserAdmin.activate_selected_users" class="md-nav__link">
+    activate_selected_users()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fig_tree.apps.signup.admin.AuthUserAdmin.deactivate_selected_users" class="md-nav__link">
+    deactivate_selected_users()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1284,9 +1304,29 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#fig_tree.apps.signup.admin.AuthenticatedUserAdmin" class="md-nav__link">
-    AuthenticatedUserAdmin
+  <a href="#fig_tree.apps.signup.admin.AuthUserAdmin" class="md-nav__link">
+    AuthUserAdmin
   </a>
+  
+    <nav class="md-nav" aria-label="AuthUserAdmin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fig_tree.apps.signup.admin.AuthUserAdmin.activate_selected_users" class="md-nav__link">
+    activate_selected_users()
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fig_tree.apps.signup.admin.AuthUserAdmin.deactivate_selected_users" class="md-nav__link">
+    deactivate_selected_users()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1336,11 +1376,11 @@ and permissions of admin portal interfaces.</p>
 
 
 
-<h2 id="fig_tree.apps.signup.admin.AuthenticatedUserAdmin" class="doc doc-heading">
-          <code>AuthenticatedUserAdmin</code>
+<h2 id="fig_tree.apps.signup.admin.AuthUserAdmin" class="doc doc-heading">
+          <code>AuthUserAdmin</code>
 
 
-<a href="#fig_tree.apps.signup.admin.AuthenticatedUserAdmin" class="headerlink" title="Permanent link">&para;</a></h2>
+<a href="#fig_tree.apps.signup.admin.AuthUserAdmin" class="headerlink" title="Permanent link">&para;</a></h2>
 
 
   <div class="doc doc-contents ">
@@ -1352,14 +1392,7 @@ and permissions of admin portal interfaces.</p>
 
             <details class="quote">
               <summary>Source code in <code>fig_tree/apps/signup/admin.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
-<span class="normal">19</span>
-<span class="normal">20</span>
-<span class="normal">21</span>
-<span class="normal">22</span>
-<span class="normal">23</span>
-<span class="normal">24</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span>
 <span class="normal">27</span>
@@ -1370,25 +1403,54 @@ and permissions of admin portal interfaces.</p>
 <span class="normal">32</span>
 <span class="normal">33</span>
 <span class="normal">34</span>
-<span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">AuthenticatedUserAdmin</span><span class="p">(</span><span class="n">UserAdmin</span><span class="p">):</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@admin</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">AuthUser</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AuthUserAdmin</span><span class="p">(</span><span class="n">UserAdmin</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Admin interface for managing user accounts&quot;&quot;&quot;</span>
 
     <span class="n">add_form</span> <span class="o">=</span> <span class="n">UserCreationForm</span>
     <span class="n">form</span> <span class="o">=</span> <span class="n">UserChangeForm</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">AuthUser</span>
 
-    <span class="c1"># Fields shown in the main admin summary page</span>
-    <span class="n">list_display</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">,</span> <span class="s1">&#39;date_joined&#39;</span><span class="p">)</span>
+    <span class="nd">@admin</span><span class="o">.</span><span class="n">action</span>
+    <span class="k">def</span> <span class="nf">activate_selected_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mark selected users as active&quot;&quot;&quot;</span>
 
-    <span class="c1"># Fields shown when editing a new user</span>
-    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="p">(</span><span class="s1">&#39;User Data&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)}),</span>
-        <span class="p">(</span><span class="s1">&#39;Account Activation&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;is_active&#39;</span><span class="p">,)}),</span>
+        <span class="n">queryset</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@admin</span><span class="o">.</span><span class="n">action</span>
+    <span class="k">def</span> <span class="nf">deactivate_selected_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mark selected users as inactive&quot;&quot;&quot;</span>
+
+        <span class="n">queryset</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">activate_selected_users</span><span class="p">,</span> <span class="n">deactivate_selected_users</span><span class="p">]</span>
+    <span class="n">list_display</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">,</span> <span class="s1">&#39;date_joined&#39;</span><span class="p">]</span>
+    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">]</span>
+    <span class="n">list_filter</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;is_active&#39;</span><span class="p">,</span> <span class="s1">&#39;date_joined&#39;</span><span class="p">]</span>
+    <span class="n">ordering</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;username&#39;</span><span class="p">]</span>
+
+    <span class="n">readonly_fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;date_joined&#39;</span><span class="p">]</span>
+    <span class="n">fieldsets</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;User Data&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;date_joined&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">,</span> <span class="s1">&#39;password&#39;</span><span class="p">)}),</span>
         <span class="p">(</span><span class="s1">&#39;Staff Status&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;is_staff&#39;</span><span class="p">,</span> <span class="s1">&#39;is_super_user&#39;</span><span class="p">)}),</span>
-    <span class="p">)</span>
-
-    <span class="n">search_fields</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;is_active&#39;</span><span class="p">)</span>
-    <span class="n">ordering</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,)</span>
+    <span class="p">]</span>
 </code></pre></div></td></tr></table></div>
             </details>
 
@@ -1403,6 +1465,72 @@ and permissions of admin portal interfaces.</p>
 
 
 
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h3 id="fig_tree.apps.signup.admin.AuthUserAdmin.activate_selected_users" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">activate_selected_users</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">)</span></code>
+
+<a href="#fig_tree.apps.signup.admin.AuthUserAdmin.activate_selected_users" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Mark selected users as active</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fig_tree/apps/signup/admin.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@admin</span><span class="o">.</span><span class="n">action</span>
+<span class="k">def</span> <span class="nf">activate_selected_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mark selected users as active&quot;&quot;&quot;</span>
+
+    <span class="n">queryset</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h3 id="fig_tree.apps.signup.admin.AuthUserAdmin.deactivate_selected_users" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">deactivate_selected_users</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">)</span></code>
+
+<a href="#fig_tree.apps.signup.admin.AuthUserAdmin.deactivate_selected_users" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Mark selected users as inactive</p>
+
+          <details class="quote">
+            <summary>Source code in <code>fig_tree/apps/signup/admin.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@admin</span><span class="o">.</span><span class="n">action</span>
+<span class="k">def</span> <span class="nf">deactivate_selected_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">queryset</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mark selected users as inactive&quot;&quot;&quot;</span>
+
+    <span class="n">queryset</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">is_active</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
 
 
 
