@@ -35,6 +35,7 @@ LOGIN_URL = 'auth:login'
 REMEMBER_ME_DURATION = timedelta(days=7)
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,6 +77,24 @@ TEMPLATES = [
         },
     },
 ]
+
+# Base settings for the Admin UI theme
+
+JAZZMIN_SETTINGS = {
+    'site_title': 'Fig-Tree Admin',
+    'site_header': 'Fig Tree',
+    'site_brand': 'Fig Tree',
+    'related_modal_active': True,
+    'order_with_respect_to': [
+        'authentication',
+        'signup',
+        'gen_rest_api',
+        'sites'
+    ],
+    'icons': {
+        'sites.Site': 'fa fa-globe'
+    },
+}
 
 # Global REST API Settings
 

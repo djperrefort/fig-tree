@@ -15,7 +15,7 @@ from django.contrib.auth import login, views
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
-from .forms import AuthenticationForm
+from .forms import *
 
 DEFAULT_REMEMBER_ME_DURATION = timedelta(days=7)
 
@@ -27,6 +27,7 @@ __all__ = [
     'PasswordResetConfirmView',
     'PasswordResetCompleteView',
 ]
+
 
 class LoginView(views.LoginView):
     """View for handling existing user authentication"""
