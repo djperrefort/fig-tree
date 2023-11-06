@@ -13,7 +13,7 @@ from django.db import models
 from django.template import defaultfilters
 from django.utils.translation import gettext_lazy as _
 
-import apps.family_trees.models as tree_models
+from apps.family_trees import FamilyTreeModelMixin
 
 __all__ = [
     'BaseRecordModel',
@@ -33,17 +33,6 @@ __all__ = [
 ]
 
 
-class BaseRecordModel(models.Model):
-    """Abstract class for creating DB models with common columns"""
-
-    class Meta:
-        abstract = True
-
-    private = models.BooleanField(default=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    tree = models.ForeignKey(tree_models.FamilyTree, db_index=True, on_delete=models.CASCADE)
-
-
 class GenericRelationshipMixin(models.Model):
     """Mixin class for adding database fields required for generic relationships
 
@@ -59,6 +48,15 @@ class GenericRelationshipMixin(models.Model):
     object_id = models.PositiveIntegerField(null=True, blank=True)  # Foreign key
     content_type = models.ForeignKey(cmodels.ContentType, null=True, blank=True, on_delete=models.CASCADE)
     content_object = cfields.GenericForeignKey('content_type', 'object_id')
+
+
+class BaseRecordModel(FamilyTreeModelMixin, models.Model):
+    """Abstract class for creating DB models with common columns"""
+
+    class Meta:
+        abstract = True
+
+    last_modified = models.DateTimeField(auto_now=True)
 
 
 class Address(GenericRelationshipMixin, BaseRecordModel):

@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 __all__ = [
     'FamilyTree',
     'TreePermission',
+    'FamilyTreeMixin',
 ]
 
 
@@ -52,3 +53,11 @@ class TreePermission(models.Model):
         """Return the permission level, username, and username and permission """
 
         return f'{self.role} permissions for {self.user} on {self.tree}'
+
+
+class FamilyTreeModelMixin:
+    """Model mixin class that adds the columns necessary to support family tree permissions"""
+
+    private = models.BooleanField(default=True)
+    last_modified = models.DateTimeField(auto_now=True)
+    tree = models.ForeignKey(FamilyTree, db_index=True, on_delete=models.CASCADE)

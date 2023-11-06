@@ -24,17 +24,21 @@ urlpatterns = [
 
 ## Usage
 
-To group application data by family tree, add a `tree` attribute to the
-appropriate database model with a relationship to the `FamilyTree` class:
+The `FamilyTreeModelMixin` class is used to add the fields and methods
+necessary to support family tree based permissions models using the model
+backend. Add the mixin to your database models as follows:
 
 ```python
-import apps.family_trees.models as tree_models
+from apps.family_trees import FamilyTreeModelMixin
 
 
-class ExampleModel(models.Model):
-    tree = models.ForeignKey(tree_models.FamilyTree, db_index=True, on_delete=models.CASCADE)
+class ExampleModel(FamilyTreeModelMixin, models.Model):
+    # Define the rest of your model class as normal
+    ...
 ```
 
 User permissions can then be assigned to any corresponding views using the
 `IsTreeMember` permission object. This will require the user to have
 """
+
+from models import FamilyTreeModelMixin
