@@ -11,8 +11,6 @@ from rest_framework.serializers import ModelSerializer
 from .models import *
 
 __all__ = [
-    'TreeSerializer',
-    'TreePermissionSerializer',
     'AddressSerializer',
     'CitationSerializer',
     'EventSerializer',
@@ -28,30 +26,6 @@ __all__ = [
     'URLSerializer',
 ]
 
-
-# -----------------------------------------------------------------------------
-# Serializers for family trees and family tree permissions
-# -----------------------------------------------------------------------------
-
-class TreeSerializer(ModelSerializer):
-    """Data serializer for the `Tree` database model"""
-
-    class Meta:
-        model = Tree
-        fields = '__all__'
-
-
-class TreePermissionSerializer(ModelSerializer):
-    """Data serializer for the `TreePermission` database model"""
-
-    class Meta:
-        model = TreePermission
-        fields = '__all__'
-
-
-# -----------------------------------------------------------------------------
-# Serializers for individual genealogical record types
-# -----------------------------------------------------------------------------
 
 class BaseRecordSerializer(ModelSerializer):
     """Base class for serializing individual genealogical record types

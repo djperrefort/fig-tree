@@ -7,16 +7,15 @@ with table data.
 
 from __future__ import annotations
 
-from django.contrib import auth
 from django.contrib.contenttypes import fields as cfields
 from django.contrib.contenttypes import models as cmodels
 from django.db import models
 from django.template import defaultfilters
 from django.utils.translation import gettext_lazy as _
 
+import apps.trees.models as tree_models
+
 __all__ = [
-    'Tree',
-    'TreePermission',
     'BaseRecordModel',
     'Address',
     'Citation',
@@ -34,55 +33,6 @@ __all__ = [
 ]
 
 
-# -----------------------------------------------------------------------------
-# Models used to organize genealogical records and permissions into trees
-# -----------------------------------------------------------------------------
-
-
-class Tree(models.Model):
-    """Database model used to group records together into family trees"""
-
-    class Meta:
-        verbose_name = 'Family Tree'
-
-    tree_name = models.CharField('Name', max_length=50)
-    last_modified = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        """Return the name of the family tree"""
-
-        return self.tree_name
-
-
-class TreePermission(models.Model):
-    """User permissions for family trees"""
-
-    class Meta:
-        unique_together = (('tree', 'user',),)
-
-    class Role(models.IntegerChoices):
-        """User roles for facilitating RBAC"""
-
-        READ = 10, _('read')
-        READ_PRIVATE = 20, _('private')
-        WRITE = 30, _('write')
-        ADMIN = 40, _('admin')
-
-    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(auth.get_user_model(), db_index=True, on_delete=models.CASCADE)
-    role = models.IntegerField(choices=Role.choices, default='read')
-    last_modified = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        """Return the permission level, username, and username and permission """
-
-        return f'{self.role} permissions for {self.user} on {self.tree}'
-
-
-# -----------------------------------------------------------------------------
-# Models used to represent individual genealogical record types
-# -----------------------------------------------------------------------------
-
 class BaseRecordModel(models.Model):
     """Abstract class for creating DB models with common columns"""
 
@@ -91,7 +41,7 @@ class BaseRecordModel(models.Model):
 
     private = models.BooleanField(default=True)
     last_modified = models.DateTimeField(auto_now=True)
-    tree = models.ForeignKey('Tree', db_index=True, on_delete=models.CASCADE)
+    tree = models.ForeignKey(tree_models.Tree, db_index=True, on_delete=models.CASCADE)
 
 
 class GenericRelationshipMixin(models.Model):

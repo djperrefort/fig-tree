@@ -7,10 +7,6 @@ View objects can be found in the `views` module.
 
 | URL                   | View / View Set         | Name               |
 |-----------------------|------------------------|---------------------|
-| `tree/`               | `TreeViewSet`          | `tree-list`         |
-| `tree/<str:pk>`       | `TreeViewSet`          | `tree-detail`       |
-| `permission/`         | `PermissionViewSet`    | `permission-list`   |
-| `permission/<str:pk>` | `PermissionViewSet`    | `permission-detail` |
 | `address/`            | `AddressViewSet`       | `address-list`      |
 | `address/<str:pk>`    | `AddressViewSet`       | `address-detail`    |
 | `citation/`           | `CitationViewSet`      | `citation-list`     |
@@ -45,22 +41,18 @@ from .views import *
 
 app_name = 'gen_rest_api'
 
-# Automatically generate URL definitions using a REST API router
-# See module docstring for the resulting definitions
 router = routers.SimpleRouter()
-router.register(r'tree', TreeViewSet),
-router.register(r'permission', TreePermissionViewSet),
-router.register(r'address', AddressViewSet),
-router.register(r'citation', CitationViewSet),
-router.register(r'event', EventViewSet),
-router.register(r'family', FamilyViewSet),
-router.register(r'media', MediaViewSet),
-router.register(r'name', NameViewSet),
-router.register(r'note', NoteViewSet),
-router.register(r'person', PersonViewSet),
-router.register(r'place', PlaceViewSet),
-router.register(r'repository', RepositoryViewSet),
-router.register(r'source', SourceViewSet),
-router.register(r'tag', TagViewSet),
-router.register(r'url', URLViewSet),
+router.register(r'address', AddressViewSet)
+router.register(r'citation', CitationViewSet)
+router.register(r'event', EventViewSet)
+router.register(r'family', FamilyViewSet)
+router.register(r'media', MediaViewSet)
+router.register(r'name', NameViewSet)
+router.register(r'note', NoteViewSet)
+router.register(r'person', PersonViewSet)
+router.register(r'place', PlaceViewSet)
+router.register(r'repository', RepositoryViewSet)
+router.register(r'source', SourceViewSet)
+router.register(r'tag', TagViewSet)
+router.register(r'url', URLViewSet)
 urlpatterns = router.urls
