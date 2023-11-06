@@ -26,11 +26,11 @@ class AuthUser(auth.models.AbstractBaseUser, auth.models.PermissionsMixin):
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email', ]
 
-    username = models.CharField(max_length=50, unique=True, null=False)
-    email = models.EmailField(_('email address'), unique=True, null=False)
-    date_joined = models.DateTimeField(default=timezone.now, null=False)
-    is_active = models.BooleanField(default=False, null=False)
-    is_staff = models.BooleanField(default=False, null=False)
-    is_super_user = models.BooleanField(default=False, null=False)
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(_('email address'), unique=True)
+    date_joined = models.DateTimeField(default=timezone.now)
+    is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_super_user = models.BooleanField(default=False)
 
     objects = AuthUserManager()
