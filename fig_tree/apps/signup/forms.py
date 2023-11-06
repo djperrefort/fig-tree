@@ -12,20 +12,8 @@ from .models import *
 
 __all__ = ['UserCreationForm', 'UserChangeForm']
 
-_user_fields = ('username', 'email')
-_user_field_classes = {
-    'username': forms.UsernameField,
-    'email': form_fields.EmailField
-}
-
-_error_messages = {
-    "username": {
-        "unique": "An account with this username already exists."
-    },
-    "email": {
-        "unique": "An account with this email address already exists."
-    },
-}
+EXISTING_USERNAME_ERROR = "An account with this username already exists."
+EXISTING_EMAIL_ERROR = "An account with this email address already exists."
 
 
 class UserCreationForm(forms.UserCreationForm):
@@ -33,9 +21,15 @@ class UserCreationForm(forms.UserCreationForm):
 
     class Meta(forms.UserCreationForm.Meta):
         model = AuthUser
-        fields = _user_fields
-        field_classes = _user_field_classes
-        error_messages = _error_messages
+        fields = ('username', 'email')
+        field_classes = {
+            'username': forms.UsernameField,
+            'email': form_fields.EmailField
+        }
+        error_messages = {
+            "username": {"unique": EXISTING_USERNAME_ERROR},
+            "email": {"unique": EXISTING_EMAIL_ERROR},
+        }
 
 
 class UserChangeForm(forms.UserChangeForm):
@@ -43,6 +37,12 @@ class UserChangeForm(forms.UserChangeForm):
 
     class Meta:
         model = AuthUser
-        fields = _user_fields
-        field_classes = _user_field_classes
-        error_messages = _error_messages
+        fields = ('username', 'email')
+        field_classes = {
+            'username': forms.UsernameField,
+            'email': form_fields.EmailField
+        }
+        error_messages = {
+            "username": {"unique": EXISTING_USERNAME_ERROR},
+            "email": {"unique": EXISTING_EMAIL_ERROR},
+        }
