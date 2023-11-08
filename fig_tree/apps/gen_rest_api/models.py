@@ -68,11 +68,14 @@ class Address(GenericRelationshipMixin, BaseRecordModel):
     # Fields
     line1 = models.CharField('Line 1', max_length=250)
     line2 = models.CharField('Line 2', max_length=250, null=True, blank=True)
+    line3 = models.CharField('Line 3', max_length=250, null=True, blank=True)
+    line4 = models.CharField('Line 4', max_length=250, null=True, blank=True)
+    municipality = models.CharField(max_length=250, null=True, blank=True)
+    province = models.CharField(max_length=250, null=True, blank=True)
+    country = models.CharField(max_length=250, null=True, blank=True)
+    code = models.CharField(max_length=10, null=True, blank=True)
     lat = models.IntegerField('Latitude', null=True, blank=True)
     long = models.IntegerField('Longitude', null=True, blank=True)
-    municipality = models.CharField(max_length=250, null=True, blank=True)
-    country = models.CharField(max_length=250, null=True, blank=True)
-    code = models.IntegerField(null=True, blank=True)
     date = models.DateField(null=True, blank=True)
 
     # Relationships

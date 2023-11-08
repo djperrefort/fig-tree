@@ -87,14 +87,15 @@ JAZZMIN_SETTINGS = {
     'site_brand': 'Fig Tree',
     'related_modal_active': True,
     'order_with_respect_to': [
-        'authentication',
         'signup',
+        'family_trees',
         'gen_rest_api',
-        'sites'
     ],
     'icons': {
         'sites.Site': 'fa fa-globe'
     },
+    'hide_apps' : ['sites'],
+    "changeform_format": "single",
     "changeform_format_overrides": dict(),
 }
 

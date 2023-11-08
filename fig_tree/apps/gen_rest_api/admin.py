@@ -5,23 +5,21 @@ management of application settings by customizing the appearance, functionality,
 and permissions of admin portal interfaces.
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.contenttypes import admin as cadmin
 
 from .models import *
 
-
-class TreePermissionInline(admin.TabularInline):
-    """Inline admin element for family tree user permissions"""
-
-    model = TreePermission
-    show_change_link = False
-    extra = 1
+settings.JAZZMIN_SETTINGS['icons'].update({
+    'gen_rest_api.Address': 'fa fa-address-card',
+})
 
 
 class CitationInline(cadmin.GenericTabularInline):
     """Inline admin element for source citations"""
 
+    fields = ['page_or_reference', 'confidence', 'source']
     model = Citation
     fk_name = 'citations'
     extra = 1
@@ -55,21 +53,11 @@ class BaseRecordAdmin(admin.ModelAdmin):
         return fields
 
 
-@admin.register(Tree)
-class TreeAdmin(admin.ModelAdmin):
-    """Admin interface for `Tree` objects"""
-
-    list_display = ['tree_name']
-    inlines = [TreePermissionInline]
-    search_fields = ['tree_name']
-    ordering = ['tree_name']
-
-
 @admin.register(Address)
 class AddressAdmin(BaseRecordAdmin):
     """Admin interface for `Address` objects"""
 
-    list_display = ['line1', 'municipality', 'country', 'private']
+    list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private']
     list_filter = ['private']
     inlines = [CitationInline]
 

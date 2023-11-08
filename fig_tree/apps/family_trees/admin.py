@@ -14,10 +14,6 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'family_trees.FamilyTree': 'fab fa-pagelines',
 })
 
-settings.JAZZMIN_SETTINGS["changeform_format_overrides"].update({
-    'family_trees.FamilyTree': 'single',
-})
-
 
 class TreePermissionInline(admin.TabularInline):
     """Inline admin element for family tree user permissions"""
