@@ -9,8 +9,7 @@ Application features include:
   - Support for query parameters and filters to search and retrieve specific genealogical records.
   - Robust data validation when creating/updating records to ensure data integrity.
 
-Installation
-------------
+## Installation
 
 Add the application to the `installed_apps` list in the package settings:
 

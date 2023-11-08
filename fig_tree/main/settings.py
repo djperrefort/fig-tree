@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'rest_framework',
     'widget_tweaks',
+    'apps.family_trees',
     'apps.authentication',
     'apps.gen_rest_api',
     'apps.signup',
@@ -94,6 +95,7 @@ JAZZMIN_SETTINGS = {
     'icons': {
         'sites.Site': 'fa fa-globe'
     },
+    "changeform_format_overrides": dict(),
 }
 
 # Global REST API Settings

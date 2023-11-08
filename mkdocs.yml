@@ -65,4 +65,7 @@ nav:
             - technical_references/site_applications/signup/models.md
             - technical_references/site_applications/signup/urls.md
             - technical_references/site_applications/signup/views.md
+          - family_trees:
+            - technical_references/site_applications/family_trees/overview.md
+            - technical_references/site_applications/family_trees/urls.md
 copyright: Copyright &copy; Daniel Perrefort. All rights reserved.
