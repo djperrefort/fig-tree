@@ -35,7 +35,7 @@ class FamilyTreeViewSet(
 
     serializer_class = FamilyTreeSerializer
     queryset = FamilyTree.objects
-    permission_classes = (IsAuthenticated, IsTreeMember)
+    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
     def get_queryset(self) -> Manager:
         """Return the filtered queryset used by the API endpoint to execute DB queries
@@ -79,7 +79,7 @@ class TreePermissionViewSet(
 
     serializer_class = TreePermissionSerializer
     queryset = TreePermission.objects
-    permission_classes = (IsAuthenticated, IsTreePermissionObjectAdmin)
+    permission_classes = (IsAuthenticated, TreePermissionObjectPermission)
 
     def get_queryset(self) -> Manager:
         """Return the filtered queryset used by the API endpoint to execute DB queries

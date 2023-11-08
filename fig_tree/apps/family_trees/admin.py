@@ -5,9 +5,18 @@ management of application settings by customizing the appearance, functionality,
 and permissions of admin portal interfaces.
 """
 
+from django.conf import settings
 from django.contrib import admin
 
 from .models import *
+
+settings.JAZZMIN_SETTINGS['icons'].update({
+    'family_trees.FamilyTree': 'fab fa-pagelines',
+})
+
+settings.JAZZMIN_SETTINGS["changeform_format_overrides"].update({
+    'family_trees.FamilyTree': 'single',
+})
 
 
 class TreePermissionInline(admin.TabularInline):
@@ -15,14 +24,14 @@ class TreePermissionInline(admin.TabularInline):
 
     model = TreePermission
     show_change_link = False
-    extra = 1
+    extra = 0
 
 
 @admin.register(FamilyTree)
 class TreeAdmin(admin.ModelAdmin):
     """Admin interface for `FamilyTree` objects"""
 
-    list_display = ['tree_name']
+    list_display = ['tree_name', 'last_modified']
     inlines = [TreePermissionInline]
     search_fields = ['tree_name']
     ordering = ['tree_name']

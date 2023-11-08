@@ -5,19 +5,18 @@ individual requests and/or objects (database records).
 """
 
 from django import views
-from django.db import models
 from rest_framework import permissions
 
 from .models import *
 
 __all__ = [
-    'IsTreeMember',
-    'IsTreePermissionObjectAdmin',
     'FamilyTreeObjectPermission',
+    'TreePermissionObjectPermission',
+    'IsTreeMember',
 ]
 
 
-class IsTreeMember(permissions.BasePermission):
+class FamilyTreeObjectPermission(permissions.BasePermission):
     """Object-level permissions for regulating access to `FamilyTree` records
 
     Access permissions are determined based on the user permissions stored in
@@ -49,8 +48,8 @@ class IsTreeMember(permissions.BasePermission):
         return permission_record.role >= TreePermission.Role.ADMIN
 
 
-class IsTreePermissionObjectAdmin(permissions.BasePermission):
-    """Object-level permissions for regulating access to `FamilyTree` records
+class TreePermissionObjectPermission(permissions.BasePermission):
+    """Object-level permissions for regulating access to `TreePermission` records
 
     Access permissions are determined based on the user permissions stored in
     the `TreePermission` database table.
@@ -78,14 +77,16 @@ class IsTreePermissionObjectAdmin(permissions.BasePermission):
         return permission_record.role >= TreePermission.Role.ADMIN
 
 
-class FamilyTreeObjectPermission(permissions.BasePermission):
+class IsTreeMember(permissions.BasePermission):
     """Object-level permissions for generic genealogical records
 
     Access permissions are determined based on the user permissions stored in
-    the `TreePermission` database table.
+    the `TreePermission` database table. Database models regulated by this
+    permission object are expected to inherit from the `FamilyTreeModelMixin`
+    class.
     """
 
-    def has_object_permission(self, request, view: views.View, obj: models.Model) -> bool:
+    def has_object_permission(self, request, view: views.View, obj: FamilyTreeModelMixin) -> bool:
         """Return whether a request has permissions to interact with an object
 
         Args:

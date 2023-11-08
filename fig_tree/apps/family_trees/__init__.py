@@ -24,8 +24,8 @@ urlpatterns = [
 
 ## Usage
 
-The `FamilyTreeModelMixin` class is used to add the fields and methods
-necessary to support family tree based permissions models using the model
+The `FamilyTreeModelMixin` class defines the fields and methods
+necessary to support family tree based permissions using the model
 backend. Add the mixin to your database models as follows:
 
 ```python
@@ -37,8 +37,16 @@ class ExampleModel(FamilyTreeModelMixin, models.Model):
     ...
 ```
 
-User permissions can then be assigned to any corresponding views using the
-`IsTreeMember` permission object. This will require the user to have
-"""
+User permissions can then be assigned to corresponding views (or view set)
+using the `IsTreeMember` permission object:
 
-from models import FamilyTreeModelMixin
+```python
+class ExampleViewSet(viewsets.GenericViewSet):
+    # Define the view set permissions
+    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
+
+    # Define the rest of the view set as normal
+    serializer_class = ExampleSerializer
+    queryset = ExampleModel.objects
+```
+"""

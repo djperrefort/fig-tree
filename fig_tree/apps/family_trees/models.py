@@ -14,7 +14,7 @@ from django.utils.translation import gettext_lazy as _
 __all__ = [
     'FamilyTree',
     'TreePermission',
-    'FamilyTreeMixin',
+    'FamilyTreeModelMixin',
 ]
 
 
@@ -23,6 +23,7 @@ class FamilyTree(models.Model):
 
     tree_name = models.CharField('Name', max_length=50)
     last_modified = models.DateTimeField(auto_now=True)
+    private = models.BooleanField(default=True)
 
     def __str__(self) -> str:
         """Return the name of the family tree"""

@@ -56,7 +56,7 @@ class BaseRecordViewSet(BaseViewSet):
     has appropriate permissions on the parent family tree.
     """
 
-    permission_classes = (IsAuthenticated, tree_permissions.FamilyTreeObjectPermission,)
+    permission_classes = (IsAuthenticated, tree_permissions.IsTreeMember)
 
     def get_queryset(self) -> Manager:
         """Filter the class level `queryset` attribute based on user tree permissions"""

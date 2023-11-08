@@ -13,7 +13,7 @@ from django.db import models
 from django.template import defaultfilters
 from django.utils.translation import gettext_lazy as _
 
-from apps.family_trees import FamilyTreeModelMixin
+from apps.family_trees.models import FamilyTreeModelMixin
 
 __all__ = [
     'BaseRecordModel',

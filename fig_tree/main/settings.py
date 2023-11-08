@@ -95,6 +95,7 @@ JAZZMIN_SETTINGS = {
     'icons': {
         'sites.Site': 'fa fa-globe'
     },
+    "changeform_format_overrides": dict(),
 }
 
 # Global REST API Settings
