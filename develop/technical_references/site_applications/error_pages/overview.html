@@ -859,16 +859,17 @@
     error_pages
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="error_pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.error_pages--installation" class="md-nav__link">
     Installation
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.error_pages--configuring-application-templates" class="md-nav__link">
     Configuring Application Templates
   </a>
@@ -901,6 +902,11 @@
   <a href="#fig_tree.apps.error_pages--context-values-for-500-errors" class="md-nav__link">
     Context Values for 500 Errors
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -1274,6 +1280,90 @@
 
               
             
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_5" id="__nav_4_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    family_trees
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            family_trees
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../family_trees/overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../family_trees/urls.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Urls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1322,16 +1412,17 @@
     error_pages
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="error_pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.error_pages--installation" class="md-nav__link">
     Installation
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.error_pages--configuring-application-templates" class="md-nav__link">
     Configuring Application Templates
   </a>
@@ -1371,6 +1462,11 @@
     </nav>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
     </ul>
   
@@ -1400,7 +1496,7 @@
       <p>The <code>error_pages</code> application extends the error handling functionality built
 into django. It provides automatic request routing to customizable error pages
 for 400, 403, 404, and 500 errors (the same as those supported by Django).</p>
-<h2 id="fig_tree.apps.error_pages--installation">Installation<a class="headerlink" href="#fig_tree.apps.error_pages--installation" title="Permanent link">&para;</a></h2>
+<h3 id="fig_tree.apps.error_pages--installation">Installation<a class="headerlink" href="#fig_tree.apps.error_pages--installation" title="Permanent link">&para;</a></h3>
 <p>Add the application to the <code>installed_apps</code> list in the package settings:</p>
 <div class="highlight"><pre><span></span><code><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
    <span class="s1">&#39;apps.error_pages&#39;</span><span class="p">,</span>
@@ -1415,14 +1511,14 @@ for 400, 403, 404, and 500 errors (the same as those supported by Django).</p>
 <span class="n">handler404</span> <span class="o">=</span> <span class="n">handlers</span><span class="o">.</span><span class="n">handler404</span>
 <span class="n">handler500</span> <span class="o">=</span> <span class="n">handlers</span><span class="o">.</span><span class="n">handler500</span>
 </code></pre></div>
-<h2 id="fig_tree.apps.error_pages--configuring-application-templates">Configuring Application Templates<a class="headerlink" href="#fig_tree.apps.error_pages--configuring-application-templates" title="Permanent link">&para;</a></h2>
+<h3 id="fig_tree.apps.error_pages--configuring-application-templates">Configuring Application Templates<a class="headerlink" href="#fig_tree.apps.error_pages--configuring-application-templates" title="Permanent link">&para;</a></h3>
 <p>By default, all HTTP errors are redirected to the HTML template <code>error_pages/default.html</code>.
 Template files can also be specified for individual HTTP error codes using the
 naming scheme <code>error_pages/http_[ERROR CODE].html</code>. For example, a 404 error
 will render the template located at <code>error_pages/http_404.html</code>.</p>
 <p>Rendered templates are automatically provided with context values for describing
 the corresponding error code. A summary of these values is provided below.</p>
-<h3 id="fig_tree.apps.error_pages--context-values-for-400-errors">Context Values for 400 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-400-errors" title="Permanent link">&para;</a></h3>
+<h4 id="fig_tree.apps.error_pages--context-values-for-400-errors">Context Values for 400 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-400-errors" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -1445,7 +1541,7 @@ the corresponding error code. A summary of these values is provided below.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="fig_tree.apps.error_pages--context-values-for-403-errors">Context Values for 403 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-403-errors" title="Permanent link">&para;</a></h3>
+<h4 id="fig_tree.apps.error_pages--context-values-for-403-errors">Context Values for 403 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-403-errors" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -1468,7 +1564,7 @@ the corresponding error code. A summary of these values is provided below.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="fig_tree.apps.error_pages--context-values-for-404-errors">Context Values for 404 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-404-errors" title="Permanent link">&para;</a></h3>
+<h4 id="fig_tree.apps.error_pages--context-values-for-404-errors">Context Values for 404 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-404-errors" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -1491,7 +1587,7 @@ the corresponding error code. A summary of these values is provided below.</p>
 </tr>
 </tbody>
 </table>
-<h3 id="fig_tree.apps.error_pages--context-values-for-500-errors">Context Values for 500 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-500-errors" title="Permanent link">&para;</a></h3>
+<h4 id="fig_tree.apps.error_pages--context-values-for-500-errors">Context Values for 500 Errors<a class="headerlink" href="#fig_tree.apps.error_pages--context-values-for-500-errors" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>

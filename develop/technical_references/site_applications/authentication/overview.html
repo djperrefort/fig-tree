@@ -735,19 +735,25 @@
     authentication
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.authentication--installation" class="md-nav__link">
     Installation
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.authentication--application-settings" class="md-nav__link">
     Application Settings
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1240,6 +1246,90 @@
 
               
             
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4_5" id="__nav_4_4_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    family_trees
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_4_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4_5">
+            <span class="md-nav__icon md-icon"></span>
+            family_trees
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../family_trees/overview.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../family_trees/urls.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Urls
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1288,19 +1378,25 @@
     authentication
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.authentication--installation" class="md-nav__link">
     Installation
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#fig_tree.apps.authentication--application-settings" class="md-nav__link">
     Application Settings
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1337,7 +1433,7 @@ It is <strong>not</strong> responsible for creating new user accounts.</p>
 <li>Extended authentication functionality with useful features like "remember me" session cookies.</li>
 <li>A secure, token-based mechanism for users to reset forgotten or outdated passwords.</li>
 </ul>
-<h2 id="fig_tree.apps.authentication--installation">Installation<a class="headerlink" href="#fig_tree.apps.authentication--installation" title="Permanent link">&para;</a></h2>
+<h3 id="fig_tree.apps.authentication--installation">Installation<a class="headerlink" href="#fig_tree.apps.authentication--installation" title="Permanent link">&para;</a></h3>
 <p>Start by adding the application to the <code>installed_apps</code> list in the package settings:</p>
 <div class="highlight"><pre><span></span><code><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">[</span>
    <span class="s1">&#39;apps.authentication&#39;</span><span class="p">,</span>
@@ -1350,10 +1446,10 @@ It is <strong>not</strong> responsible for creating new user accounts.</p>
     <span class="n">path</span><span class="p">(</span><span class="s1">&#39;auth/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s1">&#39;apps.authentication.urls&#39;</span><span class="p">,</span> <span class="n">namespace</span><span class="o">=</span><span class="s1">&#39;auth&#39;</span><span class="p">)),</span>
 <span class="p">]</span>
 </code></pre></div>
-<p>Finally, configure the pakage settings for the login URL using the same namespace value:</p>
+<p>Finally, configure the package settings for the login URL using the same namespace value:</p>
 <div class="highlight"><pre><span></span><code><span class="n">LOGIN_URL</span> <span class="o">=</span> <span class="s1">&#39;auth:login&#39;</span>
 </code></pre></div>
-<h2 id="fig_tree.apps.authentication--application-settings">Application Settings<a class="headerlink" href="#fig_tree.apps.authentication--application-settings" title="Permanent link">&para;</a></h2>
+<h3 id="fig_tree.apps.authentication--application-settings">Application Settings<a class="headerlink" href="#fig_tree.apps.authentication--application-settings" title="Permanent link">&para;</a></h3>
 <p>The <code>authentication</code> app supports a <em>remember me</em> option that will keep
 users logged in for a given duration. Users are remembered for seven days by
 default, but the length of this duration is configurable in the <code>settings.py</code>
