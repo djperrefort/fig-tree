@@ -8,18 +8,15 @@ Whenever possible, generic base classes are used to implement common behavior
 for HTTP request handling.
 """
 
-from django.db.models import Subquery, Manager, Q
-from rest_framework import mixins, viewsets, status
+from django.db.models import Manager, Q
+from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
+import apps.family_trees.permissions as tree_permissions
 from .models import *
-from .permissions import *
 from .serializers import *
 
 __all__ = [
-    'TreeViewSet',
-    'TreePermissionViewSet',
     'AddressViewSet',
     'CitationViewSet',
     'EventViewSet',
@@ -51,74 +48,6 @@ class BaseViewSet(
     """
 
 
-# -----------------------------------------------------------------------------
-# ViewSets for family trees and their associated user permissions
-# -----------------------------------------------------------------------------
-
-class TreeViewSet(BaseViewSet):
-    """ViewSet for CRUD operations on `Tree` records"""
-
-    serializer_class = TreeSerializer
-    queryset = Tree.objects
-    permission_classes = (IsAuthenticated, IsTreeMember)
-
-    def get_queryset(self) -> Manager:
-        """Return the filtered queryset used by the API endpoint to execute DB queries
-
-        Records are only returned where the requesting user has `read` permissions or higher.
-        """
-
-        return self.queryset.filter(
-            treepermission__user=self.request.user.pk,
-            treepermission__role__gte=TreePermission.Role.READ)
-
-    def create(self, request, *args, **kwargs):
-        """Create a new Family Tree
-
-        The user crating the tree is automatically granted admin 
-        """
-
-        serializer = TreeSerializer(data=request.data)
-        if not serializer.is_valid():
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # Create a new tree object and give the submitting user admin tree permissions
-        tree_obj = serializer.create(serializer.validated_data)
-        treepermission_obj = TreePermission(user=request.user, tree=tree_obj, role=TreePermission.Role.ADMIN)
-        treepermission_obj.save()
-
-        # Return the same response data/header as the parent class `create` method
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class TreePermissionViewSet(BaseViewSet):
-    """ViewSet for CRUD operations on `TreePermission` records"""
-
-    serializer_class = TreePermissionSerializer
-    queryset = TreePermission.objects
-    permission_classes = (IsAuthenticated, IsTreePermissionObjectAdmin)
-
-    def get_queryset(self) -> Manager:
-        """Return the filtered queryset used by the API endpoint to execute DB queries
-
-        Records are only returned where the requesting user has `admin` permissions or higher.
-        """
-
-        # Return all permission objects related to family trees where the user is an admin
-        tree_ids = TreePermission.objects.filter(
-            user=self.request.user.pk,
-            role__gte=TreePermission.Role.ADMIN
-        ).values('tree_id')
-
-        return self.queryset.filter(tree_id__in=Subquery(tree_ids))
-
-
-# -----------------------------------------------------------------------------
-# ViewSets for individual genealogical record types
-# -----------------------------------------------------------------------------
-
-
 class BaseRecordViewSet(BaseViewSet):
     """Base ViewSet used to build REST endpoints for genealogical record types
 
@@ -127,6 +56,8 @@ class BaseRecordViewSet(BaseViewSet):
     has appropriate permissions on the parent family tree.
     """
 
+    permission_classes = (IsAuthenticated, tree_permissions.IsTreeMember)
+
     def get_queryset(self) -> Manager:
         """Filter the class level `queryset` attribute based on user tree permissions"""
 
@@ -134,10 +65,10 @@ class BaseRecordViewSet(BaseViewSet):
         return self.queryset.filter(
             Q(
                 tree__treepermission__user=user,
-                tree__treepermission__role__gte=TreePermission.Role.READ_PRIVATE,
+                tree__treepermission__role__gte=tree_permissions.TreePermission.Role.READ_PRIVATE,
             ) | Q(
                 tree__treepermission__user=user,
-                tree__treepermission__role__gte=TreePermission.Role.READ,
+                tree__treepermission__role__gte=tree_permissions.TreePermission.Role.READ,
                 private=False
             )
         )
@@ -148,7 +79,6 @@ class AddressViewSet(BaseRecordViewSet):
 
     serializer_class = AddressSerializer
     queryset = Address.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission,)
 
 
 class CitationViewSet(BaseRecordViewSet):
@@ -156,7 +86,6 @@ class CitationViewSet(BaseRecordViewSet):
 
     serializer_class = CitationSerializer
     queryset = Citation.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class EventViewSet(BaseRecordViewSet):
@@ -164,7 +93,6 @@ class EventViewSet(BaseRecordViewSet):
 
     serializer_class = EventSerializer
     queryset = Event.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class FamilyViewSet(BaseRecordViewSet):
@@ -172,7 +100,6 @@ class FamilyViewSet(BaseRecordViewSet):
 
     serializer_class = FamilySerializer
     queryset = Family.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class MediaViewSet(BaseRecordViewSet):
@@ -180,7 +107,6 @@ class MediaViewSet(BaseRecordViewSet):
 
     serializer_class = MediaSerializer
     queryset = Media.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class NameViewSet(BaseRecordViewSet):
@@ -188,7 +114,6 @@ class NameViewSet(BaseRecordViewSet):
 
     serializer_class = NameSerializer
     queryset = Name.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class NoteViewSet(BaseRecordViewSet):
@@ -196,7 +121,6 @@ class NoteViewSet(BaseRecordViewSet):
 
     serializer_class = NoteSerializer
     queryset = Note.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class PersonViewSet(BaseRecordViewSet):
@@ -204,7 +128,6 @@ class PersonViewSet(BaseRecordViewSet):
 
     serializer_class = PersonSerializer
     queryset = Person.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class PlaceViewSet(BaseRecordViewSet):
@@ -212,7 +135,6 @@ class PlaceViewSet(BaseRecordViewSet):
 
     serializer_class = PlaceSerializer
     queryset = Place.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class RepositoryViewSet(BaseRecordViewSet):
@@ -220,7 +142,6 @@ class RepositoryViewSet(BaseRecordViewSet):
 
     serializer_class = RepositorySerializer
     queryset = Repository.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class SourceViewSet(BaseRecordViewSet):
@@ -228,7 +149,6 @@ class SourceViewSet(BaseRecordViewSet):
 
     serializer_class = SourceSerializer
     queryset = Source.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class TagViewSet(BaseRecordViewSet):
@@ -236,7 +156,6 @@ class TagViewSet(BaseRecordViewSet):
 
     serializer_class = TagSerializer
     queryset = Tag.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)
 
 
 class URLViewSet(BaseRecordViewSet):
@@ -244,4 +163,3 @@ class URLViewSet(BaseRecordViewSet):
 
     serializer_class = URLSerializer
     queryset = URL.objects
-    permission_classes = (IsAuthenticated, FamilyTreeObjectPermission)

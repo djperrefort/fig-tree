@@ -8,7 +8,7 @@ Application features include:
 - Extended authentication functionality with useful features like "remember me" session cookies.
 - A secure, token-based mechanism for users to reset forgotten or outdated passwords.
 
-# Installation
+## Installation
 
 Start by adding the application to the `installed_apps` list in the package settings:
 
@@ -28,13 +28,13 @@ urlpatterns = [
 ]
 ```
 
-Finally, configure the pakage settings for the login URL using the same namespace value:
+Finally, configure the package settings for the login URL using the same namespace value:
 
 ```python
 LOGIN_URL = 'auth:login'
 ```
 
-# Application Settings
+## Application Settings
 
 The `authentication` app supports a *remember me* option that will keep
 users logged in for a given duration. Users are remembered for seven days by
