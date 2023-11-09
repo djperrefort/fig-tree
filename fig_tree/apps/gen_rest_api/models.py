@@ -66,7 +66,7 @@ class Address(GenericRelationshipMixin, BaseRecordModel):
         verbose_name_plural = 'Addresses'
 
     # Fields
-    line1 = models.CharField('Line 1', max_length=250)
+    line1 = models.CharField('Line 1', max_length=250, null=True, blank=True)
     line2 = models.CharField('Line 2', max_length=250, null=True, blank=True)
     line3 = models.CharField('Line 3', max_length=250, null=True, blank=True)
     line4 = models.CharField('Line 4', max_length=250, null=True, blank=True)
@@ -125,19 +125,19 @@ class Event(BaseRecordModel):
         SPAN = 5, _('span')
 
     # Fields
+    event_type = models.CharField(max_length=250)
     date_type = models.IntegerField(choices=DateType.choices, default='regular')
-    event_type = models.TextField()
-    year_start = models.IntegerField(null=True)
-    month_start = models.IntegerField(null=True)
-    day_start = models.IntegerField(null=True)
-    year_end = models.IntegerField(null=True)
-    month_end = models.IntegerField(null=True)
-    day_end = models.IntegerField(null=True)
-    description = models.TextField(null=True)
+    year_start = models.IntegerField(null=True, blank=True)
+    month_start = models.IntegerField(null=True, blank=True)
+    day_start = models.IntegerField(null=True, blank=True)
+    year_end = models.IntegerField(null=True, blank=True)
+    month_end = models.IntegerField(null=True, blank=True)
+    day_end = models.IntegerField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
 
     # Relationships
-    person = models.ForeignKey('Person', on_delete=models.CASCADE)
-    place = models.OneToOneField('Place', on_delete=models.CASCADE, null=True)
+    place = models.OneToOneField('Place', on_delete=models.CASCADE, null=True, blank=True)
+    people = cfields.GenericRelation('Person')
     tags = cfields.GenericRelation('Tag')
     notes = cfields.GenericRelation('Note')
     media = cfields.GenericRelation('Media')
@@ -162,11 +162,21 @@ class Family(BaseRecordModel):
 class Media(GenericRelationshipMixin, BaseRecordModel):
     """A media object"""
 
-    relative_path = models.FilePathField()
-    date = models.DateField(null=True)
-    description = models.TextField(null=True)
+    class DateType(models.IntegerChoices):
+        """Date type for the event"""
 
-    citations = cfields.GenericRelation('Citation')
+        REGULAR = 0, _('regular')
+        BEFORE = 1, _('before')
+        AFTER = 2, _('after')
+        ABOUT = 3, _('about')
+
+    path = models.FilePathField()
+    date_type = models.IntegerField(choices=DateType.choices, default='regular')
+    year = models.IntegerField(null=True, blank=True)
+    month = models.IntegerField(null=True, blank=True)
+    day = models.IntegerField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+
     tags = cfields.GenericRelation('Tag')
 
 
@@ -269,8 +279,8 @@ class Source(BaseRecordModel):
 class Tag(GenericRelationshipMixin, BaseRecordModel):
     """Data label used to organize data into customizable categories"""
 
-    name = models.TextField()
-    description = models.TextField(null=True)
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=250, null=True, blank=True)
 
 
 class URL(GenericRelationshipMixin, BaseRecordModel):

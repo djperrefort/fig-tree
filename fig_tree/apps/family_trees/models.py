@@ -62,6 +62,6 @@ class FamilyTreeModelMixin(models.Model):
     class Meta:
         abstract = True
 
-    private = models.BooleanField(default=True)
-    last_modified = models.DateTimeField(auto_now=True)
     tree = models.ForeignKey(FamilyTree, db_index=True, on_delete=models.CASCADE)
+    last_modified = models.DateTimeField(auto_now=True)
+    private = models.BooleanField(default=True)

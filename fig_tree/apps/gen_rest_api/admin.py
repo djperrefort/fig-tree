@@ -17,11 +17,22 @@ settings.JAZZMIN_SETTINGS['icons'].update({
 
 
 class CitationInline(cadmin.GenericTabularInline):
-    """Inline admin element for source citations"""
+    """Inline admin element for `Citation` records"""
 
-    fields = ['page_or_reference', 'confidence', 'source']
     model = Citation
+    fields = ['page_or_reference', 'confidence', 'source']
     fk_name = 'citations'
+    extra = 1
+
+    def get_readonly_fields(self, request, obj=None):
+        return [] if obj is None else ['tree']
+
+
+class NoteInline(cadmin.GenericTabularInline):
+    """Inline admin element for `Note` records"""
+
+    model = Note
+    fk_name = 'notes'
     extra = 1
 
     def get_readonly_fields(self, request, obj=None):
@@ -60,11 +71,91 @@ class AddressAdmin(BaseRecordAdmin):
     list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private']
     list_filter = ['private']
     inlines = [CitationInline]
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('General', {'fields': ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long', 'date', 'last_modified']}),
+    ]
 
 
-@admin.register(Citation)
-class CitationAdmin(BaseRecordAdmin):
-    """Admin interface for `Citation` objects"""
+@admin.register(Event)
+class EventAdmin(BaseRecordAdmin):
+    list_display = ['event_type', 'date_type', 'year_start', 'month_start', 'day_start', 'year_end', 'month_end', 'day_end']
+    list_filter = ['date_type']
+    search_fields = ['event_type', 'description']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('General', {'fields': [
+            'event_type',
+            'date_type',
+            'year_start',
+            'month_start',
+            'day_start',
+            'year_end',
+            'month_end',
+            'day_end',
+            'description',
+            'place',
+        ]}),
+    ]
+    inlines = [CitationInline]
 
-    list_display = ['page_or_reference', 'source', 'confidence', 'private']
-    list_filter = ['private', 'confidence']
+
+@admin.register(Family)
+class FamilyAdmin(BaseRecordAdmin):
+    list_display = ['parent1', 'parent2', 'children']
+    search_fields = ['parent1__primary_name__given_name', 'parent2__primary_name__given_name']
+
+
+@admin.register(Media)
+class MediaAdmin(BaseRecordAdmin):
+    list_display = ['path', 'description']
+    search_fields = ['path', 'description']
+
+
+@admin.register(Name)
+class NameAdmin(BaseRecordAdmin):
+    list_display = ['given_name', 'surname', 'prefix', 'suffix']
+    search_fields = ['given_name', 'surname', 'prefix', 'suffix']
+
+
+@admin.register(Note)
+class NoteAdmin(BaseRecordAdmin):
+    list_display = ['content_object', 'text']
+    search_fields = ['text']
+
+
+@admin.register(Person)
+class PersonAdmin(BaseRecordAdmin):
+    list_display = ['primary_name', 'sex', 'birth', 'death']
+    list_filter = ['sex']
+    search_fields = ['primary_name__given_name', 'primary_name__surname']
+
+
+@admin.register(Place)
+class PlaceAdmin(BaseRecordAdmin):
+    list_display = ['name', 'place_type', 'enclosed_by']
+    search_fields = ['name', 'place_type']
+
+
+@admin.register(Repository)
+class RepositoryAdmin(BaseRecordAdmin):
+    list_display = ['type', 'name']
+    search_fields = ['type', 'name']
+
+
+@admin.register(Source)
+class SourceAdmin(BaseRecordAdmin):
+    list_display = ['title', 'author', 'pubinfo']
+    search_fields = ['title', 'author', 'pubinfo']
+
+
+@admin.register(Tag)
+class TagAdmin(BaseRecordAdmin):
+    list_display = ['name', 'description']
+    search_fields = ['name', 'description']
+
+
+@admin.register(URL)
+class URLAdmin(BaseRecordAdmin):
+    list_display = ['href', 'name', 'date', 'repository']
+    search_fields = ['href', 'name']
