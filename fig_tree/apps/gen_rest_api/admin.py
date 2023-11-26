@@ -16,7 +16,18 @@ settings.JAZZMIN_SETTINGS['icons'].update({
 })
 
 
-class CitationInline(cadmin.GenericTabularInline):
+class ReadOnlyTreeMixin:
+    """Mixin class that adds `tree` field to the list of readonly fields"""
+
+    def get_readonly_fields(self, request, obj=None):
+        fields = super().get_readonly_fields(request)
+        if obj:
+            fields += ('tree',)
+
+        return fields
+
+
+class CitationInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
     """Inline admin element for `Citation` records"""
 
     model = Citation
@@ -24,22 +35,16 @@ class CitationInline(cadmin.GenericTabularInline):
     fk_name = 'citations'
     extra = 1
 
-    def get_readonly_fields(self, request, obj=None):
-        return [] if obj is None else ['tree']
 
-
-class NoteInline(cadmin.GenericTabularInline):
+class NoteInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
     """Inline admin element for `Note` records"""
 
     model = Note
     fk_name = 'notes'
     extra = 1
 
-    def get_readonly_fields(self, request, obj=None):
-        return [] if obj is None else ['tree']
 
-
-class BaseRecordAdmin(admin.ModelAdmin):
+class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
     @admin.action
     def set_selected_to_private(self, request, queryset) -> None:
         """Mark selected clusters as enabled"""
@@ -55,13 +60,6 @@ class BaseRecordAdmin(admin.ModelAdmin):
     actions = [set_selected_to_private, set_selected_to_public]
     readonly_fields = ['last_modified']
     exclude = ['object_id', 'content_type', 'content_object']
-
-    def get_readonly_fields(self, request, obj=None):
-        fields = list(self.readonly_fields)
-        if obj:
-            fields.extend(['tree'])
-
-        return fields
 
 
 @admin.register(Address)
@@ -79,7 +77,7 @@ class AddressAdmin(BaseRecordAdmin):
 
 @admin.register(Event)
 class EventAdmin(BaseRecordAdmin):
-    list_display = ['event_type', 'date_type', 'year_start', 'month_start', 'day_start', 'year_end', 'month_end', 'day_end']
+    list_display = ['event_type', 'date', 'date_end']
     list_filter = ['date_type']
     search_fields = ['event_type', 'description']
     fieldsets = [
@@ -87,12 +85,8 @@ class EventAdmin(BaseRecordAdmin):
         ('General', {'fields': [
             'event_type',
             'date_type',
-            'year_start',
-            'month_start',
-            'day_start',
-            'year_end',
-            'month_end',
-            'day_end',
+            'date',
+            'date_end',
             'description',
             'place',
         ]}),

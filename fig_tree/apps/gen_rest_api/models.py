@@ -127,12 +127,8 @@ class Event(BaseRecordModel):
     # Fields
     event_type = models.CharField(max_length=250)
     date_type = models.IntegerField(choices=DateType.choices, default='regular')
-    year_start = models.IntegerField(null=True, blank=True)
-    month_start = models.IntegerField(null=True, blank=True)
-    day_start = models.IntegerField(null=True, blank=True)
-    year_end = models.IntegerField(null=True, blank=True)
-    month_end = models.IntegerField(null=True, blank=True)
-    day_end = models.IntegerField(null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
+    date_end = models.DateField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     # Relationships
