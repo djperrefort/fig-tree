@@ -65,13 +65,13 @@ class Address(GenericRelationshipMixin, BaseRecordModel):
         verbose_name_plural = 'Addresses'
 
     # Fields
-    line1 = models.CharField('Line 1', max_length=250)
-    line2 = models.CharField('Line 2', max_length=250, null=True, blank=True)
-    line3 = models.CharField('Line 3', max_length=250, null=True, blank=True)
-    line4 = models.CharField('Line 4', max_length=250, null=True, blank=True)
-    municipality = models.CharField(max_length=250, null=True, blank=True)
-    province = models.CharField(max_length=250, null=True, blank=True)
-    country = models.CharField(max_length=250, null=True, blank=True)
+    line1 = models.CharField('Line 1', max_length=255)
+    line2 = models.CharField('Line 2', max_length=255, null=True, blank=True)
+    line3 = models.CharField('Line 3', max_length=255, null=True, blank=True)
+    line4 = models.CharField('Line 4', max_length=255, null=True, blank=True)
+    municipality = models.CharField(max_length=255, null=True, blank=True)
+    province = models.CharField(max_length=255, null=True, blank=True)
+    country = models.CharField(max_length=255, null=True, blank=True)
     code = models.CharField(max_length=10, null=True, blank=True)
     lat = models.IntegerField('Latitude', null=True, blank=True)
     long = models.IntegerField('Longitude', null=True, blank=True)
@@ -127,7 +127,7 @@ class Event(BaseRecordModel):
         SPAN = 5, _('span')
 
     # Fields
-    event_type = models.CharField(max_length=250)
+    event_type = models.CharField(max_length=255)
     date_type = models.IntegerField(choices=DateType.choices, default='regular')
     date = models.DateField(null=True, blank=True)
     date_end = models.DateField(null=True, blank=True)
@@ -148,6 +148,9 @@ class Event(BaseRecordModel):
 
 class Family(BaseRecordModel):
     """A group of individuals forming a family unit"""
+
+    class Meta:
+        verbose_name_plural = 'Families'
 
     # Relationships with familial meaning
     parent1 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent1', null=True, blank=True)
@@ -273,19 +276,27 @@ class Place(BaseRecordModel):
 class Repository(BaseRecordModel):
     """A repository that hosts multiple historical sources"""
 
-    type = models.TextField()
-    name = models.TextField()
+    class Meta:
+        verbose_name_plural = 'Repositories'
+
+    type = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
 
     addresses = cfields.GenericRelation('Address')
     tags = cfields.GenericRelation('Tag')
+
+    def __str__(self) -> None:
+        """Return the name of the place"""
+
+        return defaultfilters.truncatechars(self.name, 50)
 
 
 class Source(BaseRecordModel):
     """A historical source or piece of reference material"""
 
-    title = models.CharField(max_length=250)
-    author = models.CharField(max_length=250, null=True, blank=True)
-    pubinfo = models.CharField(max_length=250, null=True, blank=True)
+    title = models.CharField(max_length=255)
+    author = models.CharField(max_length=255, null=True, blank=True)
+    pubinfo = models.CharField(max_length=255, null=True, blank=True)
 
     media = cfields.GenericRelation('Media')
     tags = cfields.GenericRelation('Tag')
@@ -300,7 +311,7 @@ class Tag(GenericRelationshipMixin, BaseRecordModel):
     """Data label used to organize data into customizable categories"""
 
     name = models.CharField(max_length=50)
-    description = models.CharField(max_length=250, null=True, blank=True)
+    description = models.CharField(max_length=255, null=True, blank=True)
 
 
 class URL(GenericRelationshipMixin, BaseRecordModel):

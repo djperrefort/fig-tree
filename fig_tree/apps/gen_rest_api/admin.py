@@ -19,6 +19,7 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Name': 'fa fa-id-badge',
     'gen_rest_api.Person': 'fa fa-user',
     'gen_rest_api.Place': 'fa fa-map-marker-alt',
+    'gen_rest_api.Repository': 'fa fa-building',
 })
 
 
@@ -167,10 +168,17 @@ class PlaceAdmin(BaseRecordAdmin):
         ('Record Info', {'fields': ['name', 'place_type', 'enclosed_by']}),
     ]
 
+
 @admin.register(Repository)
 class RepositoryAdmin(BaseRecordAdmin):
+    """Admin interface for `Place` records"""
+
     list_display = ['type', 'name']
     search_fields = ['type', 'name']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['type', 'name']}),
+    ]
 
 
 @admin.register(Source)
