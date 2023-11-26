@@ -15,4 +15,4 @@ class Quickstart(TestCase):
         with patch('subprocess.run') as mock_run:
             call_command('quickstart', '--uvicorn', '--no-input')
             mock_run.assert_called_with(
-                ['uvicorn', 'keystone_api.main.asgi:application', '--host', '0.0.0.0', '--port', '8000'])
+                ['uvicorn', 'fig_tree.main.asgi:application', '--host', '0.0.0.0', '--port', '8000'], check=True)
