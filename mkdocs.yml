@@ -52,11 +52,11 @@ nav:
               - technical_references/site_applications/error_pages/overview.md
               - technical_references/site_applications/error_pages/handlers.md
           - gen_rest_api:
-            - technical_references/site_applications/gen_rest_api/overview.md
-            - technical_references/site_applications/gen_rest_api/models.md
-            - technical_references/site_applications/gen_rest_api/serializers.md
-            - technical_references/site_applications/gen_rest_api/urls.md
-            - technical_references/site_applications/gen_rest_api/views.md
+            - technical_references/site_applications/gen_data/overview.md
+            - technical_references/site_applications/gen_data/models.md
+            - technical_references/site_applications/gen_data/serializers.md
+            - technical_references/site_applications/gen_data/urls.md
+            - technical_references/site_applications/gen_data/views.md
           - signup:
             - technical_references/site_applications/signup/overview.md
             - technical_references/site_applications/signup/admin.md

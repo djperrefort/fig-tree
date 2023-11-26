@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'apps.admin_utils',
     'apps.authentication',
     'apps.error_pages',
-    'apps.gen_rest_api',
+    'apps.gen_data',
     'apps.signup',
 ]
 
@@ -88,14 +88,15 @@ JAZZMIN_SETTINGS = {
     'site_brand': 'Fig Tree',
     'related_modal_active': True,
     'order_with_respect_to': [
-        'authentication',
         'signup',
-        'gen_rest_api',
-        'sites'
+        'family_trees',
+        'gen_data',
     ],
     'icons': {
         'sites.Site': 'fa fa-globe'
     },
+    'hide_apps' : ['sites'],
+    "changeform_format": "single",
     "changeform_format_overrides": dict(),
 }
 

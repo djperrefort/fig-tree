@@ -15,7 +15,7 @@ Add the application to the `installed_apps` list in the package settings:
 
 ```python
 INSTALLED_APPS = [
-    'apps.gen_rest_api',
+    'apps.gen_data',
 ]
 ```
 
@@ -25,7 +25,7 @@ Register application URLs in the package's primary URL configuration file:
 from django.urls import include, path
 
 urlpatterns = [
-    path('api/', include('apps.gen_rest_api.urls', namespace='gen_rest_api')),
+    path('gen_data/', include('apps.gen_data.urls', namespace='gen_data')),
 ]
 ```
 """

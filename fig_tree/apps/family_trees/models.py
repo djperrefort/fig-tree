@@ -56,9 +56,12 @@ class TreePermission(models.Model):
         return f'{self.role} permissions for {self.user} on {self.tree}'
 
 
-class FamilyTreeModelMixin:
+class FamilyTreeModelMixin(models.Model):
     """Model mixin class that adds the columns necessary to support family tree permissions"""
 
-    private = models.BooleanField(default=True)
-    last_modified = models.DateTimeField(auto_now=True)
+    class Meta:
+        abstract = True
+
     tree = models.ForeignKey(FamilyTree, db_index=True, on_delete=models.CASCADE)
+    last_modified = models.DateTimeField(auto_now=True)
+    private = models.BooleanField(default=True)

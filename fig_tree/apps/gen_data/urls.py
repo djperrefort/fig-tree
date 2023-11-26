@@ -19,8 +19,6 @@ View objects can be found in the `views` module.
 | `media/<str:pk>`      | `MediaViewSet`         | `media-detail`      |
 | `name/`               | `NameViewSet`          | `name-list`         |
 | `name/<str:pk>`       | `NameViewSet`          | `name-detail`       |
-| `note/`               | `NoteViewSet`          | `note-list`         |
-| `note/<str:pk>`       | `NoteViewSet`          | `note-detail`       |
 | `person/`             | `PersonViewSet`        | `person-list`       |
 | `person/<str:pk>`     | `PersonViewSet`        | `person-detail`     |
 | `place/`              | `PlaceViewSet`         | `place-list`        |
@@ -39,7 +37,7 @@ from rest_framework import routers
 
 from .views import *
 
-app_name = 'gen_rest_api'
+app_name = 'gen_data'
 
 router = routers.SimpleRouter()
 router.register(r'address', AddressViewSet)
@@ -48,7 +46,6 @@ router.register(r'event', EventViewSet)
 router.register(r'family', FamilyViewSet)
 router.register(r'media', MediaViewSet)
 router.register(r'name', NameViewSet)
-router.register(r'note', NoteViewSet)
 router.register(r'person', PersonViewSet)
 router.register(r'place', PlaceViewSet)
 router.register(r'repository', RepositoryViewSet)

@@ -17,7 +17,6 @@ __all__ = [
     'FamilySerializer',
     'MediaSerializer',
     'NameSerializer',
-    'NoteSerializer',
     'PersonSerializer',
     'PlaceSerializer',
     'RepositorySerializer',
@@ -87,14 +86,6 @@ class NameSerializer(BaseRecordSerializer):
 
     class Meta:
         model = Name
-        fields = '__all__'
-
-
-class NoteSerializer(BaseRecordSerializer):
-    """Data serializer for the `Note` database model"""
-
-    class Meta:
-        model = Note
         fields = '__all__'
 
 

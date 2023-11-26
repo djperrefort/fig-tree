@@ -8,7 +8,7 @@ route specific URLs to individual pages.
 |-------------|----------------------------|----------------|
 | `admin/`    | `apps.admin`               | `admin`        |
 | `auth/`     | `apps.authentication`      | `auth`         |
-| `api/`      | `apps.gen_rest_api`        | `gen_rest_api` |
+| `gen_data/` | `apps.gen_data`            | `gen_data`     |
 | `signup/`   | `apps.signup`              | `signup`       |
 
 The following pages are included to support testing and development.
@@ -40,7 +40,7 @@ urlpatterns = [
     # Add urls from plugins and applications
     path('admin/', admin.site.urls),
     path('auth/', include('apps.authentication.urls', namespace='auth')),
-    path('api/', include('apps.gen_rest_api.urls', namespace='gen_rest_api')),
+    path('gen_data/', include('apps.gen_data.urls', namespace='gen_data')),
     path('signup/', include('apps.signup.urls', namespace='signup')),
 
     # Add dedicated error pages for testing purposes

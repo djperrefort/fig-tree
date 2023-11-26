@@ -17,7 +17,7 @@ __all__ = ['AuthUserAdmin']
 
 admin.site.unregister(Group)
 settings.JAZZMIN_SETTINGS['icons'].update({
-    'signup.AuthUser': 'fa fa-user',
+    'signup.AuthUser': 'fa fa-users-cog',
 })
 
 
