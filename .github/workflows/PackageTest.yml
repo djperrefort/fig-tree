@@ -95,8 +95,9 @@ jobs:
         run: poetry run fig-tree-manage test --parallel auto fig_tree/tests
 
   integration-tests:
-    name: Integration Tests
     runs-on: ubuntu-latest
+    name: Integration Tests
+    needs: [ discover_apps ]
 
     steps:
       - name: Checkout source
