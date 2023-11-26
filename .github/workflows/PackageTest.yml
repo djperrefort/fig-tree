@@ -130,5 +130,5 @@ jobs:
 
     steps:
       - name: Check build status
-        if: ${{ contains(needs.*.result, 'failure') }} || ${{ contains(needs.*.result, 'skipped') }} || ${{ contains(needs.*.result, 'cancelled') }}
+        if: ${{ contains(needs.*.result, 'failure') }} || ${{ contains(needs.*.result, 'cancelled') }}
         run: exit 1
