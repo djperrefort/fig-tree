@@ -19,7 +19,9 @@ settings.JAZZMIN_SETTINGS['icons'].update({
 class ReadOnlyTreeMixin:
     """Mixin class that adds `tree` field to the list of readonly fields"""
 
-    def get_readonly_fields(self, request, obj=None):
+    def get_readonly_fields(self, request, obj=None) -> tuple:
+        """Return a tuple of model field names to treat as read-only"""
+
         fields = super().get_readonly_fields(request)
         if obj:
             fields += ('tree',)
@@ -27,8 +29,28 @@ class ReadOnlyTreeMixin:
         return fields
 
 
+class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
+    """Base class used to build admin interfaces for genealogical record tables"""
+
+    @admin.action
+    def set_selected_to_private(self, request, queryset) -> None:
+        """Mark selected records as private"""
+
+        queryset.update(private=True)
+
+    @admin.action
+    def set_selected_to_public(self, request, queryset) -> None:
+        """Mark selected records as public"""
+
+        queryset.update(private=False)
+
+    actions = [set_selected_to_private, set_selected_to_public]
+    readonly_fields = ['last_modified']
+    exclude = ['object_id', 'content_type', 'content_object']
+
+
 class CitationInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
-    """Inline admin element for `Citation` records"""
+    """Tabular inline element for `Citation` records"""
 
     model = Citation
     fields = ['page_or_reference', 'confidence', 'source']
@@ -37,29 +59,11 @@ class CitationInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
 
 
 class NoteInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
-    """Inline admin element for `Note` records"""
+    """Tabular inline admin element for `Note` records"""
 
     model = Note
     fk_name = 'notes'
     extra = 1
-
-
-class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
-    @admin.action
-    def set_selected_to_private(self, request, queryset) -> None:
-        """Mark selected clusters as enabled"""
-
-        queryset.update(private=True)
-
-    @admin.action
-    def set_selected_to_public(self, request, queryset) -> None:
-        """Mark selected clusters as disabled"""
-
-        queryset.update(private=False)
-
-    actions = [set_selected_to_private, set_selected_to_public]
-    readonly_fields = ['last_modified']
-    exclude = ['object_id', 'content_type', 'content_object']
 
 
 @admin.register(Address)
