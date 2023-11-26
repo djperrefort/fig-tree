@@ -1,12 +1,17 @@
-name: Publish Docker Image
+name: Publish Project Release
 
 on:
-  workflow_call:
+  release:
+    types: [ "released" ]
 
 env:
   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/fig-tree
 
 jobs:
+  test:
+    name: Test
+    uses: ./.github/workflows/PackageTest.yml
+
   publish-docker:
     runs-on: ubuntu-latest
     name: Publish Image
@@ -18,6 +23,7 @@ jobs:
       - name: Get tagged version
         id: version
         run: |
+          # Remove the GitHub reference prefix from the version tag
           release_tag=${{github.ref}}
           echo "version=${release_tag#refs/tags/v}" >> $GITHUB_OUTPUT
 
@@ -28,7 +34,7 @@ jobs:
 
       - name: Set package version
         run: poetry version ${{ steps.version.outputs.version }}
-          
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -44,3 +50,12 @@ jobs:
         with:
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ steps.version.outputs.version }},${{ env.IMAGE_NAME }}:latest
+
+
+  publish-docs:
+    name: Docs
+    needs: [ publish-docker ]
+    uses: ./.github/workflows/DocumentationPublish.yml
+    with:
+      version: ${{ github.event.release.tag_name }}
+      latest: true
