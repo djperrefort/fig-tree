@@ -23,7 +23,7 @@ jobs:
       - name: Find testable apps
         id: find_tests
         run: |
-          # Find application directories containing a 'tests' subdirectory nd format the result as JSON
+          # Find application directories containing a 'tests' subdirectory and format the result as JSON
           test_dirs=$(find fig_tree/apps -type d -name "tests" -exec dirname {} \; | jq -R . | jq -s . | tr -d '\n')
           echo "matrix={\"app_name\":$test_dirs}" >> $GITHUB_OUTPUT
 
