@@ -250,7 +250,7 @@ class Place(BaseRecordModel):
     """A place in the world separate from any physical location"""
 
     name = models.CharField(max_length=255)
-    place_type = models.TextField(null=True, blank=True)
+    place_type = models.CharField(max_length=255, null=True, blank=True)
     enclosed_by = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
     addresses = cfields.GenericRelation('Address')
