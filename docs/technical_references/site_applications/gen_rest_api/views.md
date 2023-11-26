@@ -5,4 +5,4 @@ hide:
 
 # Views
 
-::: fig_tree.apps.gen_rest_api.views
+::: fig_tree.apps.gen_data.views
