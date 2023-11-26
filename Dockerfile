@@ -1,5 +1,7 @@
 FROM python:3.11.4-slim
 
+EXPOSE 8000
+
 # Disable Python byte code caching and output buffering
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -8,12 +10,10 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 COPY fig_tree fig_tree
 COPY pyproject.toml pyproject.toml
-COPY README.md README.md
 
 # Install the application and its dependencies
 ENV PIP_ROOT_USER_ACTION=ignore
-RUN pip3 install --upgrade pip \
-    && pip3 install uvicorn["standard"] \
-    && pip3 install -e .
+RUN pip3 install -e .
 
-EXPOSE 8000
+ENTRYPOINT ["fig-tree-manage"]
+CMD ["quickstart", "--static", "--migrate", "--uvicorn", "--no-input"]
