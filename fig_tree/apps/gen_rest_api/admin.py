@@ -7,12 +7,12 @@ and permissions of admin portal interfaces.
 
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.contenttypes import admin as cadmin
 
 from .models import *
 
 settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Address': 'fa fa-address-card',
+    'gen_rest_api.Citation': 'fa fa-check-double',
 })
 
 
@@ -49,33 +49,27 @@ class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
     exclude = ['object_id', 'content_type', 'content_object']
 
 
-class CitationInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
-    """Tabular inline element for `Citation` records"""
-
-    model = Citation
-    fields = ['page_or_reference', 'confidence', 'source']
-    fk_name = 'citations'
-    extra = 1
-
-
-class NoteInline(ReadOnlyTreeMixin, cadmin.GenericTabularInline):
-    """Tabular inline admin element for `Note` records"""
-
-    model = Note
-    fk_name = 'notes'
-    extra = 1
-
-
 @admin.register(Address)
 class AddressAdmin(BaseRecordAdmin):
     """Admin interface for `Address` objects"""
 
     list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private']
     list_filter = ['private']
-    inlines = [CitationInline]
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
-        ('General', {'fields': ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long', 'date', 'last_modified']}),
+        ('Record Info', {'fields': ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long', 'date', 'last_modified']}),
+    ]
+
+
+@admin.register(Citation)
+class CitationAdmin(BaseRecordAdmin):
+    """Admin interface for `Citation` objects"""
+
+    list_display = ['source', 'page_or_reference', 'confidence', 'private']
+    list_filter = ['private', 'confidence']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['page_or_reference', 'confidence', 'source']}),
     ]
 
 
@@ -86,7 +80,7 @@ class EventAdmin(BaseRecordAdmin):
     search_fields = ['event_type', 'description']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
-        ('General', {'fields': [
+        ('Record Info', {'fields': [
             'event_type',
             'date_type',
             'date',
@@ -95,7 +89,6 @@ class EventAdmin(BaseRecordAdmin):
             'place',
         ]}),
     ]
-    inlines = [CitationInline]
 
 
 @admin.register(Family)
