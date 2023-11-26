@@ -313,12 +313,24 @@ class Tag(GenericRelationshipMixin, BaseRecordModel):
     name = models.CharField(max_length=25)
     description = models.TextField(null=True, blank=True)
 
+    def __str__(self) -> str:
+        """Return the tag name"""
+
+        return str(self.name)
+
 
 class URL(GenericRelationshipMixin, BaseRecordModel):
     """An online resource locator"""
 
     href = models.TextField()
-    name = models.TextField(null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    last_accessed = models.DateField(null=True, blank=True)
 
     repository = models.ForeignKey('Repository', on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        """Return the URL name and href"""
+
+        url = defaultfilters.truncatechars(self.href, 50)
+        return f'{self.name} ({url})'
