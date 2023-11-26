@@ -66,7 +66,7 @@ class Address(GenericRelationshipMixin, BaseRecordModel):
         verbose_name_plural = 'Addresses'
 
     # Fields
-    line1 = models.CharField('Line 1', max_length=250, null=True, blank=True)
+    line1 = models.CharField('Line 1', max_length=250)
     line2 = models.CharField('Line 2', max_length=250, null=True, blank=True)
     line3 = models.CharField('Line 3', max_length=250, null=True, blank=True)
     line4 = models.CharField('Line 4', max_length=250, null=True, blank=True)
@@ -108,7 +108,11 @@ class Citation(GenericRelationshipMixin, BaseRecordModel):
     def __str__(self) -> str:
         """Return the name of the cited source and supported record"""
 
-        return f'"{self.source}" citation for "{self.content_object}"'
+        source_name = defaultfilters.truncatechars(self.source, 25)
+        if self.content_object:
+            return f'"{source_name}" citation for "{self.content_object}"'
+
+        return f'"{source_name}" citation'
 
 
 class Event(BaseRecordModel):
@@ -138,6 +142,11 @@ class Event(BaseRecordModel):
     notes = cfields.GenericRelation('Note')
     media = cfields.GenericRelation('Media')
     citations = cfields.GenericRelation('Citation')
+
+    def __str__(self) -> None:
+        """Return the event type"""
+
+        return defaultfilters.truncatechars(self.event_type, 50)
 
 
 class Family(BaseRecordModel):

@@ -13,6 +13,7 @@ from .models import *
 settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Address': 'fa fa-address-card',
     'gen_rest_api.Citation': 'fa fa-check-double',
+    'gen_rest_api.Event': 'fa fa-calendar-day',
 })
 
 
@@ -51,7 +52,7 @@ class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(BaseRecordAdmin):
-    """Admin interface for `Address` objects"""
+    """Admin interface for `Address` Records"""
 
     list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private']
     list_filter = ['private']
@@ -63,7 +64,7 @@ class AddressAdmin(BaseRecordAdmin):
 
 @admin.register(Citation)
 class CitationAdmin(BaseRecordAdmin):
-    """Admin interface for `Citation` objects"""
+    """Admin interface for `Citation` records"""
 
     list_display = ['source', 'page_or_reference', 'confidence', 'private']
     list_filter = ['private', 'confidence']
@@ -75,7 +76,9 @@ class CitationAdmin(BaseRecordAdmin):
 
 @admin.register(Event)
 class EventAdmin(BaseRecordAdmin):
-    list_display = ['event_type', 'date', 'date_end']
+    """Admin interface for `Event` records"""
+    
+    list_display = ['event_type', 'date', 'date_end', 'place', 'private']
     list_filter = ['date_type']
     search_fields = ['event_type', 'description']
     fieldsets = [
