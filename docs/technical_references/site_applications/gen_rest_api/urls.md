@@ -5,4 +5,4 @@ hide:
 
 # Urls
 
-::: fig_tree.apps.gen_rest_api.urls
+::: fig_tree.apps.gen_data.urls

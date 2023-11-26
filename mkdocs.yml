@@ -51,7 +51,7 @@ nav:
           - error_pages:
               - technical_references/site_applications/error_pages/overview.md
               - technical_references/site_applications/error_pages/handlers.md
-          - gen_rest_api:
+          - gen_data:
             - technical_references/site_applications/gen_data/overview.md
             - technical_references/site_applications/gen_data/models.md
             - technical_references/site_applications/gen_data/serializers.md

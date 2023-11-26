@@ -5,4 +5,4 @@ hide:
 
 # Overview
 
-::: fig_tree.apps.gen_rest_api
+::: fig_tree.apps.gen_data

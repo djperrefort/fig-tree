@@ -5,4 +5,4 @@ hide:
 
 # Serializers
 
-::: fig_tree.apps.gen_rest_api.serializers
+::: fig_tree.apps.gen_data.serializers
