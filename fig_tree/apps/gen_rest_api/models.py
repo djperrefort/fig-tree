@@ -215,7 +215,6 @@ class Person(BaseRecordModel):
     """A single individual"""
 
     class Meta:
-
         verbose_name_plural = 'People'
 
     class Sex(models.IntegerChoices):
@@ -250,13 +249,9 @@ class Person(BaseRecordModel):
 class Place(BaseRecordModel):
     """A place in the world separate from any physical location"""
 
-    name = models.TextField()
+    name = models.CharField(max_length=255)
     place_type = models.TextField(null=True, blank=True)
-    enclosed_by = models.IntegerField(null=True, blank=True)
-    latitude = models.CharField(max_length=10, null=True, blank=True)
-    longitude = models.CharField(max_length=10, null=True, blank=True)
-    code = models.IntegerField(null=True, blank=True)
-    date = models.DateField(null=True, blank=True)
+    enclosed_by = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
     addresses = cfields.GenericRelation('Address')
     citations = cfields.GenericRelation('Citation')
@@ -268,6 +263,11 @@ class Place(BaseRecordModel):
         """Return a list of places enclosed by the current place"""
 
         return self.objects.filter(enclodes_by=self.id).all()
+
+    def __str__(self) -> None:
+        """Return the name of the place"""
+
+        return defaultfilters.truncatechars(self.name, 50)
 
 
 class Repository(BaseRecordModel):
