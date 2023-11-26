@@ -58,7 +58,7 @@ class Command(BaseCommand):
 
         if options['uvicorn']:
             self.stdout.write(self.style.SUCCESS('Starting Uvicorn server...'))
-            self.run_uvicorn(host=options['port'], port=options['port'])
+            self.run_uvicorn(host=options['host'], port=options['port'])
 
         else:
             self.stdout.write(self.style.SUCCESS('Starting default server...'))
