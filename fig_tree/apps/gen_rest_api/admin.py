@@ -54,8 +54,9 @@ class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
 class AddressAdmin(BaseRecordAdmin):
     """Admin interface for `Address` Records"""
 
-    list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private']
-    list_filter = ['private']
+    list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private', 'tree']
+    list_filter = ['private', 'tree']
+    search_fields = ['line1', 'line2', 'line3', 'line4',  'municipality', 'province', 'country', 'code', 'lat', 'long']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
         ('Record Info', {'fields': ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long', 'date', 'last_modified']}),
@@ -66,8 +67,9 @@ class AddressAdmin(BaseRecordAdmin):
 class CitationAdmin(BaseRecordAdmin):
     """Admin interface for `Citation` records"""
 
-    list_display = ['source', 'page_or_reference', 'confidence', 'private']
-    list_filter = ['private', 'confidence']
+    list_display = ['source', 'page_or_reference', 'confidence', 'private', 'tree']
+    list_filter = ['private', 'tree', 'confidence']
+    search_fields = ['source', 'page_or_reference', 'tree']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
         ('Record Info', {'fields': ['page_or_reference', 'confidence', 'source']}),
@@ -77,9 +79,9 @@ class CitationAdmin(BaseRecordAdmin):
 @admin.register(Event)
 class EventAdmin(BaseRecordAdmin):
     """Admin interface for `Event` records"""
-    
-    list_display = ['event_type', 'date', 'date_end', 'place', 'private']
-    list_filter = ['date_type']
+
+    list_display = ['event_type', 'date', 'date_end', 'place', 'private', 'tree']
+    list_filter = ['private', 'tree', 'date_type']
     search_fields = ['event_type', 'description']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
