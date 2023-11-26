@@ -20,6 +20,8 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Person': 'fa fa-user',
     'gen_rest_api.Place': 'fa fa-map-marker-alt',
     'gen_rest_api.Repository': 'fa fa-building',
+    'gen_rest_api.Source': 'fa fa-book',
+    'gen_rest_api.Tag': 'fa fa-tags',
 })
 
 
@@ -183,14 +185,26 @@ class RepositoryAdmin(BaseRecordAdmin):
 
 @admin.register(Source)
 class SourceAdmin(BaseRecordAdmin):
+    """Admin interface for `Place` records"""
+
     list_display = ['title', 'author', 'pubinfo']
     search_fields = ['title', 'author', 'pubinfo']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['title', 'author', 'pubinfo']}),
+    ]
 
 
 @admin.register(Tag)
 class TagAdmin(BaseRecordAdmin):
+    """Admin interface for `Tag` records"""
+
     list_display = ['name', 'description']
     search_fields = ['name', 'description']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['name', 'description']}),
+    ]
 
 
 @admin.register(URL)

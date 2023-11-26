@@ -296,7 +296,7 @@ class Source(BaseRecordModel):
 
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255, null=True, blank=True)
-    pubinfo = models.CharField(max_length=255, null=True, blank=True)
+    pubinfo = models.CharField(max_length=500, null=True, blank=True)
 
     media = cfields.GenericRelation('Media')
     tags = cfields.GenericRelation('Tag')
@@ -310,8 +310,8 @@ class Source(BaseRecordModel):
 class Tag(GenericRelationshipMixin, BaseRecordModel):
     """Data label used to organize data into customizable categories"""
 
-    name = models.CharField(max_length=50)
-    description = models.CharField(max_length=255, null=True, blank=True)
+    name = models.CharField(max_length=25)
+    description = models.TextField(null=True, blank=True)
 
 
 class URL(GenericRelationshipMixin, BaseRecordModel):
