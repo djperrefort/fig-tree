@@ -14,6 +14,7 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Address': 'fa fa-address-card',
     'gen_rest_api.Citation': 'fa fa-check-double',
     'gen_rest_api.Event': 'fa fa-calendar-day',
+    'gen_rest_api.Family': 'fa fa-users',
 })
 
 
@@ -55,8 +56,8 @@ class AddressAdmin(BaseRecordAdmin):
     """Admin interface for `Address` Records"""
 
     list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private', 'tree']
-    list_filter = ['private', 'tree']
-    search_fields = ['line1', 'line2', 'line3', 'line4',  'municipality', 'province', 'country', 'code', 'lat', 'long']
+    list_filter = ['private', 'tree', 'last_modified']
+    search_fields = ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
         ('Record Info', {'fields': ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long', 'date', 'last_modified']}),
@@ -68,7 +69,7 @@ class CitationAdmin(BaseRecordAdmin):
     """Admin interface for `Citation` records"""
 
     list_display = ['source', 'page_or_reference', 'confidence', 'private', 'tree']
-    list_filter = ['private', 'tree', 'confidence']
+    list_filter = ['private', 'tree', 'confidence', 'last_modified']
     search_fields = ['source', 'page_or_reference', 'tree']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
@@ -81,7 +82,7 @@ class EventAdmin(BaseRecordAdmin):
     """Admin interface for `Event` records"""
 
     list_display = ['event_type', 'date', 'date_end', 'place', 'private', 'tree']
-    list_filter = ['private', 'tree', 'date_type']
+    list_filter = ['private', 'tree', 'date_type', 'last_modified']
     search_fields = ['event_type', 'description']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
@@ -98,8 +99,15 @@ class EventAdmin(BaseRecordAdmin):
 
 @admin.register(Family)
 class FamilyAdmin(BaseRecordAdmin):
+    """Admin interface for `Family` records"""
+
     list_display = ['parent1', 'parent2', 'children']
+    list_filter = ['private', 'tree', 'last_modified']
     search_fields = ['parent1__primary_name__given_name', 'parent2__primary_name__given_name']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['parent1', 'parent2', 'children']}),
+    ]
 
 
 @admin.register(Media)

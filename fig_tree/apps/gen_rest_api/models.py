@@ -163,6 +163,13 @@ class Family(BaseRecordModel):
     notes = cfields.GenericRelation('Note')
     tags = cfields.GenericRelation('Tag')
 
+    def __str__(self) -> str:
+        """Return the family name using the full names of both parents"""
+
+        parent1 = str(self.parent1) if self.parent1 else 'Unknown'
+        parent2 = str(self.parent2) if self.parent2 else 'Unknown'
+        return f'Family of "{parent1}" and "{parent2}'
+
 
 class Media(GenericRelationshipMixin, BaseRecordModel):
     """A media object"""
