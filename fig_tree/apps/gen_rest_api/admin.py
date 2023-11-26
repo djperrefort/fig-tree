@@ -22,6 +22,7 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Repository': 'fa fa-building',
     'gen_rest_api.Source': 'fa fa-book',
     'gen_rest_api.Tag': 'fa fa-tags',
+    'gen_rest_api.URL': 'fa fa-link',
 })
 
 
@@ -209,5 +210,11 @@ class TagAdmin(BaseRecordAdmin):
 
 @admin.register(URL)
 class URLAdmin(BaseRecordAdmin):
-    list_display = ['href', 'name', 'date', 'repository']
+    """Admin interface for `URL` records"""
+
+    list_display = ['href', 'name', 'date']
     search_fields = ['href', 'name']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['href', 'name', 'date']}),
+    ]
