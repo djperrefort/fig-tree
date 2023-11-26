@@ -212,7 +212,7 @@ class TagAdmin(BaseRecordAdmin):
 class URLAdmin(BaseRecordAdmin):
     """Admin interface for `URL` records"""
 
-    list_display = ['href', 'name', 'date']
+    list_display = ['href', 'name', 'last_accessed']
     search_fields = ['href', 'name']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
