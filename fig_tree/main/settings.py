@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'apps.family_trees',
     'apps.authentication',
-    'apps.gen_rest_api',
+    'apps.gen_data',
     'apps.signup',
     'apps.error_pages',
 ]
@@ -89,7 +89,7 @@ JAZZMIN_SETTINGS = {
     'order_with_respect_to': [
         'signup',
         'family_trees',
-        'gen_rest_api',
+        'gen_data',
     ],
     'icons': {
         'sites.Site': 'fa fa-globe'

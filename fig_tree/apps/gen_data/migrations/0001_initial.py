@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
                 ('description', models.TextField(blank=True, null=True)),
                 ('last_accessed', models.DateField(blank=True, null=True)),
                 ('content_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.contenttype')),
-                ('repository', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gen_rest_api.repository')),
+                ('repository', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gen_data.repository')),
                 ('tree', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='family_trees.familytree')),
             ],
             options={
@@ -129,7 +129,7 @@ class Migration(migrations.Migration):
                 ('last_modified', models.DateTimeField(auto_now=True)),
                 ('name', models.CharField(max_length=255)),
                 ('place_type', models.CharField(blank=True, max_length=255, null=True)),
-                ('enclosed_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='gen_rest_api.place')),
+                ('enclosed_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='gen_data.place')),
                 ('tree', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='family_trees.familytree')),
             ],
             options={
@@ -143,13 +143,13 @@ class Migration(migrations.Migration):
                 ('private', models.BooleanField(default=True)),
                 ('last_modified', models.DateTimeField(auto_now=True)),
                 ('sex', models.IntegerField(blank=True, choices=[(0, 'female'), (1, 'male'), (2, 'other')], null=True)),
-                ('alternate_names', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='persons_alternate', to='gen_rest_api.name')),
-                ('birth', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_birth', to='gen_rest_api.event')),
-                ('death', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_death', to='gen_rest_api.event')),
-                ('families', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='people', to='gen_rest_api.family')),
-                ('nick_names', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_nick', to='gen_rest_api.name')),
-                ('parent_families', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='people_parent', to='gen_rest_api.family')),
-                ('primary_name', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='persons_primary', to='gen_rest_api.name')),
+                ('alternate_names', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='persons_alternate', to='gen_data.name')),
+                ('birth', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_birth', to='gen_data.event')),
+                ('death', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_death', to='gen_data.event')),
+                ('families', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='people', to='gen_data.family')),
+                ('nick_names', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='person_nick', to='gen_data.name')),
+                ('parent_families', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='people_parent', to='gen_data.family')),
+                ('primary_name', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='persons_primary', to='gen_data.name')),
                 ('tree', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='family_trees.familytree')),
             ],
             options={
@@ -177,17 +177,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='family',
             name='children',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='family_child', to='gen_rest_api.person'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='family_child', to='gen_data.person'),
         ),
         migrations.AddField(
             model_name='family',
             name='parent1',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='family_parent1', to='gen_rest_api.person'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='family_parent1', to='gen_data.person'),
         ),
         migrations.AddField(
             model_name='family',
             name='parent2',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='family_parent2', to='gen_rest_api.person'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='family_parent2', to='gen_data.person'),
         ),
         migrations.AddField(
             model_name='family',
@@ -197,7 +197,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='place',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='gen_rest_api.place'),
+            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='gen_data.place'),
         ),
         migrations.AddField(
             model_name='event',
@@ -214,7 +214,7 @@ class Migration(migrations.Migration):
                 ('page_or_reference', models.CharField(blank=True, max_length=100, null=True)),
                 ('confidence', models.IntegerField(choices=[(0, 'low'), (1, 'regular'), (2, 'high')], default=1)),
                 ('content_type', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.contenttype')),
-                ('source', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gen_rest_api.source')),
+                ('source', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gen_data.source')),
                 ('tree', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='family_trees.familytree')),
             ],
             options={

@@ -10,5 +10,5 @@ from django.apps import AppConfig
 class Config(AppConfig):
     """Application settings and configuration"""
 
-    name = 'apps.gen_rest_api'
+    name = 'apps.gen_data'
     verbose_name = "Genealogical Data"

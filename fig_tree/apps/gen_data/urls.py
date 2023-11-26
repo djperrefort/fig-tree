@@ -37,7 +37,7 @@ from rest_framework import routers
 
 from .views import *
 
-app_name = 'gen_rest_api'
+app_name = 'gen_data'
 
 router = routers.SimpleRouter()
 router.register(r'address', AddressViewSet)

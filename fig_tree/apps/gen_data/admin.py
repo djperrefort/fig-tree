@@ -11,18 +11,18 @@ from django.contrib import admin
 from .models import *
 
 settings.JAZZMIN_SETTINGS['icons'].update({
-    'gen_rest_api.Address': 'fa fa-address-card',
-    'gen_rest_api.Citation': 'fa fa-check-double',
-    'gen_rest_api.Event': 'fa fa-calendar-day',
-    'gen_rest_api.Family': 'fa fa-users',
-    'gen_rest_api.Media': 'fa fa-photo-video',
-    'gen_rest_api.Name': 'fa fa-id-badge',
-    'gen_rest_api.Person': 'fa fa-user',
-    'gen_rest_api.Place': 'fa fa-map-marker-alt',
-    'gen_rest_api.Repository': 'fa fa-building',
-    'gen_rest_api.Source': 'fa fa-book',
-    'gen_rest_api.Tag': 'fa fa-tags',
-    'gen_rest_api.URL': 'fa fa-link',
+    'gen_data.Address': 'fa fa-address-card',
+    'gen_data.Citation': 'fa fa-check-double',
+    'gen_data.Event': 'fa fa-calendar-day',
+    'gen_data.Family': 'fa fa-users',
+    'gen_data.Media': 'fa fa-photo-video',
+    'gen_data.Name': 'fa fa-id-badge',
+    'gen_data.Person': 'fa fa-user',
+    'gen_data.Place': 'fa fa-map-marker-alt',
+    'gen_data.Repository': 'fa fa-building',
+    'gen_data.Source': 'fa fa-book',
+    'gen_data.Tag': 'fa fa-tags',
+    'gen_data.URL': 'fa fa-link',
 })
 
 
