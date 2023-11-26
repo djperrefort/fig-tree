@@ -106,7 +106,7 @@ class Citation(GenericRelationshipMixin, BaseRecordModel):
     def __str__(self) -> str:
         """Return the name of the cited source and supported record"""
 
-        source_name = defaultfilters.truncatechars(self.source, 25)
+        source_name = defaultfilters.truncatechars(self.source.title, 25)
         if self.content_object:
             return f'"{source_name}" citation for "{self.content_object}"'
 
@@ -203,9 +203,20 @@ class Name(BaseRecordModel):
     prefix = models.CharField(max_length=255, null=True, blank=True)
     citations = cfields.GenericRelation('Citation')
 
+    def __str__(self) -> str:
+        """Return the first and last name as a comma seperated string"""
+
+        first = self.given_name or 'Unknown'
+        last = self.surname or 'Unknown'
+        return f'{last}, {first}'
+
 
 class Person(BaseRecordModel):
     """A single individual"""
+
+    class Meta:
+
+        verbose_name_plural = 'People'
 
     class Sex(models.IntegerChoices):
         """The individuals biological sex at birth"""
@@ -229,6 +240,11 @@ class Person(BaseRecordModel):
     citations = cfields.GenericRelation('Citation')
     media = cfields.GenericRelation('Media')
     tags = cfields.GenericRelation('Tag')
+
+    def __str__(self) -> str:
+        """Return the person's primary name"""
+
+        return str(self.primary_name) if self.primary_name else 'Unknown'
 
 
 class Place(BaseRecordModel):

@@ -17,6 +17,7 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Family': 'fa fa-users',
     'gen_rest_api.Media': 'fa fa-photo-video',
     'gen_rest_api.Name': 'fa fa-id-badge',
+    'gen_rest_api.Person': 'fa fa-user',
 })
 
 
@@ -135,9 +136,23 @@ class NameAdmin(BaseRecordAdmin):
 
 @admin.register(Person)
 class PersonAdmin(BaseRecordAdmin):
+    """Admin interface for `Person` records"""
+
     list_display = ['primary_name', 'sex', 'birth', 'death']
-    list_filter = ['sex']
+    list_filter = ['private', 'tree', 'last_modified', 'sex']
     search_fields = ['primary_name__given_name', 'primary_name__surname']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': [
+            'primary_name',
+            'alternate_names',
+            'nick_names',
+            'death',
+            'birth',
+            'families',
+            'parent_families',
+        ]}),
+    ]
 
 
 @admin.register(Place)
