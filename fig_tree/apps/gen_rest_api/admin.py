@@ -16,6 +16,7 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Event': 'fa fa-calendar-day',
     'gen_rest_api.Family': 'fa fa-users',
     'gen_rest_api.Media': 'fa fa-photo-video',
+    'gen_rest_api.Name': 'fa fa-id-badge',
 })
 
 
@@ -122,8 +123,14 @@ class MediaAdmin(BaseRecordAdmin):
 
 @admin.register(Name)
 class NameAdmin(BaseRecordAdmin):
+    """Admin interface for `Name` records"""
+
     list_display = ['given_name', 'surname', 'prefix', 'suffix']
     search_fields = ['given_name', 'surname', 'prefix', 'suffix']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['given_name', 'surname', 'prefix', 'suffix']}),
+    ]
 
 
 @admin.register(Note)

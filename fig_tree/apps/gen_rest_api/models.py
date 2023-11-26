@@ -103,7 +103,7 @@ class Citation(GenericRelationshipMixin, BaseRecordModel):
 
     # Relationships
     notes = cfields.GenericRelation('Note')
-    source = models.ForeignKey('Source', on_delete=models.CASCADE, null=True)
+    source = models.ForeignKey('Source', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         """Return the name of the cited source and supported record"""
@@ -153,9 +153,9 @@ class Family(BaseRecordModel):
     """A group of individuals forming a family unit"""
 
     # Relationships with familial meaning
-    parent1 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent1', null=True)
-    parent2 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent2', null=True)
-    children = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_child', null=True)
+    parent1 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent1', null=True, blank=True)
+    parent2 = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_parent2', null=True, blank=True)
+    children = models.ForeignKey('Person', on_delete=models.CASCADE, related_name='family_child', null=True, blank=True)
 
     # Other relationships
     citations = cfields.GenericRelation('Citation')
@@ -201,10 +201,10 @@ class Media(GenericRelationshipMixin, BaseRecordModel):
 class Name(BaseRecordModel):
     """The name of a single individual"""
 
-    given_name = models.TextField(null=True)
-    surname = models.TextField(null=True)
-    suffix = models.TextField(null=True)
-    prefix = models.TextField(null=True)
+    given_name = models.CharField(max_length=255, null=True, blank=True)
+    surname = models.CharField(max_length=255, null=True, blank=True)
+    suffix = models.CharField(max_length=255, null=True, blank=True)
+    prefix = models.CharField(max_length=255, null=True, blank=True)
     citations = cfields.GenericRelation('Citation')
 
 
@@ -225,16 +225,16 @@ class Person(BaseRecordModel):
         MALE = 1, _('male')
         Other = 2, _('other')
 
-    sex = models.IntegerField(choices=Sex.choices, null=True)
+    sex = models.IntegerField(choices=Sex.choices, null=True, blank=True)
 
     # Relationships with genealogical meaning
-    primary_name = models.ForeignKey('Name', on_delete=models.CASCADE, related_name='persons_primary', null=True)
-    alternate_names = models.ForeignKey('Name', on_delete=models.CASCADE, related_name='persons_alternate', null=True)
-    nick_names = models.ForeignKey('Name', on_delete=models.CASCADE, related_name='person_nick', null=True)
-    death = models.OneToOneField('Event', on_delete=models.CASCADE, related_name='person_death', null=True)
-    birth = models.OneToOneField('Event', on_delete=models.CASCADE, related_name='person_birth', null=True)
-    families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people', null=True)
-    parent_families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people_parent', null=True)
+    primary_name = models.ForeignKey('Name', on_delete=models.CASCADE, related_name='persons_primary', null=True, blank=True)
+    alternate_names = models.ForeignKey('Name', on_delete=models.CASCADE, related_name='persons_alternate', null=True, blank=True)
+    nick_names = models.ForeignKey('Name', on_delete=models.CASCADE, related_name='person_nick', null=True, blank=True)
+    death = models.OneToOneField('Event', on_delete=models.CASCADE, related_name='person_death', null=True, blank=True)
+    birth = models.OneToOneField('Event', on_delete=models.CASCADE, related_name='person_birth', null=True, blank=True)
+    families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people', null=True, blank=True)
+    parent_families = models.ForeignKey('Family', on_delete=models.CASCADE, related_name='people_parent', null=True, blank=True)
 
     # Other relationships
     citations = cfields.GenericRelation('Citation')
@@ -247,12 +247,12 @@ class Place(BaseRecordModel):
     """A place in the world separate from any physical location"""
 
     name = models.TextField()
-    place_type = models.TextField(null=True)
-    enclosed_by = models.IntegerField(null=True)
-    latitude = models.CharField(max_length=10, null=True)
-    longitude = models.CharField(max_length=10, null=True)
-    code = models.IntegerField(null=True)
-    date = models.DateField(null=True)
+    place_type = models.TextField(null=True, blank=True)
+    enclosed_by = models.IntegerField(null=True, blank=True)
+    latitude = models.CharField(max_length=10, null=True, blank=True)
+    longitude = models.CharField(max_length=10, null=True, blank=True)
+    code = models.IntegerField(null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
 
     addresses = cfields.GenericRelation('Address')
     citations = cfields.GenericRelation('Citation')
@@ -305,7 +305,7 @@ class URL(GenericRelationshipMixin, BaseRecordModel):
     """An online resource locator"""
 
     href = models.TextField()
-    name = models.TextField(null=True)
-    date = models.DateField(null=True)
+    name = models.TextField(null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
 
     repository = models.ForeignKey('Repository', on_delete=models.CASCADE)
