@@ -1,5 +1,2 @@
-# Django stuff
 *.sqlite3
 *.sqlite3-journal
-fig_tree/email
-fig_tree/static_root

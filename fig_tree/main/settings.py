@@ -47,10 +47,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'widget_tweaks',
     'apps.family_trees',
+    'apps.admin_utils',
     'apps.authentication',
+    'apps.error_pages',
     'apps.gen_rest_api',
     'apps.signup',
-    'apps.error_pages',
 ]
 
 MIDDLEWARE = [

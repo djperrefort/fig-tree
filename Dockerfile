@@ -16,3 +16,4 @@ ENV PIP_ROOT_USER_ACTION=ignore
 RUN pip3 install -e .
 
 ENTRYPOINT ["fig-tree-manage"]
+CMD ["quickstart", "--static", "--migrate", "--uvicorn", "--no-input"]
