@@ -174,6 +174,9 @@ class Family(BaseRecordModel):
 class Media(GenericRelationshipMixin, BaseRecordModel):
     """A media object"""
 
+    class Meta:
+        verbose_name_plural = 'Media'
+
     class DateType(models.IntegerChoices):
         """Date type for the event"""
 
@@ -182,14 +185,17 @@ class Media(GenericRelationshipMixin, BaseRecordModel):
         AFTER = 2, _('after')
         ABOUT = 3, _('about')
 
-    path = models.FilePathField()
+    blob = models.ImageField()
     date_type = models.IntegerField(choices=DateType.choices, default='regular')
-    year = models.IntegerField(null=True, blank=True)
-    month = models.IntegerField(null=True, blank=True)
-    day = models.IntegerField(null=True, blank=True)
+    date = models.DateField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     tags = cfields.GenericRelation('Tag')
+
+    def __str__(self) -> str:
+        """Return the media description"""
+
+        return defaultfilters.truncatechars(self.description, 50)
 
 
 class Name(BaseRecordModel):

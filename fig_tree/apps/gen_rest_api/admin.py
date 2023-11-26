@@ -15,6 +15,7 @@ settings.JAZZMIN_SETTINGS['icons'].update({
     'gen_rest_api.Citation': 'fa fa-check-double',
     'gen_rest_api.Event': 'fa fa-calendar-day',
     'gen_rest_api.Family': 'fa fa-users',
+    'gen_rest_api.Media': 'fa fa-photo-video',
 })
 
 
@@ -48,6 +49,7 @@ class BaseRecordAdmin(ReadOnlyTreeMixin, admin.ModelAdmin):
 
     actions = [set_selected_to_private, set_selected_to_public]
     readonly_fields = ['last_modified']
+    list_filter = ['private', 'tree', 'last_modified']
     exclude = ['object_id', 'content_type', 'content_object']
 
 
@@ -56,7 +58,6 @@ class AddressAdmin(BaseRecordAdmin):
     """Admin interface for `Address` Records"""
 
     list_display = ['line1', 'municipality', 'province', 'country', 'lat', 'long', 'private', 'tree']
-    list_filter = ['private', 'tree', 'last_modified']
     search_fields = ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
@@ -69,7 +70,6 @@ class CitationAdmin(BaseRecordAdmin):
     """Admin interface for `Citation` records"""
 
     list_display = ['source', 'page_or_reference', 'confidence', 'private', 'tree']
-    list_filter = ['private', 'tree', 'confidence', 'last_modified']
     search_fields = ['source', 'page_or_reference', 'tree']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
@@ -82,7 +82,6 @@ class EventAdmin(BaseRecordAdmin):
     """Admin interface for `Event` records"""
 
     list_display = ['event_type', 'date', 'date_end', 'place', 'private', 'tree']
-    list_filter = ['private', 'tree', 'date_type', 'last_modified']
     search_fields = ['event_type', 'description']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
@@ -102,7 +101,6 @@ class FamilyAdmin(BaseRecordAdmin):
     """Admin interface for `Family` records"""
 
     list_display = ['parent1', 'parent2', 'children']
-    list_filter = ['private', 'tree', 'last_modified']
     search_fields = ['parent1__primary_name__given_name', 'parent2__primary_name__given_name']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
@@ -112,8 +110,14 @@ class FamilyAdmin(BaseRecordAdmin):
 
 @admin.register(Media)
 class MediaAdmin(BaseRecordAdmin):
-    list_display = ['path', 'description']
-    search_fields = ['path', 'description']
+    """Admin interface for `Media` records"""
+
+    list_display = ['description', 'date']
+    search_fields = ['description']
+    fieldsets = [
+        ('Family Tree', {'fields': ['tree', 'private']}),
+        ('Record Info', {'fields': ['blob', 'date_type', 'date', 'description']}),
+    ]
 
 
 @admin.register(Name)
