@@ -94,10 +94,37 @@ jobs:
       - name: Test ${{ matrix.app_name }} app
         run: poetry run fig-tree-manage test --parallel auto fig_tree/tests
 
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: false
+
+      - name: Install dependencies
+        run: poetry install --with tests
+
+      - name: Run system checks
+        run: poetry run fig-tree-manage check --fail-level WARNING
+
+      - name: Run migration checks
+        run: poetry run fig-tree-manage makemigrations --check --no-input
+
   report-test-status:
     name: Report Test Status
     if: always()
-    needs: [ unit_tests, function_tests ]
+    needs: [ unit_tests, function_tests, integration-tests ]
     runs-on: ubuntu-latest
 
     steps:
