@@ -23,7 +23,6 @@ __all__ = [
     'FamilyViewSet',
     'MediaViewSet',
     'NameViewSet',
-    'NoteViewSet',
     'PersonViewSet',
     'PlaceViewSet',
     'RepositoryViewSet',
@@ -114,13 +113,6 @@ class NameViewSet(BaseRecordViewSet):
 
     serializer_class = NameSerializer
     queryset = Name.objects
-
-
-class NoteViewSet(BaseRecordViewSet):
-    """ViewSet for CRUD operations on `Note` records"""
-
-    serializer_class = NoteSerializer
-    queryset = Note.objects
 
 
 class PersonViewSet(BaseRecordViewSet):

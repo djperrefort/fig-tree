@@ -23,7 +23,6 @@ __all__ = [
     'Family',
     'Media',
     'Name',
-    'Note',
     'Person',
     'Place',
     'Repository',
@@ -102,7 +101,6 @@ class Citation(GenericRelationshipMixin, BaseRecordModel):
     confidence = models.IntegerField(choices=Confidence.choices, default=1)
 
     # Relationships
-    notes = cfields.GenericRelation('Note')
     source = models.ForeignKey('Source', on_delete=models.CASCADE)
 
     def __str__(self) -> str:
@@ -139,7 +137,6 @@ class Event(BaseRecordModel):
     place = models.OneToOneField('Place', on_delete=models.CASCADE, null=True, blank=True)
     people = cfields.GenericRelation('Person')
     tags = cfields.GenericRelation('Tag')
-    notes = cfields.GenericRelation('Note')
     media = cfields.GenericRelation('Media')
     citations = cfields.GenericRelation('Citation')
 
@@ -160,7 +157,6 @@ class Family(BaseRecordModel):
     # Other relationships
     citations = cfields.GenericRelation('Citation')
     media = cfields.GenericRelation('Media')
-    notes = cfields.GenericRelation('Note')
     tags = cfields.GenericRelation('Tag')
 
     def __str__(self) -> str:
@@ -208,13 +204,6 @@ class Name(BaseRecordModel):
     citations = cfields.GenericRelation('Citation')
 
 
-class Note(GenericRelationshipMixin, BaseRecordModel):
-    """A text note"""
-
-    text = models.TextField()
-    tags = cfields.GenericRelation('Tag')
-
-
 class Person(BaseRecordModel):
     """A single individual"""
 
@@ -239,7 +228,6 @@ class Person(BaseRecordModel):
     # Other relationships
     citations = cfields.GenericRelation('Citation')
     media = cfields.GenericRelation('Media')
-    notes = cfields.GenericRelation('Note')
     tags = cfields.GenericRelation('Tag')
 
 
@@ -257,7 +245,6 @@ class Place(BaseRecordModel):
     addresses = cfields.GenericRelation('Address')
     citations = cfields.GenericRelation('Citation')
     media = cfields.GenericRelation('Media')
-    notes = cfields.GenericRelation('Note')
     tags = cfields.GenericRelation('Tag')
 
     @property
@@ -285,7 +272,6 @@ class Source(BaseRecordModel):
     pubinfo = models.CharField(max_length=250, null=True, blank=True)
 
     media = cfields.GenericRelation('Media')
-    notes = cfields.GenericRelation('Note')
     tags = cfields.GenericRelation('Tag')
 
     def __str__(self) -> str:

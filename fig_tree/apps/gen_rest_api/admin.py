@@ -133,12 +133,6 @@ class NameAdmin(BaseRecordAdmin):
     ]
 
 
-@admin.register(Note)
-class NoteAdmin(BaseRecordAdmin):
-    list_display = ['content_object', 'text']
-    search_fields = ['text']
-
-
 @admin.register(Person)
 class PersonAdmin(BaseRecordAdmin):
     list_display = ['primary_name', 'sex', 'birth', 'death']
