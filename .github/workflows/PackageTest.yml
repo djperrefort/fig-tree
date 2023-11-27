@@ -92,7 +92,7 @@ jobs:
         run: poetry install --with tests
 
       - name: Test ${{ matrix.app_name }} app
-        run: poetry run fig-tree-manage test --parallel auto fig_tree/tests
+        run: poetry run fig-tree-manage test fig_tree/tests
 
   integration-tests:
     runs-on: ubuntu-latest

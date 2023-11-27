@@ -10,7 +10,7 @@ class Quickstart(TestCase):
     """Test the `quickstart` command"""
 
     def test_uvicorn_command(self):
-        """Test the `--uvicorn` option deploys a uvicorn server"""
+        """Test the `--uvicorn` option deploys a Uvicorn server"""
 
         with patch('subprocess.run') as mock_run:
             call_command('quickstart', '--uvicorn', '--no-input')

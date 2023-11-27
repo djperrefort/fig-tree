@@ -53,8 +53,8 @@ services:
       build: fig_tree
       command: |
          sh -c '
-           fig-tree-manage collectstatic --noinput
-           fig-tree-manage migrate --noinput
+           fig-tree-manage collectstatic --no-input
+           fig-tree-manage migrate --no-input
            uvicorn fig_tree.main.asgi:application --host 0.0.0.0 --port 8000'
       volumes:
          - static_app_data:/app/fig_tree/static_root

@@ -41,7 +41,7 @@ class PasswordResetForm(CustomTestBase, LiveServerTestCase):
         self.assertEqual('submit', self.submit_btn.get_property('type'))
 
     def test_form_submit_blank(self) -> None:
-        """Test form behavior on a blank entry"""
+        """Test for an error message on a blank entry"""
 
         # Check there is no redirect for empty form
         self.submit_btn.click()
@@ -51,7 +51,7 @@ class PasswordResetForm(CustomTestBase, LiveServerTestCase):
         self.assertEqual('This field is required.', alert_msg.text)
 
     def test_form_submit_invalid_email(self) -> None:
-        """Test form behavior on an invalid email address"""
+        """Test for an error message on an invalid email address"""
 
         # Check there is no redirect for invalid email
         self.email_field.send_keys('notanemail')

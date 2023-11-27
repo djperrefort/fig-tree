@@ -15,5 +15,6 @@ COPY pyproject.toml pyproject.toml
 ENV PIP_ROOT_USER_ACTION=ignore
 RUN pip3 install -e .
 
+# Migrate the application and launch a webserver
 ENTRYPOINT ["fig-tree-manage"]
 CMD ["quickstart", "--static", "--migrate", "--uvicorn", "--no-input"]
