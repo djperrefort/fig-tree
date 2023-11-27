@@ -5,7 +5,7 @@ from time import sleep
 from django.test import LiveServerTestCase
 from django.urls import reverse
 
-from ..utils import PageTitleTest
+from ..utils import PageTitleTest, CustomTestBase
 
 URL_REVERSE = 'auth:logout'
 
@@ -17,7 +17,7 @@ class PageTitle(PageTitleTest, LiveServerTestCase):
     page_title = 'Logout Successful'
 
 
-class RedirectOnSuccess(LiveServerTestCase):
+class RedirectOnSuccess(CustomTestBase, LiveServerTestCase):
     """Test the user is redirected after a delay"""
 
     url_reverse = URL_REVERSE
