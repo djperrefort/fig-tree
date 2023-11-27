@@ -120,7 +120,7 @@ class ValidResetLink(CustomTestBase, LiveServerTestCase):
         self.submit_btn.click()
 
         error = self.webdriver.find_element(By.ID, 'id_password_error')
-        self.assertEqual(error.text, 'The two password fields didn’t match.')
+        self.assertEqual(error.text, "The two password fields didn't match.")
 
     def test_redirect_on_valid_password(self) -> None:
         """Test page redirect on valid password"""
