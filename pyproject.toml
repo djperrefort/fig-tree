@@ -8,7 +8,7 @@ version = "0.0.0"
 description = "Data management utility for geneological research"
 authors = ["Daniel Perrefort"]
 packages = [{ include = "fig_tree" }]
-keywords = ["Pitt", "CRC", "HPC", "wrappers"]
+keywords = ["Family", "History", "Research", "Geneology"]
 classifiers = [
     "Environment :: Web Environment",
     "Framework :: Django",
@@ -35,6 +35,12 @@ psycopg2-binary = "2.9.7"
 python-dotenv = "1.0.0"
 uvicorn = "0.24.0"
 
+[tool.poetry.group.tests]
+optional = true
+
+[tool.poetry.group.tests.dependencies]
+selenium = "4.14.0"
+
 [tool.poetry.group.docs]
 optional = true
 
@@ -42,9 +48,3 @@ optional = true
 mike = "1.1.2"
 mkdocs-material = "9.4.7"
 mkdocstrings = { version = "0.23.0", extras = ["python"] }
-
-[tool.poetry.group.tests]
-optional = true
-
-[tool.poetry.group.tests.dependencies]
-selenium = "4.14.0"

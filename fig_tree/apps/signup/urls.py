@@ -8,7 +8,7 @@ View objects can be found in the `views` module.
 | URL                      | View                   | Name              |
 |--------------------------|------------------------|-------------------|
 | `/`                      | `SignUpView`           | `new-user`        |
-| `act_sent/`              | `activation_sent_view` | `activation-sent` |
+| `sent/`                  | `ActivationSentView`   | `activation-sent` |
 | `[AUTHENTICATION-TOKEN]` | `ActivateAccountView`  | `activate`        |
 """
 

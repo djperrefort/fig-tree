@@ -68,7 +68,19 @@ class AddressAdmin(BaseRecordAdmin):
     search_fields = ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long']
     fieldsets = [
         ('Family Tree', {'fields': ['tree', 'private']}),
-        ('Record Info', {'fields': ['line1', 'line2', 'line3', 'line4', 'municipality', 'province', 'country', 'code', 'lat', 'long', 'date', 'last_modified']}),
+        ('Record Info', {'fields': [
+            'line1',
+            'line2',
+            'line3',
+            'line4',
+            'municipality',
+            'province',
+            'country',
+            'code',
+            'lat',
+            'long',
+            'date',
+            'last_modified']}),
     ]
 
 

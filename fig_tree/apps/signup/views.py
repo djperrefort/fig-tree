@@ -69,7 +69,7 @@ class SignUpView(CreateView):
 
 
 class ActivationSentView(TemplateView):
-    """View for telling user's to check hir email for a confirmation notice"""
+    """View for telling user's to check their email for a confirmation notice"""
 
     template_name = "signup/activation_sent.html"
 
