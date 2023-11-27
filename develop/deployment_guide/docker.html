@@ -1420,8 +1420,8 @@ docker<span class="w"> </span>run<span class="w"> </span>--env-file<span class="
 <span class="w">      </span><span class="nt">build</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fig_tree</span>
 <span class="w">      </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">         </span><span class="no">sh -c &#39;</span>
-<span class="w">           </span><span class="no">fig-tree-manage collectstatic --noinput</span>
-<span class="w">           </span><span class="no">fig-tree-manage migrate --noinput</span>
+<span class="w">           </span><span class="no">fig-tree-manage collectstatic --no-input</span>
+<span class="w">           </span><span class="no">fig-tree-manage migrate --no-input</span>
 <span class="w">           </span><span class="no">uvicorn fig_tree.main.asgi:application --host 0.0.0.0 --port 8000&#39;</span>
 <span class="w">      </span><span class="nt">volumes</span><span class="p">:</span>
 <span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">static_app_data:/app/fig_tree/static_root</span>
