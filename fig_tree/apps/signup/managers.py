@@ -2,8 +2,6 @@
 The `managers` module defines custom model managers for encapsulating common
 query logic. Managers are attached to database models to extend a model's
 default querying capabilities and to facilitate common data retrieval tasks.
-
-Model objects can be found in the `models` module.
 """
 
 from __future__ import annotations
@@ -29,7 +27,7 @@ class AuthUserManager(auth.base_user.BaseUserManager):
 
     @staticmethod
     def create_user(username: str, password: str, email: str, **extra_fields) -> AuthUser:
-        """Create and save a new user with the given email and password"""
+        """Create a new user with the given email and password"""
 
         validators.validate_email(email)
 
@@ -41,7 +39,7 @@ class AuthUserManager(auth.base_user.BaseUserManager):
 
     @classmethod
     def create_staff_user(cls, username: str, password: str, email: str, **extra_fields) -> AuthUser:
-        """Convenience function for creating a new staff user"""
+        """Create a new staff user with the given email and password"""
 
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', False)
@@ -54,7 +52,7 @@ class AuthUserManager(auth.base_user.BaseUserManager):
 
     @classmethod
     def create_superuser(cls, username: str, password: str, email: str, **extra_fields) -> AuthUser:
-        """Convenience function for creating a new superuser"""
+        """Create a new superuser with the given email and password"""
 
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)

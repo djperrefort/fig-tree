@@ -1,8 +1,11 @@
 """Function tests for the logout confirmation page."""
 
-from django.test import LiveServerTestCase
+from time import sleep
 
-from ..utils import PageTitleTest, RedirectOnSuccessTest
+from django.test import LiveServerTestCase
+from django.urls import reverse
+
+from ..utils import PageTitleTest
 
 URL_REVERSE = 'auth:logout'
 
@@ -14,9 +17,16 @@ class PageTitle(PageTitleTest, LiveServerTestCase):
     page_title = 'Logout Successful'
 
 
-class RedirectOnSuccess(RedirectOnSuccessTest, LiveServerTestCase):
+class RedirectOnSuccess(LiveServerTestCase):
     """Test the user is redirected after a delay"""
 
     url_reverse = URL_REVERSE
     url_reverse_end = 'home'
     redirect_delay = 4
+
+    def runTest(self):
+        """Test the user is redirected"""
+
+        sleep(self.redirect_delay)  # Wait for client to be redirected
+        end_url = self.live_server_url + reverse(self.url_reverse_end)
+        self.assertEqual(end_url, self.webdriver.current_url)

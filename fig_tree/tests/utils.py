@@ -1,6 +1,4 @@
-"""General utilities and reusable tests fr building application function tests."""
-
-from time import sleep
+"""General utilities and reusable tests for building function tests."""
 
 from django.urls import reverse
 from selenium import webdriver
@@ -8,7 +6,7 @@ from selenium.webdriver.firefox.options import Options
 
 
 class CustomTestBase:
-    """Extends the UnitTest/Django testing framework with common setup tasks
+    """Extends the UnitTest/Django testing framework with common Selenium setup tasks
 
     This class automatically sets up a unique webdriver instance for each test.
     The attributes below are used to instantiate the web driver.
@@ -71,39 +69,3 @@ class PageTitleTest(CustomTestBase):
         """Test the page title is set correctly"""
 
         self.assertEqual(self.page_title, self.webdriver.title)
-
-
-class RedirectOnSuccessTest(CustomTestBase):
-    """Test the user is redirected to a different page after a delay"""
-
-    url_reverse_end: str
-    """The URL a user should be redirected to"""
-
-    redirect_delay: int
-    """Wait the given number of seconds before checking the redirected URL"""
-
-    def runTest(self):
-        """Test the user is redirected"""
-
-        sleep(self.redirect_delay)  # Wait for client to be redirected
-        end_url = self.live_server_url + reverse(self.url_reverse_end)
-        self.assertEqual(end_url, self.webdriver.current_url)
-
-
-class CorrectTemplateTest(CustomTestBase):
-    """Test a URL corresponds to a given template"""
-
-    url_name: str
-    """The Django URL to test"""
-
-    template: str
-    """The path of the expected rendered template"""
-
-    def test_get_returns_correct_template(self) -> None:
-        """Test the view returns correct template"""
-
-        url = reverse(self.url_name)
-        response = self.client.get(url)
-
-        self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed(response, self.template)

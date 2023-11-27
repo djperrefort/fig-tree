@@ -27,6 +27,6 @@ class UsesCustomAuthUser(TestCase):
     """Test the form uses the custom user database model"""
 
     def runTest(self) -> None:
-        """Execute the test"""
+        """Test the form uses the correct database model"""
 
         self.assertIs(UserChangeForm().Meta.model, AuthUser)

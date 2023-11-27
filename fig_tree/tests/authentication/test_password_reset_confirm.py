@@ -15,7 +15,7 @@ URL_REVERSE_KWARGS = dict(uidb64='MQ', token='b0eoao-12ccb812deafbe6e742fdd53610
 
 
 class InvalidOrExpiredLink(CustomTestBase, LiveServerTestCase):
-    """Tests page behavior for an invalid or expired password reset link"""
+    """Test page behavior for an invalid or expired password reset link"""
 
     url_reverse = URL_REVERSE
     url_reverse_kwargs = URL_REVERSE_KWARGS
@@ -34,12 +34,12 @@ class InvalidOrExpiredLink(CustomTestBase, LiveServerTestCase):
 
 
 class ValidResetLink(CustomTestBase, LiveServerTestCase):
-    """Tests page behavior for a valid password reset link"""
+    """Test page behavior for a valid password reset link"""
 
     url_reverse = URL_REVERSE
 
     def setUp(self) -> None:
-        """Render the webpage and find key page elements"""
+        """Render the webpage and identify key page elements"""
 
         # Update render arguments so the webdriver has a valid password reset token
         token, uidb64 = self.create_temporary_reset_token()

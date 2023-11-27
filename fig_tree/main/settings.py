@@ -95,7 +95,7 @@ JAZZMIN_SETTINGS = {
     'icons': {
         'sites.Site': 'fa fa-globe'
     },
-    'hide_apps' : ['sites'],
+    'hide_apps': ['sites'],
     "changeform_format": "single",
     "changeform_format_overrides": dict(),
 }
