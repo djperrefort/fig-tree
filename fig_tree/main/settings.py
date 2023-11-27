@@ -14,17 +14,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 sys.path.insert(0, str(BASE_DIR))
 
-# Security and authentication settings
+# Debug
 
 DEBUG = env.bool('DEBUG', False)
-SECRET_KEY = env.str('SECRET_KEY', get_random_secret_key())
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ["localhost", "127.0.0.1"])
-
-# If running in debug mode, save emails to disk instead of sending them
-
 if DEBUG:
+    # If running in debug mode, save emails to disk instead of sending them
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
     EMAIL_FILE_PATH = env.path('EMAIL_FILE_PATH', BASE_DIR.parent / 'email')
+
+# Security and TLS
+
+SECRET_KEY = env.str('SECRET_KEY', get_random_secret_key())
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
+
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=0)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = SECURE_HSTS_SECONDS > 0
 
 # Application Configuration
 
@@ -97,7 +106,7 @@ JAZZMIN_SETTINGS = {
     'icons': {
         'sites.Site': 'fa fa-globe'
     },
-    'hide_apps' : ['sites'],
+    'hide_apps': ['sites'],
     "changeform_format": "single",
     "changeform_format_overrides": dict(),
 }
