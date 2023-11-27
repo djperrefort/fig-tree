@@ -25,14 +25,14 @@ if DEBUG:
 # Security and TLS
 
 SECRET_KEY = env.str('SECRET_KEY', get_random_secret_key())
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ["localhost", "127.0.0.1"])
 
-SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
-CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", False)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", False)
 
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
-SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
-SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=0)
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", False)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", False)
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", 0)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = SECURE_HSTS_SECONDS > 0
 
 # Application Configuration
