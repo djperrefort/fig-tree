@@ -16,23 +16,23 @@ sys.path.insert(0, str(BASE_DIR))
 
 # Debug
 
-DEBUG = env.bool('DEBUG', False)
+DEBUG = env.bool('DEBUG', default=False)
 if DEBUG:
     # If running in debug mode, save emails to disk instead of sending them
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    EMAIL_FILE_PATH = env.path('EMAIL_FILE_PATH', BASE_DIR.parent / 'email')
+    EMAIL_FILE_PATH = env.path('EMAIL_FILE_PATH', default=BASE_DIR.parent / 'email')
 
 # Security and TLS
 
-SECRET_KEY = env.str('SECRET_KEY', get_random_secret_key())
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ["localhost", "127.0.0.1"])
+SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "127.0.0.1"])
 
-SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", False)
-CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", False)
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
 
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", False)
-SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", False)
-SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", 0)
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=False)
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=0)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = SECURE_HSTS_SECONDS > 0
 
 # Application Configuration
@@ -124,7 +124,7 @@ REST_FRAMEWORK = {
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_DB_PATH = BASE_DIR / 'keystone.db'
 DATABASES = {
-    'default': env.db('DATABASE_URL', f'sqlite:///{DEFAULT_DB_PATH}')
+    'default': env.db('DATABASE_URL', default=f'sqlite:///{DEFAULT_DB_PATH}')
 }
 
 # Password validation
@@ -148,5 +148,5 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 
-STATIC_URL = env.str('STATIC_URL', 'static/')
-STATIC_ROOT = env.path('STATIC_ROOT', BASE_DIR / 'static_root')
+STATIC_URL = env.str('STATIC_URL', default='static/')
+STATIC_ROOT = env.path('STATIC_ROOT', default=BASE_DIR / 'static_root')
