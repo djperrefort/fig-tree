@@ -122,9 +122,21 @@ REST_FRAMEWORK = {
 # Database
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-DEFAULT_DB_PATH = BASE_DIR / 'keystone.db'
+if env.str('POSTGRES_DB', False):
+    _ENGINE = 'django.db.backends.postgresql'
+
+else:
+    _ENGINE = 'django.db.backends.sqlite3'
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', default=f'sqlite:///{DEFAULT_DB_PATH}')
+    'default': {
+        "ENGINE": _ENGINE,
+        "NAME": env.str('POSTGRES_DB', BASE_DIR / 'fig_tree.db'),
+        "USER": env.str('POSTGRES_USER', ''),
+        "PASSWORD": env.str('POSTGRES_PASSWORD', ''),
+        "HOST": env.str('POSTGRES_HOST', 'localhost'),
+        "PORT": env.str('POSTGRES_PORT', '5432'),
+    }
 }
 
 # Password validation
