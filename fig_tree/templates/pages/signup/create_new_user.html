@@ -1,55 +1,83 @@
-{% extends 'layouts/center_card.html' %}
+{% extends 'layouts/base.html' %}
 {% load static widget_tweaks %}
 
 {% block title %}Sign Up{% endblock %}
+{% block header %}{% endblock %}
 
-{% block card_header_content %}
-  <h3>Create a New Account</h3>
-{% endblock %}
+{% block main_content %}
 
-{% block card_body_content %}
-  <form method="post" action="{% url 'signup:new-user' %}">
-    {% csrf_token %}
+  <section>
+    <div class="container">
+      <div class="px-4 py-5 px-md-5 text-center text-lg-start">
+        <div class="row gx-lg-5 align-items-center">
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <h1 class="my-5 display-3 fw-bold ls-tight">
+              Take your story<br />
+              <span class="text-primary">to the next level</span>
+            </h1>
+            <p class="text-gray">
+              Sign up now to see why we're so much more than a best in class data management platform.
+              Effortlessly organize your family history and build a shareable digital legacy that spans generations.
+            </p>
+          </div>
 
-    <div class="mb-3">
-      <label for="id_username" class="form-label">Username</label>
-      {% render_field form.username class="form-control" placeholder="username" %}
-      {% if form.username.errors %}
-        <p id="id_username_error" class="text-danger pt-1">
-          {{ form.username.errors.0|escape }}
-        </p>
-      {% endif %}
+          <div class="col-lg-6 mb-5 mb-lg-0">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="h3">Create a New Account</h2>
+              </div>
+
+              <div class="card-body py-4 px-md-5">
+                <form method="post" action="{% url 'signup:new-user' %}">
+                  {% csrf_token %}
+
+                  <div class="mb-3">
+                    <label for="id_username" class="form-label">Username</label>
+                    {% render_field form.username class="form-control" placeholder="username" %}
+                    {% if form.username.errors %}
+                      <p id="id_username_error" class="text-danger pt-1">
+                        {{ form.username.errors.0|escape }}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="id_email" class="form-label">Email</label>
+                    {% render_field form.email class="form-control" placeholder="name@domain.com" %}
+                    {% if form.email.errors %}
+                      <p id="id_email_error" class="text-danger pt-1">
+                        {{ form.email.errors.0|escape }}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="id_password1" class="form-label">Password</label>
+                    {% render_field form.password1 class="form-control" placeholder="password" %}
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="i3_password2" class="form-label">Confirm Password</label>
+                    {% render_field form.password2 class="form-control" placeholder="password" %}
+                    {% if form.password2.errors %}
+                      <p id="id_password_error" class="text-danger pt-1">
+                        {{ form.password2.errors.0|escape }}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  <button id="id_submit" type="submit" class="btn btn-primary w-100">Sign Up</button>
+                  <hr class="my-4">
+                  <div class="text-center text-muted">
+                    <p>Already have an account? <a href="{% url 'auth:login' %}">Click here to login</a></p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="mb-3">
-      <label for="id_email" class="form-label">Email</label>
-      {% render_field form.email class="form-control" placeholder="name@domain.com" %}
-      {% if form.email.errors %}
-        <p id="id_email_error" class="text-danger pt-1">
-          {{ form.email.errors.0|escape }}
-        </p>
-      {% endif %}
-    </div>
-
-    <div class="mb-3">
-      <label for="id_password1" class="form-label">Password</label>
-      {% render_field form.password1 class="form-control" placeholder="password" %}
-    </div>
-
-    <div class="mb-4">
-      <label for="i3_password2" class="form-label">Confirm Password</label>
-      {% render_field form.password2 class="form-control" placeholder="password" %}
-      {% if form.password2.errors %}
-        <p id="id_password_error" class="text-danger pt-1">
-          {{ form.password2.errors.0|escape }}
-        </p>
-      {% endif %}
-    </div>
-
-    <button id="id_submit" type="submit" class="btn btn-primary w-100">Sign Up</button>
-    <hr class="my-4">
-    <div class="text-center text-muted">
-      <p>Already have an account? <a href="{% url 'auth:login' %}">Click here to login</a></p>
-    </div>
-  </form>
 {% endblock %}

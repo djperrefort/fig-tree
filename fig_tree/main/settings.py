@@ -73,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware'
 ]
 
 TEMPLATES = [
@@ -131,7 +132,7 @@ else:
 DATABASES = {
     'default': {
         "ENGINE": _ENGINE,
-        "NAME": env.str('POSTGRES_DB', BASE_DIR / 'fig_tree.db'),
+        "NAME": env.str('POSTGRES_DB', BASE_DIR / 'fig_tree.sqlite3'),
         "USER": env.str('POSTGRES_USER', ''),
         "PASSWORD": env.str('POSTGRES_PASSWORD', ''),
         "HOST": env.str('POSTGRES_HOST', 'localhost'),
