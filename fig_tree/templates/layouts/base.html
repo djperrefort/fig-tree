@@ -11,7 +11,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
   <meta name="description" content="Fig-Tree data management platform for genealogical research."/>
-  <meta name="keywords" content="FigTree data management genelogy research web platform"/>
+  <meta name="keywords" content="FigTree data management genealogy research web platform"/>
+
+  <!-- Third party CDN -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+        crossorigin="anonymous">
 
   <!-- Style and favicon -->
   <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
@@ -21,11 +27,20 @@
 
 <body>
 
-  <main>
-    {% block content %}{% endblock content %}
-  </main>
+<main>
+  {% block content %}{% endblock content %}
+</main>
 
-  {% block extra_js %}{% endblock extra_js %}
+<!-- Javascript -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"
+        integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+"
+        crossorigin="anonymous"></script>
+
+{% block extra_js %}{% endblock extra_js %}
 </body>
 
 </html>

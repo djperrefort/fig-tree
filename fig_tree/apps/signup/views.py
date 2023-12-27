@@ -31,7 +31,7 @@ class SignUpView(CreateView):
     """View for handling new user creation requests"""
 
     form_class = UserCreationForm
-    template_name = 'signup/create_new_user.html'
+    template_name = 'pages/signup/create_new_user.html'
     success_url = reverse_lazy('signup:activation-sent')
 
     def form_valid(self, form: UserCreationForm) -> bool:
@@ -53,7 +53,7 @@ class SignUpView(CreateView):
         current_site = Site.objects.get_current()
 
         email_subject = 'New account activation'
-        message = render_to_string('signup/activate_account_email.html', {
+        message = render_to_string('pages/signup/activate_account_email.html', {
             'user': user,
             'domain': current_site.domain,
             'protocol': 'https',
@@ -71,7 +71,7 @@ class SignUpView(CreateView):
 class ActivationSentView(TemplateView):
     """View for telling user's to check their email for a confirmation notice"""
 
-    template_name = "signup/activation_sent.html"
+    template_name = "pages/signup/activation_sent.html"
 
 
 class ActivateAccountView(View):
@@ -100,6 +100,6 @@ class ActivateAccountView(View):
         if user is not None and activation_token_generator.check_token(user, token):
             user.is_active = True
             user.save()
-            return render(request, 'signup/activation_success.html')
+            return render(request, 'pages/signup/activation_success.html')
 
-        return render(request, 'signup/invalid_activation_link.html')
+        return render(request, 'pages/signup/invalid_activation_link.html')

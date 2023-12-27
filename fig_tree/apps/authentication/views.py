@@ -32,7 +32,7 @@ __all__ = [
 class LoginView(views.LoginView):
     """View for handling existing user authentication"""
 
-    template_name = 'authentication/login.html'
+    template_name = 'pages/authentication/login.html'
     authentication_form = AuthenticationForm
     redirect_authenticated_user = True
 
@@ -53,13 +53,13 @@ class LoginView(views.LoginView):
 class LogoutView(views.LogoutView):
     """View for logging out users"""
 
-    template_name = 'authentication/logged_out.html'
+    template_name = 'pages/authentication/logged_out.html'
 
 
 class PasswordResetView(views.PasswordResetView):
     """View for requesting a reset password link via email"""
 
-    template_name = 'authentication/password_reset_form.html'
+    template_name = 'pages/authentication/password_reset_form.html'
     email_template_name = 'authentication/password_reset_email.html'
     success_url = reverse_lazy('auth:password-reset-done')
 
@@ -67,17 +67,17 @@ class PasswordResetView(views.PasswordResetView):
 class PasswordResetDoneView(views.PasswordResetDoneView):
     """View for confirming that a reset password link has been sent via email"""
 
-    template_name = 'authentication/password_reset_done.html'
+    template_name = 'pages/authentication/password_reset_done.html'
 
 
 class PasswordResetConfirmView(views.PasswordResetConfirmView):
     """View for resetting an existing user's password"""
 
-    template_name = 'authentication/password_reset_confirm.html'
+    template_name = 'pages/authentication/password_reset_confirm.html'
     success_url = reverse_lazy('auth:password-reset-complete')
 
 
 class PasswordResetCompleteView(views.PasswordResetCompleteView):
     """View for confirming a user's password has been reset"""
 
-    template_name = 'authentication/password_reset_complete.html'
+    template_name = 'pages/authentication/password_reset_complete.html'

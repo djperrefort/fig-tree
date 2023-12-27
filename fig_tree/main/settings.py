@@ -160,5 +160,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 
+STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_URL = env.str('STATIC_URL', default='static/')
 STATIC_ROOT = env.path('STATIC_ROOT', default=BASE_DIR / 'static_root')

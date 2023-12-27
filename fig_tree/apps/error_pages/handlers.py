@@ -9,8 +9,6 @@ from typing import Optional
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
-from django.template.exceptions import TemplateDoesNotExist
-from django.template.loader import get_template
 
 app_name = 'error_pages'
 
@@ -26,13 +24,7 @@ def error_render(error_code: int, request: HttpRequest) -> HttpResponse:
         A rendered HTTP response
     """
 
-    try:
-        template = f'{app_name}/http_{error_code}.html'
-        get_template(template)
-
-    except TemplateDoesNotExist:
-        template = f'{app_name}/default.html'
-
+    template = f'pages/error.html'
     context = {
         'error_code': error_code,
         'description': settings.ERROR_CODE_DESCRIPTIONS[error_code],
