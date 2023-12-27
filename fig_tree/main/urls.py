@@ -35,7 +35,7 @@ handler404 = handlers.handler404
 handler500 = handlers.handler500
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='main/index.html'), name='home'),
+    path('', TemplateView.as_view(template_name='pages/index.html'), name='home'),
 
     # Add urls from plugins and applications
     path('admin/', admin.site.urls),
